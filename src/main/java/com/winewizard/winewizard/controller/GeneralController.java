@@ -18,6 +18,12 @@ public class GeneralController {
         return "general/statistics";
     }
 
+    @RequestMapping(method= RequestMethod.GET, value = "/add")
+    public String addWine() {
+        // folder general/statistics.html
+        return "wines/add_wine";
+    }
+
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)
     public String feedback() {
         // folder general/feedback.html
