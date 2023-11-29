@@ -7,16 +7,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/" th:text="#{Home}" ></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/addRating">Rate a wine</a>
+                    <a class="nav-link" href="/addRating" th:text="#{Rate_a_wine}"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/wines/add">Add a wine</a>
+                    <a class="nav-link" href="/wines/add" th:text="#{Add_a_wine}"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" th:text="#{Disabled}"></a>
                 </li>
             </ul>
 
@@ -26,11 +26,19 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
 
-                <form class="me-2">
-                    <button class="btn btn-outline-primary" type="submit">
-                        <i class="fas fa-language"></i>
-                    </button>
+                <form th:action="@{/changeLanguage}" method="get" class="me-2" id="languageForm">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="languageDropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-language"></i> Select Language
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="languageDropdownButton">
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='en')}">English</a>
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='fr')}">French</a>
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='de')}">German</a>
+                        </div>
+                    </div>
                 </form>
+
 
                 <form class="me-2">
                     <a class="btn btn-outline-danger" href="/logout" >
