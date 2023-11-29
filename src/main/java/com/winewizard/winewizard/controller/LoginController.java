@@ -1,22 +1,18 @@
 package com.winewizard.winewizard.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
-    @GetMapping
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showLoginForm() {
-        return "login";
+        return "general/login";
     }
 
-    @PostMapping
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String processLogin( @RequestParam("phoneNumber") String phoneNumber,
                                 @RequestParam("password") String password,
                                 RedirectAttributes redirectAttributes
@@ -35,5 +31,12 @@ public class LoginController {
             redirectAttributes.addFlashAttribute("error", "Invalid credentials");
             return "redirect:/login";
         }
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String handleLogout() {
+        // Perform any logout logic
+
+        return "redirect:/login";
     }
 }

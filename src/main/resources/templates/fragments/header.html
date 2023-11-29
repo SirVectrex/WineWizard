@@ -16,10 +16,26 @@
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+
+            <div class="d-flex">
+                <form class="d-flex me-2">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+
+                <form class="me-2">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="fas fa-language"></i>
+                    </button>
+                </form>
+
+                <form class="me-2">
+                    <a class="btn btn-outline-danger" href="/logout" >
+                    <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </form>
+
+            </div>
         </div>
     </div>
 </nav>
