@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+
+<body th:insert="~{fragments/header}"></body>
+
+        <div class="container">
+            <form th:action="@{/wines/add}"
+                  th:object="${wine}" method="POST">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Name </label>
+                        <input class="form-control" id="name" placeholder="Wine name" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"
+                               th:field="*{name}"
+                               type="text"/>
+                        <div class="invalid-feedback">
+                            <span th:errors="*{name}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="id" th:field="*{id}">
+                <button type="submit" class="btn btn-primary btn-save">Save</button>
+            </form>
+        </div>
+
+    <body th:insert="~{fragments/footer}"><body>
+</html>
