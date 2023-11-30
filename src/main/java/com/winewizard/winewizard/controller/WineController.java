@@ -29,7 +29,6 @@ public class WineController {
         Wine wine = new Wine();
         wine.setId((long) -1);
         model.addAttribute("wine", wine);
-        wineService.saveWine(wine);
 
         return "/wines/add_wine";
     }

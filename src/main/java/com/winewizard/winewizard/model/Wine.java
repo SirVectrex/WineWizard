@@ -13,8 +13,10 @@ public class Wine implements Serializable {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     Long id;
 
-
     String name;
+
+    @ManyToOne
+    Winery winery;
 
     public Long getId() {
         return id;
