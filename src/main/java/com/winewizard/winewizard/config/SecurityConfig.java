@@ -48,7 +48,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain getSecurityFilterChain(HttpSecurity http,
                                                       HandlerMappingIntrospector introspector) throws Exception {
-        
+
 
         http.csrf().disable();
         
@@ -69,7 +69,7 @@ public class SecurityConfig {
                 		
         http.authorizeHttpRequests()
 
-        .requestMatchers(new AntPathRequestMatcher("/")).hasAnyAuthority("ADMIN_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyAuthority("ADMIN_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/wines/add")).hasAuthority("ADMIN_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/changeLanguage")).hasAuthority("ADMIN_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/winery/**")).hasAuthority ("ADMIN_STATUS");
@@ -87,11 +87,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(
     		AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
-    }	
-	/*
-	@Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**");
     }
-	 */
 }

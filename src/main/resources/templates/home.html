@@ -9,6 +9,16 @@
     Welcome to the Wine Cellar!
 </h1>
 
+<div>
+    <form th:action="@{/sendMail}" th:method="post" th:object="${emailDetails}">
+        <input type="text" th:field="*{recipient}" placeholder="To">
+        <input type="text" th:field="*{subject}" placeholder="Subject">
+        <textarea th:field="*{msgBody}" placeholder="Body"></textarea>
+        <button type="submit">Send Mail</button>
+    </form>
+</div>
+
 
 <div th:insert="~{fragments/footer}"></div>
+
 </body>

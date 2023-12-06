@@ -1,6 +1,8 @@
 package com.winewizard.winewizard.controller;
 
+import com.winewizard.winewizard.config.EmailDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -8,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class GeneralController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
-    public String home() {
+    public String home(Model model) {
+        model.addAttribute("emailDetails", new EmailDetails());
         return "home";
     }
 

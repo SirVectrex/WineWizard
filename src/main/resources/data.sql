@@ -9,7 +9,7 @@ INSERT INTO address (postal_code, city, street, house_number) VALUES ('93333', '
 INSERT INTO winery (name, address_id, url_identifier) VALUES ('Schottis Winery', 1, '2520ff3c-8f72-11ee-b9d1-0242ac120002');
 
 
-INSERT INTO user (login, password, email, active) values ('adam', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'adam@email', 1);
+INSERT INTO user (login, password, email, active) values ('moadl', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl19@gmail.com', 1);
 INSERT INTO user (login, password, email, active) values ('anja', '{bcrypt}$2a$12$69GBDheB9KxZ4p4Zl9BLueq.C3ONV1VMxvx/cyoIVmzkgRziB9uFa', 'anja@email', 1);
 
 INSERT INTO role (description) VALUES ( 'ADMIN');
