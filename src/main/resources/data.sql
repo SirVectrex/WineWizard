@@ -17,8 +17,8 @@ INSERT INTO role (description) VALUES ( 'winery');
 INSERT INTO role (description) VALUES ( 'wineWizard');
 
 INSERT INTO authority (description) VALUES ( 'ADMIN_STATUS');
-INSERT INTO authority (description) VALUES ( 'LIST_STUDENT');
-INSERT INTO authority (description) VALUES ( 'REGISTRATION');
+INSERT INTO authority (description) VALUES ( 'WINERY_STATUS');
+INSERT INTO authority (description) VALUES ( 'WINEWIZARD_STATUS');
 
 
 INSERT INTO userrole(iduser, idrole) VALUES (1,1);
