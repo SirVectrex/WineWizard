@@ -1,5 +1,6 @@
 package com.winewizard.winewizard.controller;
 
+import com.winewizard.winewizard.config.EmailDetails;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.service.WineServiceI;
@@ -28,7 +29,7 @@ public class WineryController {
             System.out.println("Warning: No winery found with ident: " + identifier);
             return "/home";
         }
-
+        model.addAttribute("emailDetails", new EmailDetails());
         model.addAttribute("winery", winery);
 
         return "/winery/profile";

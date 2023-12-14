@@ -17,6 +17,13 @@
                             <p class="text-muted mb-1">Winery in Bavaria</p>
                             <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
 
+                            <div>
+                                <form th:action="@{/sendMail}" th:method="post" >
+                                    <button type="submit" class="btn btn-primary">Receive Newsletter</button>
+                                </form>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="card mb-4 mb-lg-0">

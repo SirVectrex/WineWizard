@@ -16,12 +16,9 @@ public class GeneralController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String home(Model model) {
-        model.addAttribute("emailDetails", new EmailDetails());
+
         String loggedInUsername = getLoggedInUsername();
         model.addAttribute("loggedInUsername", loggedInUsername);
-        MyUserDetails test = getLoggedInUserDetails();
-        System.out.println(test.getEmail());
-        System.out.println(test.getPhone());
 
         return "home";
     }
@@ -55,15 +52,6 @@ public class GeneralController {
         return "Gast";
     }
 
-    public MyUserDetails getLoggedInUserDetails() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof MyUserDetails) {
-            return (MyUserDetails) authentication.getPrincipal();
-        }
-
-        // Wenn kein Benutzer authentifiziert ist oder die Details nicht verfügbar sind
-        return null;
-    }
 
 }

@@ -38,15 +38,13 @@ public class MyUserDetails implements UserDetails {
 		this.password= user.getPassword();
 		this.email=user.getEmail();
 		this.phone= user.getPhone();
-		System.out.println("password of the user is="+password);
-		System.out.println("userName of the user is="+this.userName);
 		this.active = user.isActive();
 		
 		//getting authorities from the DB 		
 		List<Role> myRoles = (List<Role>) user.getRoles();
 				
 		System.out.println("the user "+  user.getLogin() +" has "+ 
-				myRoles.size() +" roles" + "and email:" + user.getEmail());
+				myRoles.size() +" roles" + " and email:" + user.getEmail());
 		
 		//authorities is required by Userdetails from Spring Security
 		this.roles = myRoles;

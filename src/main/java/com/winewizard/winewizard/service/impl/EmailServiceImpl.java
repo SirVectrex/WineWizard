@@ -20,11 +20,14 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.username}") private String sender;
 
 
-    public String sendSimpleMail(EmailDetails details)
+    public String sendSimpleMail(String recipient)
     {
 
         // Try block to check for exceptions
         try {
+
+            // Getting the riddle text from the external API
+            //String riddle = emailService.getRiddle();
 
             // Creating a simple mail message
             SimpleMailMessage mailMessage
@@ -32,13 +35,14 @@ public class EmailServiceImpl implements EmailService {
 
             // Setting up necessary details
             mailMessage.setFrom(sender);
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
+            mailMessage.setTo(recipient);
+            /// TODO: 14.12.2023 Newsletter mail body 
+            mailMessage.setText("Newsletter Riddle: ");
+            mailMessage.setSubject("Newsletter");
 
             // Sending the mail
             javaMailSender.send(mailMessage);
-            return "Mail Sent Successfully...";
+            return "Newsletter Sent Successfully...";
         }
 
         // Catch block to handle the exceptions
