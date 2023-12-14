@@ -1,8 +1,11 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.config.EmailDetails;
+import com.winewizard.winewizard.config.MyUserDetails;
 import org.springframework.security.core.Authentication;
+import com.winewizard.winewizard.service.impl.MyUserDetailsServiceImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,9 @@ public class GeneralController {
         model.addAttribute("emailDetails", new EmailDetails());
         String loggedInUsername = getLoggedInUsername();
         model.addAttribute("loggedInUsername", loggedInUsername);
+        MyUserDetails test = getLoggedInUserDetails();
+        System.out.println(test.getEmail());
+        System.out.println(test.getPhone());
 
         return "home";
     }
@@ -42,12 +48,22 @@ public class GeneralController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
-
             return authentication.getName();
         }
 
         // Wenn kein Benutzer authentifiziert ist
         return "Gast";
+    }
+
+    public MyUserDetails getLoggedInUserDetails() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof MyUserDetails) {
+            return (MyUserDetails) authentication.getPrincipal();
+        }
+
+        // Wenn kein Benutzer authentifiziert ist oder die Details nicht verfügbar sind
+        return null;
     }
 
 }

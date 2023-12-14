@@ -25,6 +25,7 @@ public class MyUserDetailsServiceImpl implements UserDetailsService{
 		Optional<User> oUser= userRepository.findByLoginIgnoreCase(username);
 		oUser.orElseThrow(()-> new UsernameNotFoundException("Not found "+username));
 		System.out.println("User found at the UserDetailsService="+ oUser.get().getLogin());
+
 		return new MyUserDetails(oUser.get());
 	}
 }

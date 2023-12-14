@@ -30,6 +30,9 @@ public class User implements Serializable{
 		
 	@NotBlank(message = "Email is mandatory")
 	private String email;
+
+	@NotBlank(message = "Phone Number is mandatory")
+	private  String phone;
 	
 	private boolean active = true;
 	
@@ -60,6 +63,14 @@ public class User implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public boolean isActive() {

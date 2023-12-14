@@ -3,6 +3,7 @@ package com.winewizard.winewizard.config;
 import com.winewizard.winewizard.model.Authority;
 import com.winewizard.winewizard.model.Role;
 import com.winewizard.winewizard.model.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,10 @@ public class MyUserDetails implements UserDetails {
 	private String userName;
 	private String password;
 	private boolean active;
+	@Getter
+	private String email;
+	@Getter
+	private String phone;
 	private List<GrantedAuthority> authorities;
 	private List <Role> roles;
 	
@@ -31,6 +36,8 @@ public class MyUserDetails implements UserDetails {
 		// TODO Auto-generated constructor stub
 		this.userName= user.getLogin();
 		this.password= user.getPassword();
+		this.email=user.getEmail();
+		this.phone= user.getPhone();
 		System.out.println("password of the user is="+password);
 		System.out.println("userName of the user is="+this.userName);
 		this.active = user.isActive();
@@ -39,7 +46,7 @@ public class MyUserDetails implements UserDetails {
 		List<Role> myRoles = (List<Role>) user.getRoles();
 				
 		System.out.println("the user "+  user.getLogin() +" has "+ 
-				myRoles.size() +" roles");
+				myRoles.size() +" roles" + "and email:" + user.getEmail());
 		
 		//authorities is required by Userdetails from Spring Security
 		this.roles = myRoles;
