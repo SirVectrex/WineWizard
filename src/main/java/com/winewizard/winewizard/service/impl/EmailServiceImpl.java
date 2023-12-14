@@ -26,9 +26,6 @@ public class EmailServiceImpl implements EmailService {
         // Try block to check for exceptions
         try {
 
-            // Getting the riddle text from the external API
-            //String riddle = emailService.getRiddle();
-
             // Creating a simple mail message
             SimpleMailMessage mailMessage
                     = new SimpleMailMessage();
