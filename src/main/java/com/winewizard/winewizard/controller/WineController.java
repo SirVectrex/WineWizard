@@ -8,10 +8,11 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "wines")
@@ -50,8 +51,11 @@ public class WineController {
         return "wines/rate_wine";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/showAll")
-    public String showAll() {
+    @GetMapping ("/showall")
+    public String showAll(Model model) {
+        List<Wine> allWines = wineService.getAllWines();
+        model.addAttribute("winelist", allWines);
+        // System.out.println(allWines.get(0).getName() );
         return "wines/all_wines";
     }
 

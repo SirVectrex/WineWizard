@@ -1,6 +1,6 @@
 -- Intial database values
 -- wine(id, barcode_num, name, type, description)
-INSERT INTO wine (name) VALUES ('Lugana');
+INSERT INTO wine (name, type) VALUES ('Lugana', 'dry white wine');
 
 -- address(id, city, house_number, postal_code, street)
 INSERT INTO address (postal_code, city, street, house_number) VALUES ('93333', 'Bad Goegging', 'Winestreet', 6);

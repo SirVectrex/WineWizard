@@ -9,6 +9,27 @@
     Welcome to statistics of the Wine Cellar!
 </h1>
 
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+        <th>Name</th>
+        <th>Type of wine</th>
+
+
+        <!-- Add more columns as needed -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="wine : ${winelist}">
+        <td th:text="${wine.name}"></td>
+        <td th:text="${wine.type}"></td>
+
+
+        <!-- Add more data fields as needed -->
+    </tr>
+    </tbody>
+</table>
+
 <body th:insert="~{fragments/footer}"><body>
 
 </body>

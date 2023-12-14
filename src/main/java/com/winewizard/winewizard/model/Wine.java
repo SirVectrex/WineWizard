@@ -15,6 +15,16 @@ public class Wine implements Serializable {
 
     String name;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    String type;
+
     @ManyToOne
     Winery winery;
 
@@ -33,4 +43,6 @@ public class Wine implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }
