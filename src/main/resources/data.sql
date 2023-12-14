@@ -10,7 +10,8 @@ INSERT INTO winery (name, address_id, url_identifier) VALUES ('Schottis Winery',
 
 
 INSERT INTO user (login, password, email, active) values ('moadl', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl19@gmail.com', 1);
-INSERT INTO user (login, password, email, active) values ('anja', '{bcrypt}$2a$12$69GBDheB9KxZ4p4Zl9BLueq.C3ONV1VMxvx/cyoIVmzkgRziB9uFa', 'anja@email', 1);
+INSERT INTO user (login, password, email, active) values ('flo', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo@email', 1);
+INSERT INTO user (login, password, email, active) values ('markus', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus@email', 1);
 
 INSERT INTO role (description) VALUES ( 'ADMIN');
 INSERT INTO role (description) VALUES ( 'winery');
@@ -22,8 +23,8 @@ INSERT INTO authority (description) VALUES ( 'WINEWIZARD_STATUS');
 
 
 INSERT INTO userrole(iduser, idrole) VALUES (1,1);
-INSERT INTO userrole(iduser, idrole) VALUES (1,3);
-INSERT INTO userrole(iduser, idrole) VALUES (2,2);
+INSERT INTO userrole(iduser, idrole) VALUES (2,1);
+INSERT INTO userrole(iduser, idrole) VALUES (3,1);
 
 
 INSERT INTO roleauthority(idrole, idauthority) VALUES (1,1);

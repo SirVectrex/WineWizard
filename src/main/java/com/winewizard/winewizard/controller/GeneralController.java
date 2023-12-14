@@ -1,6 +1,8 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.config.EmailDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,9 @@ public class GeneralController {
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String home(Model model) {
         model.addAttribute("emailDetails", new EmailDetails());
+        String loggedInUsername = getLoggedInUsername();
+        model.addAttribute("loggedInUsername", loggedInUsername);
+
         return "home";
     }
 
@@ -31,6 +36,18 @@ public class GeneralController {
     public String feedback() {
         // folder general/feedback.html
         return "general/feedback";
+    }
+
+    public String getLoggedInUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+
+            return authentication.getName();
+        }
+
+        // Wenn kein Benutzer authentifiziert ist
+        return "Gast";
     }
 
 }
