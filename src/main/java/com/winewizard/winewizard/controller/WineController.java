@@ -69,4 +69,11 @@ public class WineController {
         return "wines/send_all_wines";
     }
 
+    @GetMapping ("/search")
+    public String searchWine(){
+
+
+        return "/wines/search_wine";
+    }
+
 }
