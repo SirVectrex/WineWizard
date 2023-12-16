@@ -1,50 +1,55 @@
 package com.winewizard.winewizard.service.impl;
 
-import com.winewizard.winewizard.config.EmailDetails;
 import com.winewizard.winewizard.service.EmailService;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import com.winewizard.winewizard.service.HtmlFileReaderService;
+
+import java.io.IOException;
 
 @Service
-// Class
-// Implementing EmailService interface
 public class EmailServiceImpl implements EmailService {
 
-    @Autowired private JavaMailSender javaMailSender;
+    @Autowired
+    private JavaMailSender javaMailSender;
+    private final HtmlFileReaderService htmlFileReaderService;
 
-    @Value("${spring.mail.username}") private String sender;
+    @Value("${spring.mail.username}")
+    private String sender;
 
+    public EmailServiceImpl(HtmlFileReaderService htmlFileReaderService) {
+        this.htmlFileReaderService = htmlFileReaderService;
+    }
 
-    public String sendSimpleMail(String recipient)
-    {
+    public String sendHtmlMail(String recipient) {
 
-        // Try block to check for exceptions
         try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            // Creating a simple mail message
-            SimpleMailMessage mailMessage
-                    = new SimpleMailMessage();
+            helper.setFrom(sender);
+            helper.setTo(recipient);
+            helper.setSubject("Newsletter");
 
-            // Setting up necessary details
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(recipient);
-            /// TODO: 14.12.2023 Newsletter mail body 
-            mailMessage.setText("Newsletter Riddle: ");
-            mailMessage.setSubject("Newsletter");
+            // HTML content for the email body
+            String htmlBody = htmlFileReaderService.readHtmlFile("classpath:templates/general/newsletter.html");
 
-            // Sending the mail
-            javaMailSender.send(mailMessage);
+            // Set the HTML content to true
+            helper.setText(htmlBody, true);
+
+            // Send the email
+            javaMailSender.send(mimeMessage);
+
             return "Newsletter Sent Successfully...";
-        }
-
-        // Catch block to handle the exceptions
-        catch (Exception e) {
+        } catch (MessagingException e) {
             return "Error while Sending Mail";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

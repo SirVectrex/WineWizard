@@ -24,7 +24,7 @@ public class EmailController {
         MyUserDetails user = getLoggedInUserDetails();
         String recipient = user.getEmail();;
 
-        return emailService.sendSimpleMail(recipient);
+        return emailService.sendHtmlMail(recipient);
     }
 
     public MyUserDetails getLoggedInUserDetails() {

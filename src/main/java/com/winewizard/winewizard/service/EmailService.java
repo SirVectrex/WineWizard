@@ -7,5 +7,5 @@ public interface EmailService {
 
     // Method
     // To send a simple email
-    String sendSimpleMail(String recipient);
+    String sendHtmlMail(String recipient);
 }
