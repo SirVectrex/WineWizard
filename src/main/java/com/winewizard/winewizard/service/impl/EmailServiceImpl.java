@@ -1,5 +1,6 @@
 package com.winewizard.winewizard.service.impl;
 
+import com.winewizard.winewizard.model.RiddleResponse;
 import com.winewizard.winewizard.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -9,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import com.winewizard.winewizard.service.HtmlFileReaderService;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 
@@ -32,12 +34,20 @@ public class EmailServiceImpl implements EmailService {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
+            String url = "https://riddles-api.vercel.app/random";
+            RestTemplate restTemplate = new RestTemplate();
+
+            RiddleResponse riddle = restTemplate.getForObject(url, RiddleResponse.class);
+
             helper.setFrom(sender);
             helper.setTo(recipient);
             helper.setSubject("Newsletter");
 
             // HTML content for the email body
             String htmlBody = htmlFileReaderService.readHtmlFile("classpath:templates/general/newsletter.html");
+
+            htmlBody = htmlBody.replace("riddle_placeholder", riddle.getRiddle());
+            htmlBody = htmlBody.replace("answer_placeholder", riddle.getAnswer());
 
             // Set the HTML content to true
             helper.setText(htmlBody, true);
