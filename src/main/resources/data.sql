@@ -1,6 +1,6 @@
 -- Intial database values
 -- wine(id, barcode_num, name, type, description)
-INSERT INTO wine (name, type) VALUES ('Lugana', 'dry white wine');
+INSERT INTO wine (name, type, ean) VALUES ('Lugana', 'dry white wine', '1234567890123');
 
 -- address(id, city, house_number, postal_code, street)
 INSERT INTO address (postal_code, city, street, house_number) VALUES ('93333', 'Bad Goegging', 'Winestreet', 6);
@@ -30,3 +30,5 @@ INSERT INTO userrole(iduser, idrole) VALUES (3,1);
 INSERT INTO roleauthority(idrole, idauthority) VALUES (1,1);
 INSERT INTO roleauthority(idrole, idauthority) VALUES (1,3);
 INSERT INTO roleauthority(idrole, idauthority) VALUES (2,2);
+
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 1, 5, 5, 5);

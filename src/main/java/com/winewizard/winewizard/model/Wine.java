@@ -15,6 +15,8 @@ public class Wine implements Serializable {
 
     String name;
 
+    Long ean;
+
     public String getType() {
         return type;
     }
@@ -34,6 +36,14 @@ public class Wine implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getEan() {
+        return ean;
+    }
+
+    public void setEan(Long ean) {
+        this.ean = ean;
     }
 
     public String getName() {

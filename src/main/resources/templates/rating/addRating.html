@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+<body>
+<div class="container">
+    <h2>Rate the Wine</h2>
+    <form th:action="@{/submit-rating}" method="post">
+        <div class="row">
+            <!-- Rating 1 -->
+            <div class="col-md-6">
+                <label for="rating1">Rating 1:</label>
+            </div>
+            <div class="col-md-6">
+                <select id="rating1" class="form-control" name="rating1">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Rating 2 -->
+            <div class="col-md-6">
+                <label for="rating2">Rating 2:</label>
+            </div>
+            <div class="col-md-6">
+                <select id="rating2" class="form-control" name="rating2">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Rating 3 -->
+            <div class="col-md-6">
+                <label for="rating3">Rating 3:</label>
+            </div>
+            <div class="col-md-6">
+                <select id="rating3" class="form-control" name="rating3">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Rating 4 -->
+            <div class="col-md-6">
+                <label for="rating4">Rating 4:</label>
+            </div>
+            <div class="col-md-6">
+                <select id="rating4" class="form-control" name="rating4">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+</body>
+</html>
