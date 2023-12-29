@@ -76,7 +76,7 @@ public class WineController {
     }
 
     @GetMapping("/searchWine")
-    public String searchWine(@RequestParam(value = "searchTerm", required = false) String searchTerm,
+    public String searchWine(@RequestParam(value = "searchTerm", required = false, defaultValue = "") String searchTerm,
                              @RequestParam(value = "page", defaultValue = "1") int page,
                              @RequestParam(value = "size", defaultValue = "3") int size,
                              Model model) {
