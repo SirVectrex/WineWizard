@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 public class WineController {
 
     private WineServiceI wineService;
+    private final WineRepository wineRepository;
 
-    public WineController(WineServiceI wineService){
+    public WineController(WineServiceI wineService , WineRepository wineRepository){
         super();
         this.wineService = wineService;
+        this.wineRepository = wineRepository;
     }
 
     @GetMapping ("/add")
@@ -69,11 +72,19 @@ public class WineController {
         return "wines/send_all_wines";
     }
 
-    @GetMapping ("/search")
-    public String searchWine(){
-
+    @GetMapping("/searchWine")
+    public String searchWine(@RequestParam(value = "searchTerm", required = false) String searchTerm, Model model) {
+        if (searchTerm != null) {
+            // If searchTerm is present, perform search
+            model.addAttribute("searchResults", performSearch(searchTerm));
+        }
 
         return "/wines/search_wine";
+    }
+
+    public List<Wine> performSearch(String searchTerm) {
+
+        return wineRepository.findByNameContainingIgnoreCase(searchTerm);
     }
 
 }

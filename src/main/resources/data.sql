@@ -1,6 +1,16 @@
 -- Intial database values
 -- wine(id, barcode_num, name, type, description)
-INSERT INTO wine (name, type, ean) VALUES ('Lugana', 'dry white wine', '1234567890123');
+INSERT INTO wine (name, type, ean, description) VALUES ('Lugana', 'dry white wine', '1234567890123', 'A crisp and refreshing white wine with citrus notes.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Château Margaux', 'red wine', '2345678901234', 'An elegant and complex Bordeaux blend with a velvety finish.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Prosecco Brut', 'sparkling wine', '3456789012345', 'Bubbly and lively, this Prosecco offers floral and fruity aromas.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Chardonnay Reserve', 'oaked white wine', '4567890123456', 'Full-bodied Chardonnay with hints of vanilla and butter.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Merlot Estate', 'red wine', '5678901234567', 'Smooth and medium-bodied Merlot with plum and cherry flavors.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Sauvignon Blanc', 'crisp white wine', '6789012345678', 'Zesty Sauvignon Blanc with tropical fruit and herbal undertones.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Cabernet Sauvignon', 'full-bodied red wine', '7890123456789', 'Bold and robust Cabernet with blackberry and cassis notes.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Pinot Grigio', 'light white wine', '8901234567890', 'Delicate Pinot Grigio featuring citrus and pear aromas.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Malbec Reserva', 'intense red wine', '9012345678901', 'Rich and intense Malbec with dark fruit and chocolate nuances.');
+INSERT INTO wine (name, type, ean, description) VALUES ('Rosé de Provence', 'rosé wine', '0123456789012', 'A dry and crisp Provencal Rosé with strawberry and floral hints.');
+
 
 -- address(id, city, house_number, postal_code, street)
 INSERT INTO address (postal_code, city, street, house_number) VALUES ('93333', 'Bad Goegging', 'Winestreet', 6);
@@ -32,3 +42,6 @@ INSERT INTO roleauthority(idrole, idauthority) VALUES (1,3);
 INSERT INTO roleauthority(idrole, idauthority) VALUES (2,2);
 
 INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 1, 5, 5, 5);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 2, 4, 5, 5);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 3, 2, 3, 5);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 4, 4, 5, 0);

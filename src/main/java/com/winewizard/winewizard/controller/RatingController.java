@@ -32,7 +32,7 @@ public class RatingController {
         return "rating/rate_wine_pick";
     }
 
-    @GetMapping("/addRating/}")
+    @GetMapping("/addRating")
     public String addRating(@RequestParam("winenumber") Long winenumber, Model model) {
         Wine wine = wineRepository.findById(winenumber).orElse(null);
         model.addAttribute("wine", wine);

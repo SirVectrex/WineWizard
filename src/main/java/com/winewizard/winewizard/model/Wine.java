@@ -27,6 +27,16 @@ public class Wine implements Serializable {
 
     String type;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    String description;
+
     @ManyToOne
     Winery winery;
 
