@@ -11,5 +11,9 @@ footer  {
     /* align text horizontally  and vertically */
     text-align: center;
     vertical-align: middle;
+    margin-top: auto;
+}
 
+body {
+    margin-bottom: 65px;
 }

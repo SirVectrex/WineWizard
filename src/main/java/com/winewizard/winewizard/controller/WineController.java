@@ -5,6 +5,9 @@ import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.service.WineServiceI;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,18 +76,38 @@ public class WineController {
     }
 
     @GetMapping("/searchWine")
-    public String searchWine(@RequestParam(value = "searchTerm", required = false) String searchTerm, Model model) {
-        if (searchTerm != null) {
-            // If searchTerm is present, perform search
-            model.addAttribute("searchResults", performSearch(searchTerm));
-        }
+    public String searchWine(@RequestParam(value = "searchTerm", required = false) String searchTerm,
+                             @RequestParam(value = "page", defaultValue = "1") int page,
+                             @RequestParam(value = "size", defaultValue = "3") int size,
+                             Model model) {
+        Page<Wine> winePage;
 
-        return "/wines/search_wine";
+        try {
+            if (searchTerm != null) {
+                // If searchTerm is present, perform search
+                winePage = performSearch(searchTerm, PageRequest.of(page -1, size));
+            } else {
+                // If no search term, retrieve all wines
+                winePage = wineRepository.findAll(PageRequest.of(page -1, size));
+            }
+
+
+            model.addAttribute("searchResults", winePage.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalItems", winePage.getTotalElements());
+            model.addAttribute("totalPages", winePage.getTotalPages());
+            model.addAttribute("searchTerm", searchTerm);
+            model.addAttribute("pageSize", size);
+
+
+            return "wines/search_wine"; // Updated to remove leading slash
+        } catch (Exception e) {
+            throw e; // Rethrow the exception or handle it appropriately
+        }
     }
 
-    public List<Wine> performSearch(String searchTerm) {
-
-        return wineRepository.findByNameContainingIgnoreCase(searchTerm);
+    public Page<Wine> performSearch(String searchTerm, Pageable pageable) {
+        return wineRepository.findByNameContainingIgnoreCase(searchTerm, pageable);
     }
 
 }
