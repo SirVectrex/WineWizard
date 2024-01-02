@@ -18,9 +18,9 @@
             <!-- Search Form -->
             <form th:action="@{/wines/searchWine}" th:method="get" >
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control rounded" th:placeholder="#{Search_for_wine}"  th:name="searchTerm" id="searchInput">
+                    <input type="text" class="form-control rounded" th:placeholder="#{Search}"  th:name="searchTerm" id="searchInput">
                     <div class="input-group-append mx-4">
-                        <button class="btn btn-primary" type="submit" th:text="#{Search}"></button>
+                        <button class="btn btn-primary" type="submit" th:text="#{Search_for_wine}"></button>
                     </div>
                 </div>
             </form>

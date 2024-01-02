@@ -45,3 +45,8 @@ INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating
 INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 2, 4, 5, 5);
 INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 3, 2, 3, 5);
 INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 4, 4, 5, 0);
+
+INSERT INTO bookmarks (user_id, wine_id) VALUES (1,2);
+INSERT INTO bookmarks (user_id, wine_id) VALUES (1,8);
+INSERT INTO bookmarks (user_id, wine_id) VALUES (1,4);
+INSERT INTO bookmarks (user_id, wine_id) VALUES (1,5);
