@@ -100,9 +100,9 @@ public class WineController {
             model.addAttribute("pageSize", size);
 
 
-            return "wines/search_wine"; // Updated to remove leading slash
+            return "wines/search_wine";
         } catch (Exception e) {
-            throw e; // Rethrow the exception or handle it appropriately
+            throw e;
         }
     }
 

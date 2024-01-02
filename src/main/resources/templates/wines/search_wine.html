@@ -7,9 +7,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center align-items-center">
         <div class="col-md-6">
-            <h1 class="title text-center">
-                Welcome to Wine searching!
-            </h1>
+            <h1 class="title text-center" th:text="#{Browse_through_our_wine_collection}"></h1>
         </div>
     </div>
 </div>
@@ -20,9 +18,9 @@
             <!-- Search Form -->
             <form th:action="@{/wines/searchWine}" th:method="get" >
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search..."  th:name="searchTerm" id="searchInput">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">Search</button>
+                    <input type="text" class="form-control rounded" th:placeholder="#{Search_for_wine}"  th:name="searchTerm" id="searchInput">
+                    <div class="input-group-append mx-4">
+                        <button class="btn btn-primary" type="submit" th:text="#{Search}"></button>
                     </div>
                 </div>
             </form>
@@ -36,9 +34,9 @@
                     <div>
                         <strong th:text="${wine.name}"></strong>
                     </div>
-                    <div>Type: <span th:text="${wine.type}"></span></div>
-                    <div>EAN: <span th:text="${wine.ean}"></span></div>
-                    <div>Description: <span th:text="${wine.description}"></span></div>
+                    <div><a th:text="#{Type}"></a> <span th:text="${wine.type}"></span></div>
+                    <div> <a th:text="#{EAN}"></a> <span th:text="${wine.ean}"></span></div>
+                    <div> <a th:text="#{Description}"></a> <span th:text="${wine.description}"></span></div>
                 </li>
             </ul>
 
