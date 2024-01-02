@@ -4,6 +4,7 @@ import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.repository.RatingRepositoryI;
 import com.winewizard.winewizard.service.RatingServiceI;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,5 +26,10 @@ public class RatingServiceImpl implements RatingServiceI {
     @Override
     public Rating saveRating(Rating rating) {
         return ratingRepository.save(rating);
+    }
+
+    @Transactional
+    public void deleteRatingsByUserId(Long user_id) {
+        ratingRepository.deleteByUserId(user_id);
     }
 }

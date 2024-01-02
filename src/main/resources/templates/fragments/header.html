@@ -46,6 +46,9 @@
                     </div>
                 </form>
 
+                <form class="me-2" th:action="@{/deleteUser}" method="post">
+                    <button class="btn btn-outline-danger" type="submit" th:text="#{Delete_User}"></button>
+                </form>
 
                 <form class="me-2">
                     <a class="btn btn-outline-danger" href="/logout" >

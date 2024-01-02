@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RatingRepositoryI extends JpaRepository<Rating, Long> {
 
+    void deleteByUserId(Long user_id);
 }

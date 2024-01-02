@@ -10,4 +10,5 @@ public interface UserRepositoryI extends MyBaseRepository<User, Long> {
 	
 	Optional<User> findByLoginIgnoreCase(String login);
 
+	void deleteById(Long userId);
 }
