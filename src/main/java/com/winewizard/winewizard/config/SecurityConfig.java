@@ -64,7 +64,8 @@ public class SecurityConfig {
                 		.requestMatchers(new AntPathRequestMatcher("/webjars/**")).permitAll()
                 		.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                 		.requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                		.requestMatchers(new AntPathRequestMatcher("/logout")).permitAll());
+                		.requestMatchers(new AntPathRequestMatcher("/logout")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/register")).permitAll());
         
                 		
         http.authorizeHttpRequests()
@@ -74,9 +75,21 @@ public class SecurityConfig {
         .requestMatchers(new AntPathRequestMatcher("/changeLanguage")).hasAuthority("ADMIN_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/winery/**")).hasAuthority ("ADMIN_STATUS");
         //andere URLs....
-        http.headers(headers -> headers.frameOptions(FrameOptionsConfig::disable));                
-        
-        http.formLogin(Customizer.withDefaults());
+        http.headers(headers -> headers.frameOptions(FrameOptionsConfig::disable));
+
+        http.formLogin()
+                .loginPage("/customlogin")
+                .defaultSuccessUrl("/", true)
+                .permitAll();
+
+
+        http.logout()
+                .logoutUrl("/logout") // Specify the URL for logout
+                .logoutSuccessUrl("/login?logout") // Redirect to this URL after logout
+                .invalidateHttpSession(true) // Invalidate the HTTP session
+                .deleteCookies("JSESSIONID") // Delete cookies
+                .permitAll(); // Allow all users to access the logout URL
+
         http.httpBasic(Customizer.withDefaults());
         
         return http.build();

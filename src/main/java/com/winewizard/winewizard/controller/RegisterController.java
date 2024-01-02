@@ -57,7 +57,7 @@ public class RegisterController {
             }
         }
 
-        return new RedirectView("/logout");
+        return new RedirectView("/customlogin");
     }
 
 }
