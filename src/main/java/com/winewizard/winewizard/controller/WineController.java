@@ -106,6 +106,24 @@ public class WineController {
         }
     }
 
+    @GetMapping("/showBookmarks")
+    public String showBookmarks(@RequestParam(value = "searchTerm", required = false, defaultValue = "") String searchTerm,
+                                @RequestParam(value = "page", defaultValue = "1") int page,
+                                @RequestParam(value = "size", defaultValue = "3") int size,
+                                Model model){
+        Page<Wine> winePage;
+        winePage = wineRepository.findAll(PageRequest.of(page -1, size));
+
+        model.addAttribute("searchResults", winePage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalItems", winePage.getTotalElements());
+        model.addAttribute("totalPages", winePage.getTotalPages());
+        model.addAttribute("searchTerm", searchTerm);
+        model.addAttribute("pageSize", size);
+
+        return "wines/search_wine";
+    }
+
     public Page<Wine> performSearch(String searchTerm, Pageable pageable) {
         return wineRepository.findByNameContainingIgnoreCase(searchTerm, pageable);
     }

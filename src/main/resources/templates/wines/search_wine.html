@@ -14,7 +14,7 @@
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-8 text-center">
             <!-- Search Form -->
             <form th:action="@{/wines/searchWine}" th:method="get" >
                 <div class="input-group mb-3">
@@ -24,6 +24,16 @@
                     </div>
                 </div>
             </form>
+
+
+        </div>
+
+        <div class="col-md-4">
+            <form  th:action="#{/wines/showBookmarks}" th:method="get">
+                <div class="input-group-append mx-4">
+                    <button class="btn btn-primary" type="submit" th:text="#{Your_Bookmarks}"></button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -31,12 +41,25 @@
             <ul class="list-group" id="searchResults">
 
                 <li th:each="wine : ${searchResults}" class="list-group-item">
-                    <div>
-                        <strong th:text="${wine.name}"></strong>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div>
+                                    <strong th:text="${wine.name}"></strong>
+                                </div>
+                                <div><a th:text="#{Type}"></a> <span th:text="${wine.type}"></span></div>
+                                <div> <a th:text="#{EAN}"></a> <span th:text="${wine.ean}"></span></div>
+                                <div> <a th:text="#{Description}"></a> <span th:text="${wine.description}"></span></div>
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <!--  hier logik für ausgewählte bookmarks des Users einbinden um diese anzuzeigen-->
+                                <button class="btn btn-light bookmark-button" >
+                                    <i class="far fa-bookmark fa-4x" ></i>
+
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div><a th:text="#{Type}"></a> <span th:text="${wine.type}"></span></div>
-                    <div> <a th:text="#{EAN}"></a> <span th:text="${wine.ean}"></span></div>
-                    <div> <a th:text="#{Description}"></a> <span th:text="${wine.description}"></span></div>
                 </li>
             </ul>
 
