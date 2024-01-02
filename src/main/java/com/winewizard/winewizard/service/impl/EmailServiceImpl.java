@@ -28,7 +28,7 @@ public class EmailServiceImpl implements EmailService {
         this.htmlFileReaderService = htmlFileReaderService;
     }
 
-    public String sendHtmlMail(String recipient) {
+    public Void sendHtmlMail(String recipient) {
 
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -55,11 +55,9 @@ public class EmailServiceImpl implements EmailService {
             // Send the email
             javaMailSender.send(mimeMessage);
 
-            return "Newsletter Sent Successfully...";
-        } catch (MessagingException e) {
-            return "Error while Sending Mail";
-        } catch (IOException e) {
+        } catch (IOException | MessagingException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 }

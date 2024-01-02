@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
 
@@ -18,13 +19,14 @@ public class EmailController {
 
     // Sending a simple Email
     @PostMapping("/sendMail")
-    public String
+    public RedirectView
     sendMail()
     {
         MyUserDetails user = getLoggedInUserDetails();
         String recipient = user.getEmail();;
 
-        return emailService.sendHtmlMail(recipient);
+        emailService.sendHtmlMail(recipient);
+        return new RedirectView("/");
     }
 
     public MyUserDetails getLoggedInUserDetails() {
