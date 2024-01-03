@@ -1,32 +1,44 @@
 package com.winewizard.winewizard.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
+import com.winewizard.winewizard.model.Bookmark;
+import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
+import com.winewizard.winewizard.repository.BookmarkRepository;
+import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.service.WineServiceI;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "wines")
 public class WineController {
 
+    private final UserRepositoryI userRepositoryI;
+
+    private final BookmarkRepository bookmarkRepository;
+
     private WineServiceI wineService;
     private final WineRepository wineRepository;
 
-    public WineController(WineServiceI wineService , WineRepository wineRepository){
+    public WineController(UserRepositoryI userRepositoryI, BookmarkRepository bookmarkRepository, WineServiceI wineService , WineRepository wineRepository){
         super();
+        this.userRepositoryI = userRepositoryI;
+        this.bookmarkRepository = bookmarkRepository;
         this.wineService = wineService;
         this.wineRepository = wineRepository;
     }
@@ -81,16 +93,30 @@ public class WineController {
                              @RequestParam(value = "size", defaultValue = "3") int size,
                              Model model) {
         Page<Wine> winePage;
+        List<Wine> bookmarkedWines = getBookmarks();
 
         try {
-            if (searchTerm != null) {
+            if (Objects.equals(searchTerm, "Bookmark")) {
+                // If searchTerm is Bookmark give back all bookmarked wines of the user
+                Pageable pageable = PageRequest.of(page -1, size);
+                int start = (int) pageable.getOffset();
+                int end = Math.min((start + pageable.getPageSize()), bookmarkedWines.size());
+
+                List<Wine> winesForPage = bookmarkedWines.subList(start, end);
+
+                // Return the Page object with the correct parameters
+                winePage = new PageImpl<>(winesForPage, pageable, bookmarkedWines.size());
+
+
+            } else if (searchTerm != null) {
                 // If searchTerm is present, perform search
                 winePage = performSearch(searchTerm, PageRequest.of(page -1, size));
-            } else {
+                System.out.println(winePage);
+
+            } else{
                 // If no search term, retrieve all wines
                 winePage = wineRepository.findAll(PageRequest.of(page -1, size));
             }
-
 
             model.addAttribute("searchResults", winePage.getContent());
             model.addAttribute("currentPage", page);
@@ -106,26 +132,52 @@ public class WineController {
         }
     }
 
-    @GetMapping("/showBookmarks")
-    public String showBookmarks(@RequestParam(value = "searchTerm", required = false, defaultValue = "") String searchTerm,
-                                @RequestParam(value = "page", defaultValue = "1") int page,
-                                @RequestParam(value = "size", defaultValue = "3") int size,
-                                Model model){
-        Page<Wine> winePage;
-        winePage = wineRepository.findAll(PageRequest.of(page -1, size));
+    @PostMapping("/toggleBookmark/{wineId}")
+    public RedirectView toggleBookmark(@PathVariable Long wineId) {
+        Optional<User> user = userRepositoryI.findByLoginIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName());
 
-        model.addAttribute("searchResults", winePage.getContent());
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalItems", winePage.getTotalElements());
-        model.addAttribute("totalPages", winePage.getTotalPages());
-        model.addAttribute("searchTerm", searchTerm);
-        model.addAttribute("pageSize", size);
+        if (user.isPresent()) {
+            Optional<Wine> wine = wineRepository.findById(wineId);
+            if (wine.isPresent()) {
+                Optional<Bookmark> existingBookmark = bookmarkRepository.findByUserIdAndWineId(user.get().getId(), wine.get().getId());
 
-        return "wines/search_wine";
+                if (existingBookmark.isPresent()) {
+                    // Wenn bereits gebookmarked, entfernen Sie das Bookmark
+                    bookmarkRepository.delete(existingBookmark.get());
+                } else {
+                    // Wenn nicht gebookmarked, fügen Sie das Bookmark hinzu
+                    Bookmark newBookmark = new Bookmark();
+                    newBookmark.setUser(user.get());
+                    newBookmark.setWine(wine.get());
+                    bookmarkRepository.save(newBookmark);
+                }
+            }
+        }
+
+        // Hier können Sie je nach Bedarf auf eine andere Seite weiterleiten oder denselben View anzeigen
+        return new RedirectView("/wines/searchWine");
+
     }
 
     public Page<Wine> performSearch(String searchTerm, Pageable pageable) {
         return wineRepository.findByNameContainingIgnoreCase(searchTerm, pageable);
+    }
+
+    public List<Wine> getBookmarks() {
+
+        Optional<User> user = userRepositoryI.findByLoginIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName());
+        List<Bookmark> bookmarks = bookmarkRepository.findBookmarkByUserId(user.get().getId());
+
+        List<Long> wineIds = bookmarks.stream()
+                .map(bookmark -> bookmark.getWine().getId())
+                .collect(Collectors.toList());
+
+        // Fetch wines by IDs
+        List<Wine> wines = wineRepository.findAllById(wineIds);
+
+        wines.forEach(wine -> wine.setBookmarked(true));
+
+        return wines;
     }
 
 }

@@ -37,6 +37,16 @@ public class Wine implements Serializable {
 
     String description;
 
+    public boolean isBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
+    }
+
+    private boolean bookmarked;
+
     @ManyToOne
     Winery winery;
 

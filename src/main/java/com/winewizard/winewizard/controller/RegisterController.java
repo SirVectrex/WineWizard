@@ -1,6 +1,7 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.model.User;
+import com.winewizard.winewizard.service.BookmarkServiceI;
 import com.winewizard.winewizard.service.RatingServiceI;
 import com.winewizard.winewizard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,13 @@ public class RegisterController {
     private final UserService userService;
     private final RatingServiceI ratingServiceI;
 
+    private final BookmarkServiceI bookmarkServiceI;
+
     @Autowired
-    public RegisterController(UserService userService, RatingServiceI ratingServiceI) {
+    public RegisterController(UserService userService, RatingServiceI ratingServiceI, BookmarkServiceI bookmarkServiceI) {
         this.userService = userService;
         this.ratingServiceI = ratingServiceI;
+        this.bookmarkServiceI = bookmarkServiceI;
     }
 
 
@@ -50,6 +54,7 @@ public class RegisterController {
                 Long userId = userOptional.get().getId();
 
                 ratingServiceI.deleteRatingsByUserId(userId);
+                bookmarkServiceI.deleteBookmarksByUserId(userId);
                 userService.deleteUserById(userId);
                 redirectAttributes.addFlashAttribute("message", "Benutzer erfolgreich gelöscht");
             } else {

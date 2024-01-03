@@ -10,4 +10,6 @@ import java.util.List;
 // This is the access wrapper which is reused in the service implementation
 public interface WineRepository extends JpaRepository<Wine, Long> {
     Page<Wine> findByNameContainingIgnoreCase(String searchTerm, Pageable pageable);
+
+    List<Wine> findAllById(Long id);
 }

@@ -1,15 +1,15 @@
 -- Intial database values
 -- wine(id, barcode_num, name, type, description)
-INSERT INTO wine (name, type, ean, description) VALUES ('Lugana', 'dry white wine', '1234567890123', 'A crisp and refreshing white wine with citrus notes.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Château Margaux', 'red wine', '2345678901234', 'An elegant and complex Bordeaux blend with a velvety finish.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Prosecco Brut', 'sparkling wine', '3456789012345', 'Bubbly and lively, this Prosecco offers floral and fruity aromas.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Chardonnay Reserve', 'oaked white wine', '4567890123456', 'Full-bodied Chardonnay with hints of vanilla and butter.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Merlot Estate', 'red wine', '5678901234567', 'Smooth and medium-bodied Merlot with plum and cherry flavors.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Sauvignon Blanc', 'crisp white wine', '6789012345678', 'Zesty Sauvignon Blanc with tropical fruit and herbal undertones.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Cabernet Sauvignon', 'full-bodied red wine', '7890123456789', 'Bold and robust Cabernet with blackberry and cassis notes.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Pinot Grigio', 'light white wine', '8901234567890', 'Delicate Pinot Grigio featuring citrus and pear aromas.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Malbec Reserva', 'intense red wine', '9012345678901', 'Rich and intense Malbec with dark fruit and chocolate nuances.');
-INSERT INTO wine (name, type, ean, description) VALUES ('Rosé de Provence', 'rosé wine', '0123456789012', 'A dry and crisp Provencal Rosé with strawberry and floral hints.');
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Lugana', 'dry white wine', '1234567890123', 'A crisp and refreshing white wine with citrus notes.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Château Margaux', 'red wine', '2345678901234', 'An elegant and complex Bordeaux blend with a velvety finish.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Prosecco Brut', 'sparkling wine', '3456789012345', 'Bubbly and lively, this Prosecco offers floral and fruity aromas.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Chardonnay Reserve', 'oaked white wine', '4567890123456', 'Full-bodied Chardonnay with hints of vanilla and butter.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Merlot Estate', 'red wine', '5678901234567', 'Smooth and medium-bodied Merlot with plum and cherry flavors.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Sauvignon Blanc', 'crisp white wine', '6789012345678', 'Zesty Sauvignon Blanc with tropical fruit and herbal undertones.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Cabernet Sauvignon', 'full-bodied red wine', '7890123456789', 'Bold and robust Cabernet with blackberry and cassis notes.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Pinot Grigio', 'light white wine', '8901234567890', 'Delicate Pinot Grigio featuring citrus and pear aromas.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Malbec Reserva', 'intense red wine', '9012345678901', 'Rich and intense Malbec with dark fruit and chocolate nuances.', false);
+INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Rosé de Provence', 'rosé wine', '0123456789012', 'A dry and crisp Provencal Rosé with strawberry and floral hints.', false);
 
 
 -- address(id, city, house_number, postal_code, street)

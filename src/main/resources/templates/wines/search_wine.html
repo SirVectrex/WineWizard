@@ -29,8 +29,9 @@
         </div>
 
         <div class="col-md-4">
-            <form  th:action="#{/wines/showBookmarks}" th:method="get">
+            <form  th:action="#{/wines/searchWine}" th:method="get">
                 <div class="input-group-append mx-4">
+                    <input type="hidden" class="form-control rounded"  value="Bookmark" th:name="searchTerm" id="Bookmark">
                     <button class="btn btn-primary" type="submit" th:text="#{Your_Bookmarks}"></button>
                 </div>
             </form>
@@ -51,13 +52,16 @@
                                 <div> <a th:text="#{EAN}"></a> <span th:text="${wine.ean}"></span></div>
                                 <div> <a th:text="#{Description}"></a> <span th:text="${wine.description}"></span></div>
                             </div>
-                            <div class="col-md-2 text-center">
-                                <!--  hier logik für ausgewählte bookmarks des Users einbinden um diese anzuzeigen-->
-                                <button class="btn btn-light bookmark-button" >
-                                    <i class="far fa-bookmark fa-4x" ></i>
 
-                                </button>
+
+                            <div class="col-md-2 text-center">
+                                    <form th:action="@{/wines/toggleBookmark/{wineId}(wineId=${wine.id})}" method="post">
+                                        <button class="btn btn-light bookmark-button" th:classappend="${wine.bookmarked ? 'fas' : 'far'}">
+                                            <i class="fa-bookmark fa-4x"></i>
+                                        </button>
+                                    </form>
                             </div>
+
                         </div>
                     </div>
                 </li>
