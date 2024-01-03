@@ -104,7 +104,7 @@ public class WineController {
 
                 List<Wine> winesForPage = bookmarkedWines.subList(start, end);
 
-                // Return the Page object with the correct parameters
+
                 winePage = new PageImpl<>(winesForPage, pageable, bookmarkedWines.size());
 
 
@@ -154,7 +154,7 @@ public class WineController {
             }
         }
 
-        // Hier können Sie je nach Bedarf auf eine andere Seite weiterleiten oder denselben View anzeigen
+
         return new RedirectView("/wines/searchWine");
 
     }
@@ -172,7 +172,7 @@ public class WineController {
                 .map(bookmark -> bookmark.getWine().getId())
                 .collect(Collectors.toList());
 
-        // Fetch wines by IDs
+
         List<Wine> wines = wineRepository.findAllById(wineIds);
 
         wines.forEach(wine -> wine.setBookmarked(true));

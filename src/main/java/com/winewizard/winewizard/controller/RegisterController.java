@@ -42,15 +42,12 @@ public class RegisterController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            // Assuming your User class has a method to get the user ID
-            // Adjust this based on your User class structure
-            System.out.println(userDetails.getUsername());
+
 
             Optional<User> userOptional = userService.findUserByLoginIgnoreCase(userDetails.getUsername());
 
             if (userOptional.isPresent()) {
-                // Assuming your User class has a method to get the user ID
-                // Adjust this based on your User class structure
+
                 Long userId = userOptional.get().getId();
 
                 ratingServiceI.deleteRatingsByUserId(userId);
