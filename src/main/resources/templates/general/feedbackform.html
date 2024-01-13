@@ -5,9 +5,47 @@
 
 <body th:insert="~{fragments/header}"></body>
 
-<h1 class="title">
-    Welcome to leaving feedback!
-</h1>
+<div class="container">
+    <form th:action="@{/feedback/add}"
+          th:object="${feedback}" method="POST">
+
+        <div class="col-md-8 offset-md-2">
+            <h2 class="mb-4 text-center">We Value Your Feedback</h2>
+            <p class="text-center mb-5">
+                Please share your thoughts with us. Whether it's a suggestion, question, or feedback, we're here to listen and improve. Fill out the form below and we'll get back to you as soon as we can.
+            </p>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input class="form-control mb-3" id="name" placeholder="Enter your name" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:field="*{name}" type="text"/>
+                <div class="invalid-feedback">
+                    <span th:errors="*{name}"></span>
+                </div>
+
+                <label for="mail">Email</label>
+                <input class="form-control mb-3" id="mail" placeholder="Enter your email" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" th:field="*{email}" type="email"/>
+                <div class="invalid-feedback">
+                    <span th:errors="*{email}"></span>
+                </div>
+
+                <label for="message">Message</label>
+                <textarea class="form-control mb-3" id="message" placeholder="Type your message" rows="4" th:classappend="${#fields.hasErrors('message')} ? 'is-invalid'" th:field="*{message}"></textarea>
+                <div class="invalid-feedback">
+                    <span th:errors="*{message}"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+        <div th:if="${feedbackSent == true}" class="alert alert-success" role="alert">
+            <span>Thank you for your feedback!</span>
+        </div>
+    </form>
+</div>
+
+
 
 <body th:insert="~{fragments/footer}"><body>
 
