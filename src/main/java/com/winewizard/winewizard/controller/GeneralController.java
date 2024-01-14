@@ -45,6 +45,7 @@ public class GeneralController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
+
             return authentication.getName();
         }
 
