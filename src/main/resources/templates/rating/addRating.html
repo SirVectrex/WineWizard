@@ -18,7 +18,7 @@
     <form th:action="@{/rating/addRating}" method="post">
         <input type="hidden" name="winenumber" th:value="${wine.getId()}" />
         <div class="star-rating mb-3">
-            <label for="pricerating" class="form-label">Price for value:</label>
+            <label for="pricerating" class="form-label" th:text="#{price_label}">Price for value:</label>
             <div class="stars" data-rating="pricerating">
                 <i class="far fa-star"></i>
                 <i class="far fa-star"></i>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="star-rating mb-3">
-            <label for="designrating" class="form-label">Design of bottle:</label>
+            <label for="designrating" class="form-label" th:text="#{design_label}">Design of bottle:</label>
             <div class="stars" data-rating="designrating">
                 <i class="far fa-star"></i>
                 <i class="far fa-star"></i>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="star-rating mb-3">
-            <label for="tasterating" class="form-label">Taste of wine:</label>
+            <label for="tasterating" class="form-label" th:text="#{taste_label}">Taste of wine:</label>
             <div class="stars" data-rating="tasterating">
                 <i class="far fa-star"></i>
                 <i class="far fa-star"></i>

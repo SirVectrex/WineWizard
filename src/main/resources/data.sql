@@ -45,6 +45,22 @@ INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating
 INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 2, 4, 5, 5);
 INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 3, 2, 3, 5);
 INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 4, 4, 5, 0);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (3, 2, 3, 5, 1);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 1, 3, 5, 4);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (3, 9, 2, 3, 2);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 6, 3, 1, 3);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 2, 5, 2, 4);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 4, 5, 1, 1);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (2, 5, 5, 3, 1);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 9, 3, 3, 2);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (3, 8, 3, 4, 2);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (2, 7, 2, 5, 1);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (3, 10, 5, 4, 4);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 3, 3, 1, 2);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (3, 1, 2, 2, 4);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 7, 3, 1, 3);
+INSERT INTO ratings (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (3, 1, 1, 1, 2);
+
 
 INSERT INTO bookmarks (user_id, wine_id) VALUES (1,2);
 INSERT INTO bookmarks (user_id, wine_id) VALUES (1,8);

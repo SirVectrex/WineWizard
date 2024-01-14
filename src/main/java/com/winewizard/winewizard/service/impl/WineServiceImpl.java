@@ -19,6 +19,8 @@ public class WineServiceImpl implements WineServiceI {
         this.wineRepository = wineRepository;
     }
 
+
+
     @Override
     public List<Wine> getAllWines() {
         return wineRepository.findAll();

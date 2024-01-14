@@ -4,15 +4,24 @@
 <body th:insert="~{fragments/header}"></body>
 
 <div class="container mt-5">
-    <h2>Search for Wine by Name</h2>
-    <form th:action="@{/rating/search_by_name}" method="post" class="mt-4">
-        <div class="form-group">
-            <label for="name">Wine Name:</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="Enter wine name" required>
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2 class="text-center mb-4" th:text="#{winepick_title}">Search for Wine by Name</h2>
+            <p class="lead text-center" th:text="#{winepick_desc}"></p>
+
+            <form th:action="@{/rating/search_by_name}" method="post" class="mt-4">
+                <div class="form-group mb-3">
+                    <label for="name" th:text="#{winepick_label}">What wine do you want to rate?</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter wine name" required>
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg" th:text="#{winepick_button}">Submit</button>
+                </div>
+            </form>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
 </div>
+
 
 
 <body th:insert="~{fragments/footer}"></body>
