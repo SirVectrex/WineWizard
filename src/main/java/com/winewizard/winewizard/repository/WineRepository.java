@@ -11,5 +11,7 @@ import java.util.List;
 public interface WineRepository extends JpaRepository<Wine, Long> {
     Page<Wine> findByNameContainingIgnoreCase(String searchTerm, Pageable pageable);
 
+    Wine findByNameContainingIgnoreCase(String searchTerm);
+
     List<Wine> findAllById(Long id);
 }

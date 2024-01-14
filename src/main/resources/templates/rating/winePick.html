@@ -4,15 +4,15 @@
 <body th:insert="~{fragments/header}"></body>
 
 <div class="container mt-5">
-    <h2>Enter Wine Number</h2>
-    <form th:action="@{/addwine}" method="get" class="mt-4">
+    <h2>Search for Wine by Name</h2>
+    <form th:action="@{/rating/search_by_name}" method="post" class="mt-4">
         <div class="form-group">
-            <label for="wineNumber">Wine Number:</label>
-            <input type="number" id="wineNumber" name="winenumber" class="form-control" placeholder="Enter wine number" required>
+            <label for="name">Wine Name:</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter wine name" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 
+
 <body th:insert="~{fragments/footer}"></body>
-</html>

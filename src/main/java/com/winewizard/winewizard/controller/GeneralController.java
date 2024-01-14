@@ -1,11 +1,7 @@
 package com.winewizard.winewizard.controller;
 
-import com.winewizard.winewizard.config.EmailDetails;
-import com.winewizard.winewizard.config.MyUserDetails;
 import org.springframework.security.core.Authentication;
-import com.winewizard.winewizard.service.impl.MyUserDetailsServiceImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,6 +42,7 @@ public class GeneralController {
 
         if (authentication != null && authentication.isAuthenticated()) {
             return authentication.getName();
+
         }
 
         // Wenn kein Benutzer authentifiziert ist

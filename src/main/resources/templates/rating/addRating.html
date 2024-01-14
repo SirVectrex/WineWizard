@@ -1,71 +1,103 @@
 <!DOCTYPE html>
+<head>
+    <title>Rate the Wine</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
+</head>
+
+
+
 <header th:insert="~{layout}"></header>
-<body>
-<div class="container">
-    <h2>Rate the Wine</h2>
-    <form th:action="@{/submit-rating}" method="post">
-        <div class="row">
-            <!-- Rating 1 -->
-            <div class="col-md-6">
-                <label for="rating1">Rating 1:</label>
+
+<body th:insert="~{fragments/header}"></body>
+
+
+
+
+<div class="container mt-4">
+    <h2>Rate the Wine <span th:text="${wine.getName()}">Name</span></h2>
+    <form th:action="@{/rating/addRating}" method="post">
+        <input type="hidden" name="winenumber" th:value="${wine.getId()}" />
+        <div class="star-rating mb-3">
+            <label for="pricerating" class="form-label">Price for value:</label>
+            <div class="stars" data-rating="pricerating">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
             </div>
-            <div class="col-md-6">
-                <select id="rating1" class="form-control" name="rating1">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
+            <input type="hidden" id="pricerating" name="pricerating" value="0">
         </div>
-        <div class="row">
-            <!-- Rating 2 -->
-            <div class="col-md-6">
-                <label for="rating2">Rating 2:</label>
+
+        <div class="star-rating mb-3">
+            <label for="designrating" class="form-label">Design of bottle:</label>
+            <div class="stars" data-rating="designrating">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
             </div>
-            <div class="col-md-6">
-                <select id="rating2" class="form-control" name="rating2">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
+            <input type="hidden" id="designrating" name="designrating" value="0">
         </div>
-        <div class="row">
-            <!-- Rating 3 -->
-            <div class="col-md-6">
-                <label for="rating3">Rating 3:</label>
+
+        <div class="star-rating mb-3">
+            <label for="tasterating" class="form-label">Taste of wine:</label>
+            <div class="stars" data-rating="tasterating">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
             </div>
-            <div class="col-md-6">
-                <select id="rating3" class="form-control" name="rating3">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
+            <input type="hidden" id="tasterating" name="tasterating" value="0">
         </div>
-        <div class="row">
-            <!-- Rating 4 -->
-            <div class="col-md-6">
-                <label for="rating4">Rating 4:</label>
-            </div>
-            <div class="col-md-6">
-                <select id="rating4" class="form-control" name="rating4">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
-        </div>
+        <!-- Repeat for other ratings -->
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-</body>
-</html>
+
+
+<body th:insert="~{fragments/footer}"></body>
+
+
+<style>
+
+    .star-rating .stars {
+    cursor: pointer;
+    display: inline-block;
+    }
+
+    .star-rating .stars i {
+    font-size: 1.5rem; /* Adjust the size of stars */
+    color: #ccc; /* Default star color */
+    }
+
+    .star-rating .stars i.selected {
+    color: #f39c12; /* Selected star color */
+    }
+
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const container = document.querySelector('.container');
+        container.addEventListener('click', function(e) {
+            if (e.target && e.target.matches('.fa-star')) {
+                const starsEl = e.target.parentNode;
+                const ratingInput = document.getElementById(starsEl.dataset.rating);
+                const idx = Array.from(starsEl.children).indexOf(e.target);
+                if (idx >= 0) {
+                    ratingInput.value = idx + 1; // Set the hidden input value
+                    updateStars(starsEl, idx);
+                }
+            }
+        });
+    });
+
+    function updateStars(starsEl, idx) {
+        Array.from(starsEl.children).forEach((star, i) => {
+            star.classList.toggle('selected', i <= idx);
+        });
+    }
+</script>

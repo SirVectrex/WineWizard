@@ -1,7 +1,6 @@
 package com.winewizard.winewizard.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 
@@ -23,15 +22,12 @@ public class Rating implements Serializable {
     private Wine wine;
 
     @Column(name = "taste_rating", nullable = false)
-    @NotBlank(message = "Taste rating is mandatory")
     private int ratingTaste;
 
     @Column(name = "design_rating", nullable = false)
-    @NotBlank(message = "Design rating is mandatory")
     private int ratingDesign;
 
     @Column(name = "price_rating", nullable = false)
-    @NotBlank(message = "Price rating is mandatory")
     private int ratingPrice;
 
     public void setId(Long id) {
@@ -78,6 +74,14 @@ public class Rating implements Serializable {
 
     public void setRatingPrice(int ratingPrice) {
         this.ratingPrice = ratingPrice;
+    }
+
+    public Wine getWine() {
+        return wine;
+    }
+
+    public void setWine(Wine wine) {
+        this.wine = wine;
     }
 
     // Constructor, hashCode, equals, toString
