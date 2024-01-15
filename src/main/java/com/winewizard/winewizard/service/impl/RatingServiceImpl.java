@@ -32,4 +32,11 @@ public class RatingServiceImpl implements RatingServiceI {
     public void deleteRatingsByUserId(Long user_id) {
         ratingRepository.deleteByUserId(user_id);
     }
+
+    public List<Rating> getAllRatingsByUserId(Long userId){
+        return ratingRepository.findAllByUserId(userId);
+    };
+
+
+
 }
