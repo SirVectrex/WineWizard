@@ -1,5 +1,6 @@
 package com.winewizard.winewizard.controller;
 
+import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,8 @@ public class API {
         return wineRepository.findWinesWithAverageRatings();
     }
 
-
+    @GetMapping("/allwines")
+    public List<Wine> getAllWines() { return wineRepository.findAll();}
 
 
 
