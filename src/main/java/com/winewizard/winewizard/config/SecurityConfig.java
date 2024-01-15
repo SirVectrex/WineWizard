@@ -30,7 +30,9 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/logout",
             "/h2-console/**",
-            "/console/**"
+            "/console/**",
+            "/api/**"
+
             
     };
 	
@@ -66,7 +68,10 @@ public class SecurityConfig {
                 		.requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
                 		.requestMatchers(new AntPathRequestMatcher("/logout")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/register")).permitAll());
-        
+
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/**").permitAll()
+        );
                 		
         http.authorizeHttpRequests()
 
@@ -81,6 +86,7 @@ public class SecurityConfig {
                 .loginPage("/customlogin")
                 .defaultSuccessUrl("/", true)
                 .permitAll();
+
 
 
         http.logout()
