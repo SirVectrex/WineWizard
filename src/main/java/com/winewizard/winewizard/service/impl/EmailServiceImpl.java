@@ -1,6 +1,7 @@
 package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.RiddleResponse;
+import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -13,6 +14,7 @@ import com.winewizard.winewizard.service.HtmlFileReaderService;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -21,11 +23,14 @@ public class EmailServiceImpl implements EmailService {
     private JavaMailSender javaMailSender;
     private final HtmlFileReaderService htmlFileReaderService;
 
+    private WineServiceImpl wineService;
+
     @Value("${spring.mail.username}")
     private String sender;
 
-    public EmailServiceImpl(HtmlFileReaderService htmlFileReaderService) {
+    public EmailServiceImpl(HtmlFileReaderService htmlFileReaderService, WineServiceImpl wineService) {
         this.htmlFileReaderService = htmlFileReaderService;
+        this.wineService = wineService;
     }
 
     public Void sendHtmlMail(String recipient) {
@@ -60,4 +65,46 @@ public class EmailServiceImpl implements EmailService {
         }
         return null;
     }
+
+    public Void sendTopWines(String recipient){
+
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            String url = "https://riddles-api.vercel.app/random";
+            RestTemplate restTemplate = new RestTemplate();
+
+            RiddleResponse riddle = restTemplate.getForObject(url, RiddleResponse.class);
+
+            helper.setFrom(sender);
+            helper.setTo(recipient);
+            helper.setSubject("Newsletter");
+
+            // HTML content for the email body
+            String htmlBody = htmlFileReaderService.readHtmlFile("classpath:templates/general/newsletter.html");
+
+            List<WineProjectionI> winelist = wineService.getWineRatings();
+
+            // build big String with new lines for each wine
+            String topWines = "";
+            for (WineProjectionI wine : winelist) {
+                topWines += wine.getName() + " " + wine.getAvgTasteRating() + " " + wine.getAvgDesignRating() + " " + wine.getAvgPriceRating() + "\n";
+            }
+
+
+            htmlBody = htmlBody.replace("Top_wine_placeholder", topWines);
+
+            // Set the HTML content to true
+            helper.setText(htmlBody, true);
+
+            // Send the email
+            javaMailSender.send(mimeMessage);
+
+        } catch (IOException | MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
 }
