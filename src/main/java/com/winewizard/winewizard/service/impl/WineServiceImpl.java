@@ -1,6 +1,7 @@
 package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.Wine;
+import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.service.WineServiceI;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,10 @@ public class WineServiceImpl implements WineServiceI {
     public WineServiceImpl(WineRepository wineRepository){
         super();
         this.wineRepository = wineRepository;
+    }
+
+    public List<WineProjectionI> getWineRatings() {
+        return wineRepository.findWinesWithAverageRatings();
     }
 
 

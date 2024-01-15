@@ -35,4 +35,5 @@ import java.util.Locale;
             localeChangeInterceptor.setParamName("lang");
             registry.addInterceptor(localeChangeInterceptor);
         }
+
     }

@@ -1,7 +1,10 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.model.WineDTO;
+import com.winewizard.winewizard.repository.RatingRepositoryI;
+import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepository;
+import com.winewizard.winewizard.service.impl.WineServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,19 +20,42 @@ public class GeneralController {
 
     WineRepository winerepo;
 
-    public GeneralController(WineRepository winerepo){
+    RatingRepositoryI ratingRepositoryI;
+
+    WineServiceImpl wineServiceImpl;
+
+    public GeneralController(WineRepository winerepo, RatingRepositoryI ratingRepositoryI, WineServiceImpl wineServiceImpl){
         super();
         this.winerepo = winerepo;
+        this.ratingRepositoryI = ratingRepositoryI;
+        this.wineServiceImpl = wineServiceImpl;
+
+
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String home(Model model) {
 
-        winerepo.findWinesWithAverageRatings();
-        // System.out.println(winelist);
+        List<WineProjectionI> winelist = wineServiceImpl.getWineRatings();
+                // winerepo.findWinesWithAverageRatings();
+
+        //print first wine
+        // System.out.println(wineDTOList.get(0));
+
+        //print first wine name
+        System.out.println(winelist.get(0).getAvgDesignRating());
+
+        System.out.println("help");
+
+        // print the list of wines with average ratings
+        for (WineProjectionI wine : winelist) {
+            System.out.println(wine.getName() + " " + wine.getAvgTasteRating() + " " + wine.getAvgDesignRating() + " " + wine.getAvgPriceRating());
+        }
 
         String loggedInUsername = getLoggedInUsername();
         model.addAttribute("loggedInUsername", loggedInUsername);
+
+        model.addAttribute("wines", winelist);
 
         return "home";
     }

@@ -12,10 +12,10 @@ public interface RatingRepositoryI extends JpaRepository<Rating, Long> {
     void deleteByUserId(Long user_id);
 
     @Query(value =
-            "SELECT w.NAME, AVG(r.taste_rating) AS avg_taste_rating, AVG(r.design_rating) AS avg_design_rating,AVG(r.price_rating) AS avg_price_rating" +
-                    "            FROM WINE w JOIN RATINGS r ON w.ID = r.wine_id" +
+            "SELECT w.NAME, AVG(r.taste_rating) AS avgTasteRating, AVG(r.design_rating) AS avgDesignRating,AVG(r.price_rating) AS avgPriceRating" +
+                    "            FROM WINE w JOIN RATING r ON w.ID = r.wine_id" +
                     "            GROUP BY w.ID, w.NAME" +
-                    "            ORDER BY avg_taste_rating DESC", nativeQuery = true)
+                    "            ORDER BY avgTasteRating DESC", nativeQuery = true)
     List<WineDTO> findWinesWithAverageRatings();
 
 }
