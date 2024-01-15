@@ -152,10 +152,6 @@ public class RatingController {
         String username = authentication.getName();
         Long userid = userRepository.findByLoginIgnoreCase(username).get().getId();
         List<Rating> ratings = ratingService.getAllRatingsByUserId(userid);
-        System.out.println("Found ratings: " + ratings);
-        // print the first rating fully
-        System.out.println("First rating: " + ratings.get(0).getWine().getName());
-        // A rating consists of: id, user, wine, ratingTaste, ratingDesign, ratingPrice
         model.addAttribute("ratings", ratings);
         return "rating/myratings";
     }

@@ -6,7 +6,13 @@
 
 <!-- content goes here -->
 <div class="container">
-    <table class="table">
+
+    <div th:if="${#lists.isEmpty(ratings)}">
+        <h2>You have not rated any wines yet.</h2>
+
+    </div>
+
+    <table th:if="${not #lists.isEmpty(ratings)}" class="table">
         <thead>
         <tr>
             <th>Wine Name</th>
