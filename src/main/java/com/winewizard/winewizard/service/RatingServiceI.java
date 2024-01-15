@@ -13,4 +13,10 @@ public interface RatingServiceI {
     void deleteRatingsByUserId(Long user_id);
 
     List<Rating> getAllRatingsByUserId(Long userId);
+
+    void deleteRatingById(Long id);
+
+    Rating findRatingById(Long id);
+
+    void updateRating(Rating rating);
 }

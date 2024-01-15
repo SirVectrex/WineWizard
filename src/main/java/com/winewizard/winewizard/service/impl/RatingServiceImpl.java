@@ -35,7 +35,24 @@ public class RatingServiceImpl implements RatingServiceI {
 
     public List<Rating> getAllRatingsByUserId(Long userId){
         return ratingRepository.findAllByUserId(userId);
-    };
+    }
+
+    @Override
+    public void deleteRatingById(Long id) {
+        ratingRepository.deleteById(id);
+    }
+
+    @Override
+    public Rating findRatingById(Long id) {
+        return ratingRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void updateRating(Rating rating) {
+        ratingRepository.save(rating);
+    }
+
+    ;
 
 
 

@@ -24,13 +24,22 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/feedback/add" th:text="#{Feedback}"></a>
+
                 </li>
 
-                <li class="nav-item">
-                    <!-- TODO: Make dynamic when login is finished -->
-                    <a class="nav-link" href="/winery/2520ff3c-8f72-11ee-b9d1-0242ac120002" th:text="#{Profile}"></a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        User functionality
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/winery/2520ff3c-8f72-11ee-b9d1-0242ac120002" th:text="#{Profile}"></a></li>
+                        <li><a class="dropdown-item" href="/rating/myratings" th:text="#{My_Ratings}"></a></li>
+                        <li><a class="dropdown-item" href="/feedback/add" th:text="#{Feedback}"></a></li>
+                        <li><form class="me-2" th:action="@{/deleteUser}" method="post"><button class="btn btn-outline-danger" type="submit" th:text="#{Delete_User}"></button></form></li>
+                    </ul>
                 </li>
+
+
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" th:text="#{Disabled}"></a>
                 </li>
@@ -57,8 +66,8 @@
                 </form>
 
                 <form class="me-2" th:action="@{/deleteUser}" method="post">
-                    <button class="btn btn-outline-danger" type="submit" th:text="#{Delete_User}"></button>
-                </form>
+
+
 
                 <form class="me-2" th:action="@{/logout}" method="post">
                     <button class="btn btn-outline-danger" type="submit">
