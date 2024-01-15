@@ -1,6 +1,7 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.model.Rating;
+import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineProjectionI;
@@ -97,6 +98,7 @@ public class RatingController {
         wine.setDescription(description);
         System.out.println("Attempting to save wine: " + wine);
         wineService.saveWine(wine);
+
         return "redirect:/rating/addRating?winenumber=" + wine.getId();
     }
 
@@ -150,9 +152,62 @@ public class RatingController {
         String username = authentication.getName();
         Long userid = userRepository.findByLoginIgnoreCase(username).get().getId();
         List<Rating> ratings = ratingService.getAllRatingsByUserId(userid);
+        System.out.println("Found ratings: " + ratings);
+        // print the first rating fully
+        System.out.println("First rating: " + ratings.get(0).getWine().getName());
+        // A rating consists of: id, user, wine, ratingTaste, ratingDesign, ratingPrice
         model.addAttribute("ratings", ratings);
         return "rating/myratings";
     }
+
+    @GetMapping("/delete")
+    public String deleteRating(@RequestParam("id") Long id) {
+        System.out.println("Deleted rating with id: " + id);
+        ratingService.deleteRatingById(id);
+        return "redirect:/rating/myratings"; // Redirect to the page showing ratings
+    }
+
+    @GetMapping("/updaterating")
+    public String showUpdateRatingForm(@RequestParam("id") Long id, Model model) {
+        Rating rating = ratingService.findRatingById(id);
+        System.out.println("Updating rating for wine: " + rating.getWine().getName());
+
+        model.addAttribute("oldrating", rating);
+
+        return "rating/updaterating";
+    }
+
+    @PostMapping("/update")
+    public String updateRating(@RequestParam("id") Long id,
+                               @RequestParam("wineId") Long wineId,
+                               @RequestParam("ratingTaste") int ratingTaste,
+                               @RequestParam("ratingDesign") int ratingDesign,
+                               @RequestParam("ratingPrice") int ratingPrice) {
+        // Logic to update the rating
+        // You'll need to fetch the Wine object based on wineName or its ID if available
+        Wine wine = wineRepository.findById(wineId).orElse(null);
+
+        // get current user through authentication
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Long userid = userRepository.findByLoginIgnoreCase(username).get().getId();
+        User user = userRepository.findById(userid).orElse(null);
+
+        Rating rating = new Rating();
+        rating.setId(id);
+        rating.setWine(wine);
+        rating.setUser(user);
+        rating.setRatingTaste(ratingTaste);
+        rating.setRatingDesign(ratingDesign);
+        rating.setRatingPrice(ratingPrice);
+
+
+        ratingService.updateRating(rating); // Implement this method in your service
+        return "redirect:/rating/myratings"; // Redirect to the ratings list view after update
+    }
+
+
+
 
 
 

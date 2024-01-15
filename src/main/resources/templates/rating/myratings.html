@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+
+<body th:insert="~{fragments/header}"></body>
+
+
+<!-- content goes here -->
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Wine Name</th>
+            <th>Taste Rating</th>
+            <th>Design Rating</th>
+            <th>Price Rating</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rating : ${ratings}">
+            <td th:text="${rating.getWine().getName()}">Wine Name</td>
+            <td th:text="${rating.getRatingTaste()}">Taste Rating</td>
+            <td th:text="${rating.getRatingDesign()}">Design Rating</td>
+            <td th:text="${rating.getRatingPrice()}">Price Rating</td>
+            <td>
+                <a th:href="@{/rating/delete(id=${rating.getRatingId()})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/rating/updaterating(id=${rating.getRatingId()})}" class="btn btn-primary">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<body th:insert="~{fragments/footer}"></body>
