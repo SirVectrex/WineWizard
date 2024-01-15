@@ -9,6 +9,77 @@
     Welcome to the Wine Cellar <span th:text="${loggedInUsername}"></span>!
 </h1>
 
+<div>
+
+    <div class="container mt-5">
+        <div class="row text-center">
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Number of Ratings</h5>
+                        <p class="card-text" th:text="${stat.getNumRatings()}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Number of Wines</h5>
+                        <p class="card-text" th:text="${stat.getNumwines()}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Number of Wineries</h5>
+                        <p class="card-text" th:text="${stat.getNumwinery()}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Number of Feedback</h5>
+                        <p class="card-text" th:text="${stat.getNum_feedback()}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
 <div th:insert="~{fragments/footer}"></div>
 
 </body>
+
+<style>
+
+    .card {
+        margin: 10px;
+        min-height: 140px;
+        background: lightgrey;
+        border-radius: 20px;
+        border: white;
+    }
+
+    .card-title {
+        font-size: 20px;
+        min-height: 60px;
+    }
+
+    .card-text {
+        font-size: 40px;
+        font-weight: bold;
+        font-family: Monospaced, sans-serif;
+    }
+
+
+
+</style>

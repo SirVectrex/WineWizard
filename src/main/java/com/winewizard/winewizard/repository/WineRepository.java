@@ -31,12 +31,8 @@ public interface WineRepository extends JpaRepository<Wine, Long> {
             "ORDER BY AVG(r.ratingTaste) DESC")
     Page<WineProjectionI> findWinesWithAverageRatings_Pages(Pageable pageable);
 
-
-
     @Query(value = "Select (Select Count(*) from RATING) as numratings, (Select Count(*) from WINE) as numwines,  (Select Count(*) from WINERY) as numwinery, (Select Count(*) from feedback) as num_feedback", nativeQuery = true)
-    List<Object[]> getStats();
-
-
+    List<StatsProjectionI> getStats();
 
 
 }

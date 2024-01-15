@@ -2,6 +2,7 @@ package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.model.WineDTO;
 import com.winewizard.winewizard.repository.RatingRepositoryI;
+import com.winewizard.winewizard.repository.StatsProjectionI;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.service.impl.WineServiceImpl;
@@ -49,12 +50,17 @@ public class GeneralController {
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String home(Model model) {
 
-        List<WineProjectionI> winelist = wineServiceImpl.getWineRatings();
-                // winerepo.findWinesWithAverageRa
+        List<StatsProjectionI> stats =  winerepo.getStats();
+
+            System.out.println("numratings: " + stats.get(0).getNumRatings());
+            System.out.println("numwines: " + stats.get(0).getNumwines());
+            System.out.println("numwinery: " + stats.get(0).getNumwinery());
+            System.out.println("num_feedback: " + stats.get(0).getNum_feedback());
+
         String loggedInUsername = getLoggedInUsername();
         model.addAttribute("loggedInUsername", loggedInUsername);
 
-        model.addAttribute("wines", winelist);
+        model.addAttribute("stat", stats.get(0));
 
         return "home";
     }
