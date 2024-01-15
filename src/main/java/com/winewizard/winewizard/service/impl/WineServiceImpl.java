@@ -4,6 +4,8 @@ import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.service.WineServiceI;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +26,9 @@ public class WineServiceImpl implements WineServiceI {
         return wineRepository.findWinesWithAverageRatings();
     }
 
-
+    public Page<WineProjectionI> getWineRatings(Pageable pageable) {
+        return wineRepository.findWinesWithAverageRatings_Pages(pageable);
+    }
 
     @Override
     public List<Wine> getAllWines() {
@@ -35,4 +39,5 @@ public class WineServiceImpl implements WineServiceI {
     public Wine saveWine(Wine wine) {
         return wineRepository.save(wine);
     }
+
 }

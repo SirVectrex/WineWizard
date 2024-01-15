@@ -7,17 +7,26 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/" th:text="#{Home}" ></a>
+                    <a class="nav-link" href="/" th:text="#{Home}"></a>
                 </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Wine functionality
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/allratings" th:text="#{All_Ratings}"></a></li>
+                        <li><a class="dropdown-item" href="/wines/add" th:text="#{Add_a_wine}"></a></li>
+                        <li><a class="dropdown-item" href="/rating/add" th:text="#{Rate_a_wine}"></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/wines/searchWine" th:text="#{Search_for_wine}"></a></li>
+                    </ul>
+                </li>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="/rating/add" th:text="#{Rate_a_wine}"></a>
+                    <a class="nav-link" href="/feedback/add" th:text="#{Feedback}"></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wines/add" th:text="#{Add_a_wine}"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/wines/searchWine" th:text="#{Search_for_wine}"></a>
-                </li>
+
                 <li class="nav-item">
                     <!-- TODO: Make dynamic when login is finished -->
                     <a class="nav-link" href="/winery/2520ff3c-8f72-11ee-b9d1-0242ac120002" th:text="#{Profile}"></a>
@@ -25,6 +34,7 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true" th:text="#{Disabled}"></a>
                 </li>
+
             </ul>
 
             <div class="d-flex">

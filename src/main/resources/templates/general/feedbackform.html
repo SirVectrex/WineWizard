@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <header th:insert="~{layout}"></header>
 
-<body>
 
 <body th:insert="~{fragments/header}"></body>
 
@@ -11,7 +10,7 @@
 
         <div class="col-md-8 offset-md-2">
             <h2 class="mb-4 text-center" th:text="#{feedback_title}">We Value Your Feedback</h2>
-            <p class="text-center mb-5" th:text="#{feedback_text}>
+            <p class="text-center mb-5" th:text="#{feedback_text}">
                 Please share your thoughts with us. Whether it's a suggestion, question, or feedback, we're here to listen and improve. Fill out the form below and we'll get back to you as soon as we can.
             </p>
         </div>
@@ -42,12 +41,11 @@
         <div th:if="${feedbackSent == true}" class="alert alert-success" role="alert">
             <span>Thank you for your feedback!</span>
         </div>
+
     </form>
+</div>
 </div>
 
 
 
-<body th:insert="~{fragments/footer}"><body>
-
-</body>
-</body>
+<body th:insert="~{fragments/footer}"></body>

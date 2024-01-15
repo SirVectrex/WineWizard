@@ -5,13 +5,19 @@ import com.winewizard.winewizard.repository.RatingRepositoryI;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.service.impl.WineServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import com.winewizard.winewizard.model.Wine;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -30,7 +36,16 @@ public class GeneralController {
         this.ratingRepositoryI = ratingRepositoryI;
         this.wineServiceImpl = wineServiceImpl;
 
+    }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/allratings")
+    public String listWines(Model model,
+                            @RequestParam(defaultValue = "0") int page,
+                            @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<WineProjectionI> winePage = wineServiceImpl.getWineRatings(pageable);
+        model.addAttribute("wines", winePage);
+        return "general/allratings";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
