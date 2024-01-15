@@ -19,7 +19,7 @@ public interface WineRepository extends JpaRepository<Wine, Long> {
 
     List<Wine> findAllById(Long id);
 
-    @Query("SELECT w.name as name, AVG(r.ratingTaste) as avgTasteRating, AVG(r.ratingDesign) as avgDesignRating, AVG(r.ratingPrice) as avgPriceRating " +
+    @Query("SELECT w.name as name, ROUND(AVG(r.ratingTaste), 2) as avgTasteRating, ROUND(AVG(r.ratingDesign), 2) as avgDesignRating, ROUND(AVG(r.ratingPrice), 2) as avgPriceRating " +
             "FROM Wine w JOIN Rating r ON w = r.wine " +
             "GROUP BY w.id, w.name " +
             "ORDER BY AVG(r.ratingTaste) DESC")

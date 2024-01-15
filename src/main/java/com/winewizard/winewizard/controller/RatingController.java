@@ -7,14 +7,13 @@ import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.service.ApiClient;
 import com.winewizard.winewizard.service.RatingServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
+import com.winewizard.winewizard.service.impl.EmailServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -32,13 +31,16 @@ public class RatingController {
 
     private ApiClient apiClient;
 
-    public RatingController(RatingServiceI ratingService, WineRepository wineRepository, WineServiceI wineService, UserRepositoryI userRepository) {
+    private EmailServiceImpl emailService;
+
+    public RatingController(RatingServiceI ratingService, WineRepository wineRepository, WineServiceI wineService, UserRepositoryI userRepository, EmailServiceImpl emailService) {
         super();
         this.ratingService = ratingService;
         this.wineRepository = wineRepository;
         this.apiClient = new ApiClient();
         this.wineService = wineService;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @GetMapping("/add")
@@ -131,7 +133,12 @@ public class RatingController {
         return "redirect:/";
     }
 
-
+    @PostMapping("/sendInfo")
+    public String sendMail(@RequestParam("email") String email) {
+        System.out.println("Sending email to: " + email);
+        emailService.sendTopWines(email);
+        return "redirect:/allratings";
+    }
 
 }
 

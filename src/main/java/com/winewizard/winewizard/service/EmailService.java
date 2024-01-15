@@ -8,4 +8,6 @@ public interface EmailService {
     // Method
     // To send a simple email
     Void sendHtmlMail(String recipient);
+
+    Void sendTopWines(String recipient);
 }

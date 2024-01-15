@@ -13,10 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.winewizard.winewizard.model.Wine;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -52,21 +50,7 @@ public class GeneralController {
     public String home(Model model) {
 
         List<WineProjectionI> winelist = wineServiceImpl.getWineRatings();
-                // winerepo.findWinesWithAverageRatings();
-
-        //print first wine
-        // System.out.println(wineDTOList.get(0));
-
-        //print first wine name
-        System.out.println(winelist.get(0).getAvgDesignRating());
-
-        System.out.println("help");
-
-        // print the list of wines with average ratings
-        for (WineProjectionI wine : winelist) {
-            System.out.println(wine.getName() + " " + wine.getAvgTasteRating() + " " + wine.getAvgDesignRating() + " " + wine.getAvgPriceRating());
-        }
-
+                // winerepo.findWinesWithAverageRa
         String loggedInUsername = getLoggedInUsername();
         model.addAttribute("loggedInUsername", loggedInUsername);
 

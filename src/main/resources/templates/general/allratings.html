@@ -46,7 +46,23 @@
     </ul>
   </nav>
 </div>
+
+<div class="container mt-5">
+  <h2>Enter Email</h2>
+  <form th:action="@{rating/sendInfo}" method="post">
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+    </div>
+    <!-- CSRF Token is automatically included by Thymeleaf -->
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
 </body>
+
+
 
 
 

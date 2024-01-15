@@ -82,7 +82,7 @@ public class EmailServiceImpl implements EmailService {
             helper.setSubject("Newsletter");
 
             // HTML content for the email body
-            String htmlBody = htmlFileReaderService.readHtmlFile("classpath:templates/general/newsletter.html");
+            String htmlBody = htmlFileReaderService.readHtmlFile("classpath:templates/general/topwine_list.html");
 
             List<WineProjectionI> winelist = wineService.getWineRatings();
 
@@ -92,8 +92,27 @@ public class EmailServiceImpl implements EmailService {
                 topWines += wine.getName() + " " + wine.getAvgTasteRating() + " " + wine.getAvgDesignRating() + " " + wine.getAvgPriceRating() + "\n";
             }
 
+            // build an html table with the wines and add a header as well pls
+            String htmltext = "<table>\n" +
+                    "  <tr>\n" +
+                    "    <th>Name</th>\n" +
+                    "    <th>Taste</th>\n" +
+                    "    <th>Design</th>\n" +
+                    "    <th>Price</th>\n" +
+                    "  </tr>\n";
 
-            htmlBody = htmlBody.replace("Top_wine_placeholder", topWines);
+            for (WineProjectionI wine : winelist) {
+                            htmltext += "<tr>\n" +
+                                "    <td>" + wine.getName() + "</td>\n" +
+                                "    <td>" + wine.getAvgTasteRating() + "</td>\n" +
+                                "    <td>" + wine.getAvgDesignRating() + "</td>\n" +
+                                "    <td>" + wine.getAvgPriceRating() + "</td>\n" +
+                                "  </tr>\n";
+            }
+
+            htmltext +="</table>";
+
+            htmlBody = htmlBody.replace("Top_wine_placeholder", htmltext);
 
             // Set the HTML content to true
             helper.setText(htmlBody, true);
