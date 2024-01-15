@@ -3,11 +3,15 @@ package com.winewizard.winewizard.controller;
 import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.UserRepositoryI;
+import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.service.ApiClient;
 import com.winewizard.winewizard.service.RatingServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.impl.EmailServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -139,6 +143,19 @@ public class RatingController {
         emailService.sendTopWines(email);
         return "redirect:/allratings";
     }
+
+    @GetMapping("/myratings")
+    public String myRatings(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Long userid = userRepository.findByLoginIgnoreCase(username).get().getId();
+        List<Rating> ratings = ratingService.getAllRatingsByUserId(userid);
+        model.addAttribute("ratings", ratings);
+        return "rating/myratings";
+    }
+
+
+
 
 }
 

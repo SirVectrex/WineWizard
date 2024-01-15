@@ -18,4 +18,7 @@ public interface RatingRepositoryI extends JpaRepository<Rating, Long> {
                     "            ORDER BY avgTasteRating DESC", nativeQuery = true)
     List<WineDTO> findWinesWithAverageRatings();
 
+    List<Rating> findAllByUserId(Long userId);
+
+
 }
