@@ -5,16 +5,16 @@
 <body th:insert="~{fragments/header}"></body>
 <body>
 <div class="container mt-4">
-  <h2>Wine List</h2>
+  <h2 th:text="#{Wine_List}"></h2>
 
   <!-- Table for displaying wine data -->
   <table class="table table-bordered table-hover">
     <thead class="thead-dark">
     <tr>
-      <th>Name</th>
-      <th>Average Taste Rating</th>
-      <th>Average Design Rating</th>
-      <th>Average Price Rating</th>
+      <th th:text="#{Name}">Name</th>
+      <th th:text="#{Average_Taste_Rating}"></th>
+      <th th:text="#{Average_Design_Rating}"></th>
+      <th th:text="#{Average_Price_Rating}"></th>
     </tr>
     </thead>
     <tbody>
@@ -48,14 +48,14 @@
 </div>
 
 <div class="container mt-5">
-  <h2>Enter Email</h2>
+  <h2 th:text="#{Enter_Email}"></h2>
   <form th:action="@{rating/sendInfo}" method="post">
     <div class="form-group">
-      <label for="email">Email address:</label>
-      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+      <label for="email" th:text="#{Email_address}"></label>
+      <input type="email" class="form-control" id="email" th:placeholder="#{Enter_email}" name="email" required>
     </div>
     <!-- CSRF Token is automatically included by Thymeleaf -->
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" th:text="#{Submit}"></button>
   </form>
 </div>
 

@@ -5,8 +5,8 @@
 
 <div th:insert="~{fragments/header}"></div>
 
-<h1 class="title">
-    Welcome to the Wine Cellar <span th:text="${loggedInUsername}"></span>!
+<h1 class="title" th:text="#{Welcome_to_the_Wine_Cellar}">
+     <span th:text="${loggedInUsername}"></span>!
 </h1>
 
 <div>
@@ -17,7 +17,7 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Number of Ratings</h5>
+                        <h5 class="card-title" th:text="#{Number_of_Ratings}"></h5>
                         <p class="card-text" th:text="${stat.getNumRatings()}"></p>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Number of Wines</h5>
+                        <h5 class="card-title" th:text="#{Number_of_Wines}"></h5>
                         <p class="card-text" th:text="${stat.getNumwines()}"></p>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Number of Wineries</h5>
+                        <h5 class="card-title" th:text="#{Number_of_Wineries}"></h5>
                         <p class="card-text" th:text="${stat.getNumwinery()}"></p>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Number of Feedback</h5>
+                        <h5 class="card-title" th:text="#{Number_of_Feedback}"></h5>
                         <p class="card-text" th:text="${stat.getNum_feedback()}"></p>
                     </div>
                 </div>

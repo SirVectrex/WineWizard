@@ -12,10 +12,10 @@
             <form th:action="@{/rating/search_by_name}" method="post" class="mt-4">
                 <div class="form-group mb-3">
                     <label for="name" th:text="#{winepick_label}">What wine do you want to rate?</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter wine name" required>
+                    <input type="text" id="name" name="name" class="form-control" th:placeholder="#{Enter_wine_name}" required>
                 </div>
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary btn-lg" th:text="#{winepick_button}">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-lg" th:text="#{Submit}"></button>
                 </div>
             </form>
         </div>

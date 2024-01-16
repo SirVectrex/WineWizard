@@ -97,7 +97,7 @@ public class EmailServiceImpl implements EmailService {
 
 
 
-            htmltext =wine_of_the_week.getName() + "\n"+ wine_of_the_week.getType() + "\n" + wine_of_the_week.getDescription();
+            htmltext =wine_of_the_week.getName() + ". "+ wine_of_the_week.getType() + ". " + wine_of_the_week.getDescription();
 
             htmlBody = htmlBody.replace("Wine_of_the_week_placeholder", htmltext);
 

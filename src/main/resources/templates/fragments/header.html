@@ -11,8 +11,8 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Wine functionality
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{Wine_functionality}">
+
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/allratings" th:text="#{All_Ratings}"></a></li>
@@ -28,8 +28,7 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        User functionality
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{User_functionality}">
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/winery/2520ff3c-8f72-11ee-b9d1-0242ac120002" th:text="#{Profile}"></a></li>
@@ -54,8 +53,8 @@
 
                 <form th:action="@{/changeLanguage}" method="get" class="me-2" id="languageForm">
                     <div class="dropdown">
-                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="languageDropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-language"></i> Select Language
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="languageDropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            <i class="fas fa-language " th:text="#{Select_Language}"></i>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="languageDropdownButton">
                             <a class="dropdown-item" th:href="@{/changeLanguage(lang='en')}">English</a>
