@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,9 +31,7 @@ public class User implements Serializable{
 	@Size(min = 5, max = 50, message ="Username must have at least 5 characters")
 	private String login;
 
-	@NotBlank(message = "zip code is mandatory")
-	@Size(min=5, max= 5, message = "Exactly 5 digits are required")
-	@Digits(integer = 5, fraction = 0, message = "Valid german zip code contains exactly 5 digits")
+
 	@Transient
 	private String zipCodeInput;
 
@@ -43,7 +43,6 @@ public class User implements Serializable{
 	@NotBlank(message = "password is mandatory")
 	private String password;
 
-	@NotBlank(message = "repeat password")
 	@Transient
 	private String passwordRepeat;
 		
@@ -60,7 +59,7 @@ public class User implements Serializable{
 			name="userrole",
 			joinColumns = @JoinColumn(name="iduser"),
 			inverseJoinColumns = @JoinColumn(name="idrole")
-			)	
+			)
 	private List<Role> roles = new ArrayList<Role>();
 
 	

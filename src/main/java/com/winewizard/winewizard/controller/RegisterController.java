@@ -1,5 +1,6 @@
 package com.winewizard.winewizard.controller;
 
+import com.winewizard.winewizard.model.Role;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.service.ApiClientZipCodes;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -46,20 +50,35 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public String addStudent(@ModelAttribute @Valid User user,
+    public String addUser(@ModelAttribute @Valid User user,
                              BindingResult result,
                              RedirectAttributes attr){
 
-        ApiClientZipCodes api = new ApiClientZipCodes();
-        ZipCode zipCode = api.getGermanZipInformation(user.getZipCodeInput());
 
-        if(zipCode == null ) {
-            result.rejectValue("zipCodeInput", "invalid_zip_code");
-        } else {
-            user.setZipCode(zipCode);
+        boolean invalidZipCode = false;
+
+        if(user.getZipCodeInput().isEmpty() || user.getZipCodeInput().length() != 5 ){
+            invalidZipCode = true;
         }
 
-        if(!user.getPassword().equals(user.getPasswordRepeat())){
+        try{
+            Integer.parseInt(user.getZipCodeInput());
+        } catch (NumberFormatException e) {
+            invalidZipCode = true;
+        }
+
+        if(!invalidZipCode) {
+            ApiClientZipCodes api = new ApiClientZipCodes();
+            ZipCode zipCode = api.getGermanZipInformation(user.getZipCodeInput());
+
+            if (zipCode == null) {
+                result.rejectValue("zipCodeInput", "invalid_zip_code");
+            } else {
+                user.setZipCode(zipCode);
+            }
+        }
+
+        if(user.getPasswordRepeat().isEmpty() || !user.getPassword().equals(user.getPasswordRepeat())){
             result.rejectValue("passwordRepeat", "password_not_equal");
         }
 
@@ -69,7 +88,12 @@ public class RegisterController {
             return "general/register";
         }
 
+        var defaultUser = new Role();
+        // 1L is the default winewizward user, needs to be created on DB setup
+        defaultUser.setId(1L);
+        user.setRoles(List.of(defaultUser));
 
+        userService.createUser(user);
 
         attr.addFlashAttribute("success", "User added!");
         return "redirect:/general/login";

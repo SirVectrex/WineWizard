@@ -11,4 +11,6 @@ public interface UserRepositoryI extends MyBaseRepository<User, Long> {
 
 	void deleteById(Long userId);
 
+	User save(User user);
+
 }

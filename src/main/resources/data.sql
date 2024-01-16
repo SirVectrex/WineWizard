@@ -25,9 +25,9 @@ INSERT INTO user (login, password, email, phone, active, zip_code) values ('moad
 INSERT INTO user (login, password, email, phone, active, zip_code) values ('flo', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo@email', '+4915114962996',  1, 93333);
 INSERT INTO user (login, password, email, phone, active, zip_code) values ('markus', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus@email', '+4915114962996',  1, 93333);
 
+INSERT INTO role (description) VALUES ( 'wineWizard');
 INSERT INTO role (description) VALUES ( 'ADMIN');
 INSERT INTO role (description) VALUES ( 'winery');
-INSERT INTO role (description) VALUES ( 'wineWizard');
 
 INSERT INTO authority (description) VALUES ( 'ADMIN_STATUS');
 INSERT INTO authority (description) VALUES ( 'WINERY_STATUS');

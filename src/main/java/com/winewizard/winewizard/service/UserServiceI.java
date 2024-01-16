@@ -9,4 +9,6 @@ public interface UserServiceI {
     public Optional<User> findUserByLoginIgnoreCase(String login);
 
     public void deleteUserById(Long userId);
+
+    public void createUser(User user);
 }
