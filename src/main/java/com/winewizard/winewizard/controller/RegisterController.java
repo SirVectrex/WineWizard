@@ -5,7 +5,7 @@ import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.service.ApiClientZipCodes;
 import com.winewizard.winewizard.service.BookmarkServiceI;
 import com.winewizard.winewizard.service.RatingServiceI;
-import com.winewizard.winewizard.service.UserService;
+import com.winewizard.winewizard.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,14 +22,14 @@ import java.util.Optional;
 
 @Controller
 public class RegisterController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final RatingServiceI ratingServiceI;
 
     private final BookmarkServiceI bookmarkServiceI;
 
 
     @Autowired
-    public RegisterController(UserService userService, RatingServiceI ratingServiceI, BookmarkServiceI bookmarkServiceI) {
+    public RegisterController(UserServiceImpl userService, RatingServiceI ratingServiceI, BookmarkServiceI bookmarkServiceI) {
         this.userService = userService;
         this.ratingServiceI = ratingServiceI;
         this.bookmarkServiceI = bookmarkServiceI;
@@ -68,6 +68,8 @@ public class RegisterController {
             System.out.println(result.getAllErrors());
             return "general/register";
         }
+
+
 
         attr.addFlashAttribute("success", "User added!");
         return "redirect:/general/login";

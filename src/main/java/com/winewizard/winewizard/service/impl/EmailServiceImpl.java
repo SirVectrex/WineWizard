@@ -3,7 +3,7 @@ package com.winewizard.winewizard.service.impl;
 import com.winewizard.winewizard.model.RiddleResponse;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.WineProjectionI;
-import com.winewizard.winewizard.service.EmailService;
+import com.winewizard.winewizard.service.EmailServiceI;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 @Service
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl implements EmailServiceI {
 
     @Autowired
     private JavaMailSender javaMailSender;

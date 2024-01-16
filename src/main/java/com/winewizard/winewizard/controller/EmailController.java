@@ -1,12 +1,10 @@
 package com.winewizard.winewizard.controller;
 
-import com.winewizard.winewizard.config.EmailDetails;
 import com.winewizard.winewizard.config.MyUserDetails;
-import com.winewizard.winewizard.service.EmailService;
+import com.winewizard.winewizard.service.EmailServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
@@ -15,7 +13,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 public class EmailController {
 
-    @Autowired private EmailService emailService;
+    @Autowired private EmailServiceI emailService;
 
     // Sending a simple Email
     @PostMapping("/sendMail")

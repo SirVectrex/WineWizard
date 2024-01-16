@@ -1,19 +1,20 @@
-package com.winewizard.winewizard.service;
+package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.repository.UserRepositoryI;
+import com.winewizard.winewizard.service.UserServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserServiceI {
 
     private final UserRepositoryI userRepository;
 
     @Autowired
-    public UserService(UserRepositoryI userRepository) {
+    public UserServiceImpl(UserRepositoryI userRepository) {
         this.userRepository = userRepository;
     }
 
