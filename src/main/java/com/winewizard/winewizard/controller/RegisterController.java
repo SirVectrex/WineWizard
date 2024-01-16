@@ -74,7 +74,9 @@ public class RegisterController {
             if (zipCode == null) {
                 result.rejectValue("zipCodeInput", "invalid_zip_code");
             } else {
+                userService.createZipCode(zipCode);
                 user.setZipCode(zipCode);
+
             }
         }
 

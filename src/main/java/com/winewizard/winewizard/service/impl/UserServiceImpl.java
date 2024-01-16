@@ -1,6 +1,7 @@
 package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.User;
+import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.service.UserServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,10 @@ public class UserServiceImpl implements UserServiceI {
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public void createZipCode(ZipCode zipCode) {
+        userRepository.save(zipCode);
     }
 }

@@ -1,6 +1,8 @@
 package com.winewizard.winewizard.service;
 
 import com.winewizard.winewizard.model.User;
+import com.winewizard.winewizard.model.ZipCode;
+
 import java.util.Optional;
 
 public interface UserServiceI {
@@ -11,4 +13,6 @@ public interface UserServiceI {
     public void deleteUserById(Long userId);
 
     public void createUser(User user);
+
+    public void createZipCode(ZipCode zipCode);
 }
