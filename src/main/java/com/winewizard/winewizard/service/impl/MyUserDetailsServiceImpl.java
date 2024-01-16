@@ -3,6 +3,7 @@ package com.winewizard.winewizard.service.impl;
 import com.winewizard.winewizard.config.MyUserDetails;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.repository.UserRepositoryI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,8 +15,10 @@ import java.util.Optional;
 public class MyUserDetailsServiceImpl implements UserDetailsService{
 
 	UserRepositoryI userRepository;
-	
+
+
 	public MyUserDetailsServiceImpl(UserRepositoryI userRepository) {
+
 		this.userRepository= userRepository;
 	}
 	

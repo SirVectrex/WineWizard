@@ -4,7 +4,7 @@ import com.winewizard.winewizard.model.WineDTO;
 import com.winewizard.winewizard.repository.RatingRepositoryI;
 import com.winewizard.winewizard.repository.StatsProjectionI;
 import com.winewizard.winewizard.repository.WineProjectionI;
-import com.winewizard.winewizard.repository.WineRepository;
+import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
 import com.winewizard.winewizard.service.impl.WineServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,13 +23,13 @@ import java.util.List;
 @Controller
 public class GeneralController {
 
-    WineRepository winerepo;
+    WineRepositoryImpl winerepo;
 
     RatingRepositoryI ratingRepositoryI;
 
     WineServiceImpl wineServiceImpl;
 
-    public GeneralController(WineRepository winerepo, RatingRepositoryI ratingRepositoryI, WineServiceImpl wineServiceImpl){
+    public GeneralController(WineRepositoryImpl winerepo, RatingRepositoryI ratingRepositoryI, WineServiceImpl wineServiceImpl){
         super();
         this.winerepo = winerepo;
         this.ratingRepositoryI = ratingRepositoryI;
@@ -58,6 +58,7 @@ public class GeneralController {
             System.out.println("num_feedback: " + stats.get(0).getNum_feedback());
 
         String loggedInUsername = getLoggedInUsername();
+        System.out.println("loggedInUsername: " + loggedInUsername);
         model.addAttribute("loggedInUsername", loggedInUsername);
 
         model.addAttribute("stat", stats.get(0));

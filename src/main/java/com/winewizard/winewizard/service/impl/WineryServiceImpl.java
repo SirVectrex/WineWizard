@@ -1,10 +1,7 @@
 package com.winewizard.winewizard.service.impl;
 
-import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.Winery;
-import com.winewizard.winewizard.repository.WineRepository;
 import com.winewizard.winewizard.repository.WineryRepository;
-import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.WineryServiceI;
 import org.springframework.stereotype.Service;
 

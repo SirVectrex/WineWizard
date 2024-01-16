@@ -4,6 +4,7 @@ import com.winewizard.winewizard.model.Feedback;
 import com.winewizard.winewizard.repository.FeedbackRepositoryI;
 import com.winewizard.winewizard.service.FeedbackServiceI;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,12 +18,11 @@ public class FeedbackController {
 
 
     private FeedbackServiceI feedbackService;
-    private final FeedbackRepositoryI feedbackRepository;
 
-    public FeedbackController(FeedbackRepositoryI feedbackRepo, FeedbackServiceI feedbackService){
+
+    public FeedbackController(FeedbackServiceI feedbackService){
         super();
         this.feedbackService = feedbackService;
-        this.feedbackRepository = feedbackRepo;
     }
 
     @GetMapping("/add")

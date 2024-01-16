@@ -5,7 +5,8 @@ import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineProjectionI;
-import com.winewizard.winewizard.repository.WineRepository;
+import com.winewizard.winewizard.repository.WineRepositoryI;
+import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
 import com.winewizard.winewizard.service.RatingServiceI;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +18,14 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class API {
 
-    WineRepository wineRepository;
+    WineRepositoryImpl wineRepositoryI;
     UserRepositoryI userRepository;
 
     RatingServiceI ratingService;
 
-    public API(WineRepository wineRepository, UserRepositoryI userRepository, RatingServiceI ratingService){
+    public API(WineRepositoryImpl wineRepositoryI, UserRepositoryI userRepository, RatingServiceI ratingService){
         super();
-        this.wineRepository = wineRepository;
+        this.wineRepositoryI = wineRepositoryI;
         this.userRepository = userRepository;
         this.ratingService = ratingService;
 
@@ -32,11 +33,11 @@ public class API {
 
     @GetMapping("/topwines")
     public List<WineProjectionI> getTopWines(){
-        return wineRepository.findWinesWithAverageRatings();
+        return wineRepositoryI.findWinesWithAverageRatings();
     }
 
     @GetMapping("/allwines")
-    public List<Wine> getAllWines() { return wineRepository.findAll();}
+    public List<Wine> getAllWines() { return wineRepositoryI.findAll();}
 
     @PostMapping("/addRating")
     public String addRating(@RequestParam("user_id") Long userId,
@@ -45,7 +46,7 @@ public class API {
                             @RequestParam("pricerating") int pricerating,
                             @RequestParam("tasterating") int tasterating) {
 
-        Optional<Wine> wine = wineRepository.findById(winenumber);
+        Optional<Wine> wine = wineRepositoryI.findById(winenumber);
         Optional<User> user = userRepository.findById(userId);
 
         if (!wine.isPresent() || !user.isPresent()) {

@@ -5,8 +5,9 @@
 
 <div th:insert="~{fragments/header}"></div>
 
-<h1 class="title" th:text="#{Welcome_to_the_Wine_Cellar}">
-     <span th:text="${loggedInUsername}"></span>!
+<h1 class="title">
+    <span th:text="#{Welcome_to_the_Wine_Cellar}"></span>
+    <span th:text="${loggedInUsername}">Test</span>!
 </h1>
 
 <div>

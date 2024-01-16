@@ -2,7 +2,8 @@ package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.WineProjectionI;
-import com.winewizard.winewizard.repository.WineRepository;
+import com.winewizard.winewizard.repository.WineRepositoryI;
+import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
 import com.winewizard.winewizard.service.WineServiceI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,29 +16,29 @@ import java.util.List;
 public class WineServiceImpl implements WineServiceI {
 
     // Provides the most important CRUD-Functions
-    private WineRepository wineRepository;
+    private WineRepositoryImpl wineRepositoryI;
 
-    public WineServiceImpl(WineRepository wineRepository){
+    public WineServiceImpl(WineRepositoryImpl wineRepositoryI){
         super();
-        this.wineRepository = wineRepository;
+        this.wineRepositoryI = wineRepositoryI;
     }
 
     public List<WineProjectionI> getWineRatings() {
-        return wineRepository.findWinesWithAverageRatings();
+        return wineRepositoryI.findWinesWithAverageRatings();
     }
 
     public Page<WineProjectionI> getWineRatings(Pageable pageable) {
-        return wineRepository.findWinesWithAverageRatings_Pages(pageable);
+        return wineRepositoryI.findWinesWithAverageRatings_Pages(pageable);
     }
 
     @Override
     public List<Wine> getAllWines() {
-        return wineRepository.findAll();
+        return wineRepositoryI.findAll();
     }
 
     @Override
     public Wine saveWine(Wine wine) {
-        return wineRepository.save(wine);
+        return wineRepositoryI.save(wine);
     }
 
 }

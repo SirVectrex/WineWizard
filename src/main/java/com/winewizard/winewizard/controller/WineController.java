@@ -5,7 +5,7 @@ import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.BookmarkRepository;
 import com.winewizard.winewizard.repository.UserRepositoryI;
-import com.winewizard.winewizard.repository.WineRepository;
+import com.winewizard.winewizard.repository.WineRepositoryI;
 import com.winewizard.winewizard.service.WineServiceI;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -33,14 +33,14 @@ public class WineController {
     private final BookmarkRepository bookmarkRepository;
 
     private WineServiceI wineService;
-    private final WineRepository wineRepository;
+    private final WineRepositoryI wineRepositoryI;
 
-    public WineController(UserRepositoryI userRepositoryI, BookmarkRepository bookmarkRepository, WineServiceI wineService , WineRepository wineRepository){
+    public WineController(UserRepositoryI userRepositoryI, BookmarkRepository bookmarkRepository, WineServiceI wineService , WineRepositoryI wineRepositoryI){
         super();
         this.userRepositoryI = userRepositoryI;
         this.bookmarkRepository = bookmarkRepository;
         this.wineService = wineService;
-        this.wineRepository = wineRepository;
+        this.wineRepositoryI = wineRepositoryI;
     }
 
     @GetMapping ("/add")
@@ -115,7 +115,7 @@ public class WineController {
 
             } else{
                 // If no search term, retrieve all wines
-                winePage = wineRepository.findAll(PageRequest.of(page -1, size));
+                winePage = wineRepositoryI.findAll(PageRequest.of(page -1, size));
             }
 
             model.addAttribute("searchResults", winePage.getContent());
@@ -137,7 +137,7 @@ public class WineController {
         Optional<User> user = userRepositoryI.findByLoginIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName());
 
         if (user.isPresent()) {
-            Optional<Wine> wine = wineRepository.findById(wineId);
+            Optional<Wine> wine = wineRepositoryI.findById(wineId);
             if (wine.isPresent()) {
                 Optional<Bookmark> existingBookmark = bookmarkRepository.findByUserIdAndWineId(user.get().getId(), wine.get().getId());
 
@@ -160,7 +160,7 @@ public class WineController {
     }
 
     public Page<Wine> performSearch(String searchTerm, Pageable pageable) {
-        return wineRepository.findByNameContainingIgnoreCase(searchTerm, pageable);
+        return wineRepositoryI.findByNameContainingIgnoreCase(searchTerm, pageable);
     }
 
     public List<Wine> getBookmarks() {
@@ -173,7 +173,7 @@ public class WineController {
                 .collect(Collectors.toList());
 
 
-        List<Wine> wines = wineRepository.findAllById(wineIds);
+        List<Wine> wines = wineRepositoryI.findAllById(wineIds);
 
         wines.forEach(wine -> wine.setBookmarked(true));
 

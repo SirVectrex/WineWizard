@@ -4,15 +4,11 @@ import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.UserRepositoryI;
-import com.winewizard.winewizard.repository.WineProjectionI;
-import com.winewizard.winewizard.repository.WineRepository;
+import com.winewizard.winewizard.repository.WineRepositoryI;
 import com.winewizard.winewizard.service.ApiClient;
 import com.winewizard.winewizard.service.RatingServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.impl.EmailServiceImpl;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -28,7 +24,7 @@ import java.util.Map;
 public class RatingController {
 
     private RatingServiceI ratingService;
-    private WineRepository wineRepository;
+    private WineRepositoryI wineRepositoryI;
 
     private UserRepositoryI userRepository;
 
@@ -38,10 +34,10 @@ public class RatingController {
 
     private EmailServiceImpl emailService;
 
-    public RatingController(RatingServiceI ratingService, WineRepository wineRepository, WineServiceI wineService, UserRepositoryI userRepository, EmailServiceImpl emailService) {
+    public RatingController(RatingServiceI ratingService, WineRepositoryI wineRepositoryI, WineServiceI wineService, UserRepositoryI userRepository, EmailServiceImpl emailService) {
         super();
         this.ratingService = ratingService;
-        this.wineRepository = wineRepository;
+        this.wineRepositoryI = wineRepositoryI;
         this.apiClient = new ApiClient();
         this.wineService = wineService;
         this.userRepository = userRepository;
@@ -59,10 +55,8 @@ public class RatingController {
     @PostMapping("/search_by_name")
     public String searchWineByName(@RequestParam("name") String name, Model model) {
         Long ean;
-        System.out.println("Searching for wine with name: " + name);
-        Wine wine = wineRepository.findByNameContainingIgnoreCase(name);
-
-        System.out.println(wine);
+        System.out.println("LOG: Searching for wine with name: " + name);
+        Wine wine = wineRepositoryI.findByNameContainingIgnoreCase(name);
 
         if (wine == null) {
             // No wine found in DB - search API
@@ -104,7 +98,7 @@ public class RatingController {
 
     @GetMapping("/addRating")
     public String addRating(@RequestParam("winenumber") Long winenumber, Model model) {
-        Wine wine = wineRepository.findById(winenumber).orElse(null);
+        Wine wine = wineRepositoryI.findById(winenumber).orElse(null);
         model.addAttribute("wine", wine);
         return "rating/addRating";
     }
@@ -119,7 +113,7 @@ public class RatingController {
 
         System.out.println("Attempting to save rating for wine: " + winenumber + "with taste " + tasterating + " design " + designrating + " price " + pricerating);
 
-        Wine wine = wineRepository.findById(winenumber).orElse(null);
+        Wine wine = wineRepositoryI.findById(winenumber).orElse(null);
         Rating ratingObject = new Rating();
         ratingObject.setRatingDesign(designrating);
         ratingObject.setRatingPrice(pricerating);
@@ -158,7 +152,7 @@ public class RatingController {
 
     @GetMapping("/delete")
     public String deleteRating(@RequestParam("id") Long id) {
-        System.out.println("Deleted rating with id: " + id);
+        System.out.println("LOG: Deleted rating with id: " + id);
         ratingService.deleteRatingById(id);
         return "redirect:/rating/myratings"; // Redirect to the page showing ratings
     }
@@ -181,7 +175,7 @@ public class RatingController {
                                @RequestParam("ratingPrice") int ratingPrice) {
         // Logic to update the rating
         // You'll need to fetch the Wine object based on wineName or its ID if available
-        Wine wine = wineRepository.findById(wineId).orElse(null);
+        Wine wine = wineRepositoryI.findById(wineId).orElse(null);
 
         // get current user through authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

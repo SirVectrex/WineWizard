@@ -47,11 +47,10 @@
 
             <div class="d-flex">
 
-
                 <form th:action="@{/changeLanguage}" method="get" class="me-2" id="languageForm">
                     <div class="dropdown">
                         <button class="btn btn-outline-primary dropdown-toggle" type="button" id="languageDropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                            <i class="fas fa-language " th:text="#{Select_Language}"></i>
+                            <i class="fas fa-language " ></i> <span th:text="#{Select_Language}">Language</span>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="languageDropdownButton">
                             <a class="dropdown-item" th:href="@{/changeLanguage(lang='en')}">English</a>
