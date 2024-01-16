@@ -1,8 +1,10 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.model.WineDTO;
+import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.RatingRepositoryI;
 import com.winewizard.winewizard.repository.StatsProjectionI;
+import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
 import com.winewizard.winewizard.service.impl.WineServiceImpl;
@@ -29,11 +31,14 @@ public class GeneralController {
 
     WineServiceImpl wineServiceImpl;
 
-    public GeneralController(WineRepositoryImpl winerepo, RatingRepositoryI ratingRepositoryI, WineServiceImpl wineServiceImpl){
+    UserRepositoryI userRepository;
+
+    public GeneralController(WineRepositoryImpl winerepo, RatingRepositoryI ratingRepositoryI, WineServiceImpl wineServiceImpl, UserRepositoryI userRepository){
         super();
         this.winerepo = winerepo;
         this.ratingRepositoryI = ratingRepositoryI;
         this.wineServiceImpl = wineServiceImpl;
+        this.userRepository = userRepository;
 
     }
 
@@ -50,14 +55,12 @@ public class GeneralController {
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String home(Model model) {
 
+        // get users zip code from auth
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String loggedInUsername = getLoggedInUsername();
+
         List<StatsProjectionI> stats =  winerepo.getStats();
 
-            System.out.println("numratings: " + stats.get(0).getNumRatings());
-            System.out.println("numwines: " + stats.get(0).getNumwines());
-            System.out.println("numwinery: " + stats.get(0).getNumwinery());
-            System.out.println("num_feedback: " + stats.get(0).getNum_feedback());
-
-        String loggedInUsername = getLoggedInUsername();
         System.out.println("loggedInUsername: " + loggedInUsername);
         model.addAttribute("loggedInUsername", loggedInUsername);
 

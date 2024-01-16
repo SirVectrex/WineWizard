@@ -3,12 +3,18 @@ package com.winewizard.winewizard.controller;
 import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
+import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.UserRepositoryI;
+import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepositoryI;
+import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
 import com.winewizard.winewizard.service.ApiClient;
 import com.winewizard.winewizard.service.RatingServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.impl.EmailServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,7 +30,7 @@ import java.util.Map;
 public class RatingController {
 
     private RatingServiceI ratingService;
-    private WineRepositoryI wineRepositoryI;
+    private WineRepositoryImpl wineRepository;
 
     private UserRepositoryI userRepository;
 
@@ -34,10 +40,10 @@ public class RatingController {
 
     private EmailServiceImpl emailService;
 
-    public RatingController(RatingServiceI ratingService, WineRepositoryI wineRepositoryI, WineServiceI wineService, UserRepositoryI userRepository, EmailServiceImpl emailService) {
+    public RatingController(RatingServiceI ratingService, WineRepositoryImpl wineRepositoryI, WineServiceI wineService, UserRepositoryI userRepository, EmailServiceImpl emailService) {
         super();
         this.ratingService = ratingService;
-        this.wineRepositoryI = wineRepositoryI;
+        this.wineRepository = wineRepositoryI;
         this.apiClient = new ApiClient();
         this.wineService = wineService;
         this.userRepository = userRepository;
@@ -56,7 +62,7 @@ public class RatingController {
     public String searchWineByName(@RequestParam("name") String name, Model model) {
         Long ean;
         System.out.println("LOG: Searching for wine with name: " + name);
-        Wine wine = wineRepositoryI.findByNameContainingIgnoreCase(name);
+        Wine wine = wineRepository.findByNameContainingIgnoreCase(name);
 
         if (wine == null) {
             // No wine found in DB - search API
@@ -98,7 +104,7 @@ public class RatingController {
 
     @GetMapping("/addRating")
     public String addRating(@RequestParam("winenumber") Long winenumber, Model model) {
-        Wine wine = wineRepositoryI.findById(winenumber).orElse(null);
+        Wine wine = wineRepository.findById(winenumber).orElse(null);
         model.addAttribute("wine", wine);
         return "rating/addRating";
     }
@@ -113,7 +119,7 @@ public class RatingController {
 
         System.out.println("Attempting to save rating for wine: " + winenumber + "with taste " + tasterating + " design " + designrating + " price " + pricerating);
 
-        Wine wine = wineRepositoryI.findById(winenumber).orElse(null);
+        Wine wine = wineRepository.findById(winenumber).orElse(null);
         Rating ratingObject = new Rating();
         ratingObject.setRatingDesign(designrating);
         ratingObject.setRatingPrice(pricerating);
@@ -175,7 +181,7 @@ public class RatingController {
                                @RequestParam("ratingPrice") int ratingPrice) {
         // Logic to update the rating
         // You'll need to fetch the Wine object based on wineName or its ID if available
-        Wine wine = wineRepositoryI.findById(wineId).orElse(null);
+        Wine wine = wineRepository.findById(wineId).orElse(null);
 
         // get current user through authentication
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -197,6 +203,41 @@ public class RatingController {
     }
 
 
+    @GetMapping("/myarea")
+    public String myArea(Model model,
+                         @RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "5") int size) {
+
+        String loggedInUsername = getLoggedInUsername();
+        ZipCode zipCode;
+        int zipCodeInt = 0;
+        if (!loggedInUsername.equals("anonymousUser")) {
+            zipCode = userRepository.findByLoginIgnoreCase(loggedInUsername).get().getZipCode();
+            zipCodeInt = Integer.parseInt((zipCode.getZipCode()));
+        }
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<WineProjectionI> winePage =  wineRepository.getWinesByZipCodewParamwPage(zipCodeInt, pageable);
+
+        model.addAttribute("wines", winePage);
+
+
+        return "rating/localratings";
+    }
+
+
+    public String getLoggedInUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+
+            return authentication.getName();
+
+        }
+
+        // Wenn kein Benutzer authentifiziert ist
+        return "Gast";
+    }
 
 
 

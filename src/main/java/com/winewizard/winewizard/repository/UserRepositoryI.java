@@ -17,4 +17,5 @@ public interface UserRepositoryI extends MyBaseRepository<User, Long> {
 	User save(User user);
 
 	void save(ZipCode zipCode);
+
 }
