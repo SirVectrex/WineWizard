@@ -5,12 +5,78 @@
 <body th:insert="~{fragments/header}"></body>
 
 <body>
-<h2>Admin Page</h2>
 
+<div class="container">
+    <h2 th:text="#{Overview_all_users}"></h2>
 
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Admins</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th th:text="#{Login}"></th>
+                        <th th:text="#{Email}"></th>
+                        <th th:text="#{Zip_Code}"></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="admin : ${usersByRole['ADMIN']}">
+                    <tr>
+                        <td th:text="${admin.getLogin()}"></td>
+                        <td th:text="${admin.getEmail()}"></td>
+                        <td th:text="${admin.getZipCode()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-</body>
+        <div class="col-md-4">
+            <h3>Winewizards</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th th:text="#{Login}"></th>
+                        <th th:text="#{Email}"></th>
+                        <th th:text="#{Zip_Code}"></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="winewizard : ${usersByRole['wineWizard']}">
+                    <tr>
+                        <td th:text="${winewizard.getLogin()}"></td>
+                        <td th:text="${winewizard.getEmail()}"></td>
+                        <td th:text="${winewizard.getZipCode()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
+        <div class="col-md-4">
+            <h3>Winerys</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th th:text="#{Login}"></th>
+                        <th th:text="#{Email}"></th>
+                        <th th:text="#{Zip_Code}"></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="winery : ${usersByRole['winery']}">
+                    <tr>
+                        <td th:text="${winery.getLogin()}"></td>
+                        <td th:text="${winery.getEmail()}"></td>
+                        <td th:text="${winery.getZipCode()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
