@@ -1,7 +1,9 @@
 package com.winewizard.winewizard.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,11 +24,28 @@ public class User implements Serializable{
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	Long id;
 	
-	@NotBlank(message = "login is mandatory")
+	@NotBlank(message = "username is mandatory")
+	//TODO: check if contains blank
+	@Size(min = 5, max = 50, message ="Username must have at least 5 characters")
 	private String login;
+
+	@NotBlank(message = "zip code is mandatory")
+	@Size(min=5, max= 5, message = "Exactly 5 digits are required")
+	@Digits(integer = 5, fraction = 0, message = "Valid german zip code contains exactly 5 digits")
+	@Transient
+	private String zipCodeInput;
+
+
+	@ManyToOne
+	@JoinColumn(name="zip_code", nullable = false)
+	private ZipCode zipCode;
 	
 	@NotBlank(message = "password is mandatory")
 	private String password;
+
+	@NotBlank(message = "repeat password")
+	@Transient
+	private String passwordRepeat;
 		
 	@NotBlank(message = "Email is mandatory")
 	private String email;
@@ -59,6 +78,30 @@ public class User implements Serializable{
 
 	public String getEmail() {
 		return email;
+	}
+
+	public String getPasswordRepeat() {
+		return passwordRepeat;
+	}
+
+	public void setPasswordRepeat(String passwordRepeat) {
+		this.passwordRepeat = passwordRepeat;
+	}
+
+	public String getZipCodeInput() {
+		return zipCodeInput;
+	}
+
+	public void setZipCodeInput(String zipCode) {
+		this.zipCodeInput = zipCode;
+	}
+
+	public ZipCode getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(ZipCode zipCode) {
+		this.zipCode = zipCode;
 	}
 
 	public void setEmail(String email) {

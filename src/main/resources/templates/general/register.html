@@ -12,43 +12,92 @@
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Create an account</h2>
 
-                            <form>
+                            <form th:action="@{/register}" th:object="${user}" method="POST">
 
-                                <div class="form-outline mb-4">
-                                    <input type="text" id="form3Example1cg" class="form-control form-control-lg" />
-                                    <label class="form-label" for="form3Example1cg">Your Name</label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="email">Email</label>
+                                        <input type="text" class="form-control" id="email" placeholder="Email"
+                                               th:field="*{email}"
+                                               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" />
+                                        <div class="invalid-feedback">
+                                            <span th:errors="*{email}"></span>
+                                        </div>
+                                    </div>
+
                                 </div>
 
-                                <div class="form-outline mb-4">
-                                    <input type="email" id="form3Example3cg" class="form-control form-control-lg" />
-                                    <label class="form-label" for="form3Example3cg">Your Email</label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="login">Username </label>
+                                        <input type="text" class="form-control" id="login" placeholder="Name"
+                                               autofocus="autofocus" th:field="*{login}"
+                                               th:classappend="${#fields.hasErrors('login')} ? 'is-invalid'" />
+                                        <div class="invalid-feedback">
+                                            <span th:errors="*{login}"></span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="form-outline mb-4">
-                                    <input type="password" id="form3Example4cg" class="form-control form-control-lg" />
-                                    <label class="form-label" for="form3Example4cg">Password</label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="phone">phone </label>
+                                        <input type="text" class="form-control" id="phone" placeholder="Phone number"
+                                               autofocus="autofocus" th:field="*{phone}"
+                                               th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" />
+                                        <div class="invalid-feedback">
+                                            <span th:errors="*{login}"></span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="form-outline mb-4">
-                                    <input type="password" id="form3Example4cdg" class="form-control form-control-lg" />
-                                    <label class="form-label" for="form3Example4cdg">Repeat your password</label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="zipCodeInput">PLZ </label>
+                                        <input type="text" class="form-control" id="zipCodeInput" placeholder="German Zip Code"
+                                               autofocus="autofocus" th:field="*{zipCodeInput}"
+                                               th:classappend="${#fields.hasErrors('zipCodeInput')} ? 'is-invalid'" />
+                                        <p class=" " id="zipCode"
+                                               th:text="*{zipCode} != null ? *{zipCode.toString()}: ''"></p>
+                                        <div class="invalid-feedback">
+                                            <span th:errors="*{zipCodeInput}"></span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="form-check d-flex justify-content-center mb-5">
-                                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                                    <label class="form-check-label" for="form2Example3cg">
-                                        I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
-                                    </label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="password">Password </label>
+                                        <input type="text" class="form-control" id="password" placeholder="Password"
+                                               autofocus="autofocus" th:field="*{password}"
+                                               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'" />
+                                        <div class="invalid-feedback">
+                                            <span th:errors="*{password}"></span>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="passwordRepeat">Repeat password</label>
+                                        <input type="text" class="form-control" id="passwordRepeat" placeholder="Repeat password"
+                                               autofocus="autofocus" th:field="*{passwordRepeat}"
+                                               th:classappend="${#fields.hasErrors('passwordRepeat')} ? 'is-invalid'" />
+                                        <div class="invalid-feedback">
+                                            <span th:errors="*{passwordRepeat}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="id" th:field="*{id}"/>
 
                                 <div class="d-flex justify-content-center">
-                                    <button type="button"
-                                            class="btn btn-success btn-block btn-lg text-body">Register</button>
+                                    <button type="submit"
+                                            class="btn  btn-primary btn-lg text-body">Register</button>
                                 </div>
 
                                 <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
                                                                                                         class="fw-bold text-body"><u>Login here</u></a></p>
-
                             </form>
 
                         </div>
