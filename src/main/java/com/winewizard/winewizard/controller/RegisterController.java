@@ -96,7 +96,7 @@ public class RegisterController {
         userService.createUser(user);
 
         attr.addFlashAttribute("success", "User added!");
-        return "redirect:/general/login";
+        return "redirect:/customlogin";
     }
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
