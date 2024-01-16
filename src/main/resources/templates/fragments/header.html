@@ -46,10 +46,7 @@
             </ul>
 
             <div class="d-flex">
-                <form class="d-flex me-2">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+
 
                 <form th:action="@{/changeLanguage}" method="get" class="me-2" id="languageForm">
                     <div class="dropdown">
@@ -63,9 +60,6 @@
                         </div>
                     </div>
                 </form>
-
-                <form class="me-2" th:action="@{/deleteUser}" method="post">
-
 
 
                 <form class="me-2" th:action="@{/logout}" method="post">

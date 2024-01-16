@@ -91,7 +91,7 @@ public class SecurityConfig {
 
         http.logout()
                 .logoutUrl("/logout") // Specify the URL for logout
-                .logoutSuccessUrl("/login?logout") // Redirect to this URL after logout
+                .logoutSuccessUrl("/customlogin") // Redirect to this URL after logout
                 .invalidateHttpSession(true) // Invalidate the HTTP session
                 .deleteCookies("JSESSIONID") // Delete cookies
                 .permitAll(); // Allow all users to access the logout URL
