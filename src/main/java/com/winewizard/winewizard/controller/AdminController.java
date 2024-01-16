@@ -3,11 +3,9 @@ package com.winewizard.winewizard.controller;
 import com.winewizard.winewizard.model.Role;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.repository.UserRepositoryI;
-import com.winewizard.winewizard.service.UserServiceI;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -28,6 +26,8 @@ public class AdminController {
     public String adminPage(Model model) {
 
         Iterable<User> users = userRepo.findAll();
+
+
 
         // Create a map to store users based on their roles
         Map<String, List<User>> usersByRole = new HashMap<>();

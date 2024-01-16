@@ -32,8 +32,7 @@ public class MyUserDetails implements UserDetails {
 	
 	
 	public MyUserDetails(User user) {
-		
-		// TODO Auto-generated constructor stub
+
 		this.userName= user.getLogin();
 		this.password= user.getPassword();
 		this.email=user.getEmail();

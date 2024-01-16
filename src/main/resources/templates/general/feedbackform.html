@@ -11,7 +11,7 @@
         <div class="col-md-8 offset-md-2">
             <h2 class="mb-4 text-center" th:text="#{feedback_title}">We Value Your Feedback</h2>
             <p class="text-center mb-5" th:text="#{feedback_text}">
-                Please share your thoughts with us. Whether it's a suggestion, question, or feedback, we're here to listen and improve. Fill out the form below and we'll get back to you as soon as we can.
+                Please share your thoughts with us. Whether it's a suggestion, question, or feedback, we're here to listen and improve. Fill out the form below, and we'll get back to you as soon as we can.
             </p>
         </div>
 
@@ -30,7 +30,7 @@
                 </div>
 
                 <label for="message" th:text="#{Message}"></label>
-                <textarea class="form-control mb-3" id="message" th:placeholder="#{Type_your_message}Type your message" rows="4" th:classappend="${#fields.hasErrors('message')} ? 'is-invalid'" th:field="*{message}"></textarea>
+                <textarea class="form-control mb-3" id="message" th:placeholder="#{Type_your_message}" rows="4" th:classappend="${#fields.hasErrors('message')} ? 'is-invalid'" th:field="*{message}"></textarea>
                 <div class="invalid-feedback">
                     <span th:errors="*{message}"></span>
                 </div>
@@ -43,7 +43,6 @@
         </div>
 
     </form>
-</div>
 </div>
 
 

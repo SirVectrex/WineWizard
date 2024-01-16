@@ -75,10 +75,11 @@ public class SecurityConfig {
                 		
         http.authorizeHttpRequests()
 
-        .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyAuthority("ADMIN_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/wines/add")).hasAuthority("ADMIN_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/changeLanguage")).hasAuthority("ADMIN_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/winery/**")).hasAuthority ("ADMIN_STATUS");
+        .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/wines/add")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/changeLanguage")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/admin")).hasAnyAuthority("ADMIN_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/winery/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS");
         //andere URLs....
         http.headers(headers -> headers.frameOptions(FrameOptionsConfig::disable));
 
