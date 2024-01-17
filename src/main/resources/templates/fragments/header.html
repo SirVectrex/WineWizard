@@ -41,7 +41,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="hasRole('ADMIN')" href="/admin" th:text="#{User_info}"></a>
+                    <a class="nav-link" sec:authorize="hasAuthority('ADMIN_STATUS')" href="/admin" th:text="#{User_info}"></a>
                 </li>
 
             </ul>
