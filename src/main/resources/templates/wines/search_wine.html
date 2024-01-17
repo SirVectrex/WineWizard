@@ -4,39 +4,45 @@
 
 <div th:insert="~{fragments/header}"></div>
 
-<div class="container-fluid">
-    <div class="row justify-content-center align-items-center">
-        <div class="col-md-6">
-            <h1 class="title text-center" th:text="#{Browse_through_our_wine_collection}"></h1>
-        </div>
+<div class="row">
+
+    <div class="col-md-4">
+        <img src="/images/flaschi_suchi.png"  class="img-fluid" alt="Feedback Image" >
     </div>
-</div>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 text-center">
-            <!-- Search Form -->
-            <form th:action="@{/wines/searchWine}" th:method="get" >
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control rounded" th:placeholder="#{Search}"  th:name="searchTerm" id="searchInput">
-                    <div class="input-group-append mx-4">
-                        <button class="btn btn-primary" type="submit" th:text="#{Search_for_wine}"></button>
-                    </div>
+
+    <div class="col-md-8">
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <h1 class="title text-center" th:text="#{Browse_through_our_wine_collection}"></h1>
                 </div>
-            </form>
-
-
+            </div>
         </div>
 
-        <div class="col-md-4">
-            <form  th:action="#{/wines/searchWine}" th:method="get">
-                <div class="input-group-append mx-4">
-                    <input type="hidden" class="form-control rounded"  value="Bookmark" th:name="searchTerm" id="Bookmark">
-                    <button class="btn btn-primary" type="submit" th:text="#{Your_Bookmarks}"></button>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 text-center">
+                    <!-- Search Form -->
+                    <form th:action="@{/wines/searchWine}" th:method="get" >
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control rounded" th:placeholder="#{Search}"  th:name="searchTerm" id="searchInput">
+                            <div class="input-group-append mx-4">
+                            <button class="btn btn-primary" type="submit" th:text="#{Search_for_wine}"></button>
+                        </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </div>
+
+                <div class="col-md-4">
+                    <form  th:action="#{/wines/searchWine}" th:method="get">
+                        <div class="input-group-append mx-4">
+                            <input type="hidden" class="form-control rounded"  value="Bookmark" th:name="searchTerm" id="Bookmark">
+                            <button class="btn btn-primary" type="submit" th:text="#{Your_Bookmarks}"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- Search Results List -->
             <ul class="list-group" id="searchResults">
@@ -93,6 +99,8 @@
         </ul>
     </nav>
 
+</div>
+</div>
 
 </div>
 
