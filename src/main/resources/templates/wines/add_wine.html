@@ -6,8 +6,8 @@
 <div class="container my-5">
     <div class="row">
         <!-- Image Column -->
-        <div class="col-md-6">
-            <img src="/images/flaschi_notepad.png" class="img-fluid" alt="Wine Image" height="40vh">
+        <div class="col-md-6 text-center">
+            <img src="/images/flaschi_notepad.png" id="img" class="img-fluid" alt="Wine Image" height="40vh">
         </div>
 
         <!-- Form Column -->
@@ -61,3 +61,12 @@
 
     <body th:insert="~{fragments/footer}"></body>
 </html>
+
+
+<style>
+
+    #img {
+        max-height: 50vh !important;
+    }
+
+</style>

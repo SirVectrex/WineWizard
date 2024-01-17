@@ -44,8 +44,8 @@
         </div>
 
         <!-- Image Column -->
-        <div class="col-md-6">
-            <img src="/images/flaschi_suchi.png" class="img-fluid" alt="Feedback Image" height="20vh">
+        <div class="col-md-6 text-center">
+            <img src="/images/flaschi_suchi.png" class="img-fluid" id="img" alt="Feedback Image" height="500px">
         </div>
 
     </div>
@@ -58,3 +58,11 @@
 
 
 <body th:insert="~{fragments/footer}"></body>
+
+<style>
+
+    #img {
+        max-height: 50vh !important;
+    }
+
+</style>
