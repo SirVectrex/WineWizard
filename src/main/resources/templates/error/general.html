@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+
+<body>
+
+<div th:insert="~{fragments/header}"></div>
+
+
+<div class="container text-center mt-5">
+    <div class="row">
+        <div class="col">
+            <!-- Wine Image or Icon -->
+            <img src="/images/cryingwine.png" alt="Cute Wine" style="width: 400px;">
+            <!-- Error Message -->
+            <h1 class="mt-3">Application Error</h1>
+            <p>Oops! Unfortunately we ran into an error... </p>
+            <!-- Return Home Button -->
+            <a href="/" class="btn btn-primary mt-3">Return Home</a>
+        </div>
+    </div>
+</div>
+
+
+
+<div th:insert="~{fragments/footer}"></div>
+</body>

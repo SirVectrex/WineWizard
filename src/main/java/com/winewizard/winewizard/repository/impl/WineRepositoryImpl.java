@@ -26,7 +26,7 @@ public interface WineRepositoryImpl extends WineRepositoryI {
             "ORDER BY AVG(r.ratingTaste) DESC")
     Page<WineProjectionI> findWinesWithAverageRatings_Pages(Pageable pageable);
 
-    @Query(value = "Select (Select Count(*) from RATING) as numratings, (Select Count(*) from WINE) as numwines,  (Select Count(*) from WINERY) as numwinery, (Select Count(*) from feedback) as num_feedback", nativeQuery = true)
+    @Query(value = "Select (Select Count(*) from RATING) as numratings, (Select Count(*) from WINE) as numwines,  (Select Count(*) from WINERY) as numwinery, (Select Count(*) from \"USER\") as numuser", nativeQuery = true)
     List<StatsProjectionI> getStats();
 
     @Query(value = "SELECT w.NAME as name, ROUND(AVG(r.TASTE_RATING), 2) as avgTasteRating, ROUND(AVG(r.DESIGN_RATING), 2) as avgDesignRating, ROUND(AVG(r.PRICE_RATING), 2) as avgPriceRating " +

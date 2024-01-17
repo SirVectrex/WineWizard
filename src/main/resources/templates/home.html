@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<header th:insert="~{layout}"></header>
+<header th:insert="~{layout}" ></header>
 
-<body>
+<body id="main">
 
 <div th:insert="~{fragments/header}"></div>
 
-<h1 class="title">
-    <span th:text="#{Welcome_to_the_Wine_Cellar}"></span>
-    <span th:text="${loggedInUsername}">Test</span>!
-</h1>
+
 
 <div>
 
@@ -45,8 +42,8 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="#{Number_of_Feedback}"></h5>
-                        <p class="card-text" th:text="${stat.getNum_feedback()}"></p>
+                        <h5 class="card-title" th:text="#{Number_of_Users}"></h5>
+                        <p class="card-text" th:text="${stat.getNumuser()}"></p>
                     </div>
                 </div>
             </div>
@@ -56,29 +53,58 @@
 
 </div>
 
+<h1 class="title" id="title">
+    <span th:text="#{Welcome_to_the_Wine_Cellar}" style="color:white;" ></span>
+    <span th:text="${loggedInUsername}" style="color:white;">Test</span>
+</h1>
+
+
 <div th:insert="~{fragments/footer}"></div>
 
 </body>
 
 <style>
 
+
+    #title {
+        color: white;
+        padding-top: 420px;
+        text-align: center;
+        font-size: 50px;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+
     .card {
         margin: 10px;
         min-height: 140px;
-        background: lightgrey;
+        background: white;
         border-radius: 20px;
         border: white;
+        color: black;
     }
 
     .card-title {
         font-size: 20px;
-        min-height: 60px;
+        min-height: 50px;
+        color: black;
     }
 
     .card-text {
         font-size: 40px;
         font-weight: bold;
         font-family: Monospaced, sans-serif;
+        color: black;
+    }
+
+    #main {
+        background-image: url("/images/wine.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100%;
+        width: 100%;
     }
 
 
