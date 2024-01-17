@@ -125,7 +125,7 @@ public class EmailServiceImpl implements EmailServiceI {
 
             helper.setFrom(sender);
             helper.setTo(recipient);
-            helper.setSubject("Newsletter");
+            helper.setSubject("WineWizard - Our best wines");
 
             // HTML content for the email body
             String htmlBody = htmlFileReaderService.readHtmlFile("classpath:templates/general/topwine_list.html");

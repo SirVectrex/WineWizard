@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="/"><img src="/images/flaschi_die_flasche.png" alt="Cute Wine" style="height: 70px;"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,7 +17,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/allratings" th:text="#{All_Ratings}"></a></li>
                         <li><a class="dropdown-item" href="/wines/add" th:text="#{Add_a_wine}"></a></li>
-                        <li><a class="dropdown-item" href="/rating/add" th:text="#{Rate_a_wine}"></a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/add" th:text="#{Rate_a_wine}"></a></li>
                         <li><a class="dropdown-item" href="/rating/myarea" th:text="#{Ratings_area}">Best in my area</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/wines/searchWine" th:text="#{Search_for_wine}"></a></li>
@@ -33,7 +33,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/winery/2520ff3c-8f72-11ee-b9d1-0242ac120002" th:text="#{Profile}"></a></li>
-                        <li><a class="dropdown-item" href="/rating/myratings" th:text="#{My_Ratings}"></a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/myratings" th:text="#{My_Ratings}"></a></li>
                         <li><a class="dropdown-item" href="/feedback/add" th:text="#{Feedback}"></a></li>
                         <li><form class="me-2" th:action="@{/deleteUser}" method="post"><button class="btn btn-outline-danger" type="submit" th:text="#{Delete_User}"></button></form></li>
                     </ul>
@@ -41,7 +41,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin" th:text="#{User_info}"></a>
+                    <a class="nav-link" sec:authorize="hasRole('ADMIN')" href="/admin" th:text="#{User_info}"></a>
                 </li>
 
             </ul>
@@ -57,6 +57,7 @@
                             <a class="dropdown-item" th:href="@{/changeLanguage(lang='en')}">English</a>
                             <a class="dropdown-item" th:href="@{/changeLanguage(lang='fr')}">French</a>
                             <a class="dropdown-item" th:href="@{/changeLanguage(lang='de')}">German</a>
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='sp')}">Spanish</a>
                         </div>
                     </div>
                 </form>

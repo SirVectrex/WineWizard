@@ -31,7 +31,7 @@ INSERT INTO user (login, password, email, phone, active, zip_code) values ('anna
 INSERT INTO user (login, password, email, phone, active, zip_code) values ('lena', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl19@gmail.com', '+4915114962996',  1, 93499);
 INSERT INTO user (login, password, email, phone, active, zip_code) values ('Sigi', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo@email', '+4915114962996',  1, 93499);
 INSERT INTO user (login, password, email, phone, active, zip_code) values ('Thomas', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus@email', '+4915114962996',  1, 93499);
-
+INSERT INTO user (login, password, email, phone, active, zip_code) values ('PetersWinery', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'petermachtwein@peter.de', '+4915114962996',  1, 93499);
 
 INSERT INTO role (description) VALUES ( 'ADMIN');
 INSERT INTO role (description) VALUES ( 'wineWizard');
@@ -51,13 +51,13 @@ INSERT INTO userrole(iduser, idrole) VALUES (6,2);
 INSERT INTO userrole(iduser, idrole) VALUES (7,3);
 INSERT INTO userrole(iduser, idrole) VALUES (8,2);
 INSERT INTO userrole(iduser, idrole) VALUES (9,3);
+INSERT INTO userrole(iduser, idrole) VALUES (10,3);
 
 
 INSERT INTO roleauthority(idrole, idauthority) VALUES (1,1);
 INSERT INTO roleauthority(idrole, idauthority) VALUES (1,3);
 INSERT INTO roleauthority(idrole, idauthority) VALUES (2,3);
 INSERT INTO roleauthority(idrole, idauthority) VALUES (3,2);
-INSERT INTO roleauthority(idrole, idauthority) VALUES (3,3);
 
 INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 1, 5, 5, 5);
 INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 2, 4, 5, 5);

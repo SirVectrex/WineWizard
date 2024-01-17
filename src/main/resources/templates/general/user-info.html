@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <header th:insert="~{layout}"></header>
 
 
@@ -75,6 +76,8 @@
                 </table>
             </div>
         </div>
+        Authenticated user roles:
+        <div sec:authentication="principal.authorities"></div>
     </div>
 </div>
 

@@ -1,10 +1,12 @@
 package com.winewizard.winewizard.config;
 
 import com.winewizard.winewizard.service.impl.MyUserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -45,8 +47,6 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
-    		
-			  
     
     @Bean
     public SecurityFilterChain getSecurityFilterChain(HttpSecurity http,
@@ -77,17 +77,19 @@ public class SecurityConfig {
         http.authorizeHttpRequests()
 
 
-        .requestMatchers(new AntPathRequestMatcher("/wines/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/wines/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/rating/myarea/**")).hasAnyAuthority("WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/rating/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/admin")).hasAnyAuthority("ADMIN_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/winery/**")).hasAnyAuthority ("ADMIN_STATUS", "WINERY_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/allratings/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/allratings/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/changeLanguage")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/admin")).hasAnyAuthority("ADMIN_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/feedback/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/fragments/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/sendMail/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/feedback/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
+        // .requestMatchers(new AntPathRequestMatcher("/fragments/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/sendMail/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS");
+
         //andere URLs....
         http.headers(headers -> headers.frameOptions(FrameOptionsConfig::disable));
 
