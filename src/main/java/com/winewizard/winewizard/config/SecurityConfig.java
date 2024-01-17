@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
@@ -75,17 +76,24 @@ public class SecurityConfig {
                 		
         http.authorizeHttpRequests()
 
-        .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/wines/add")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/changeLanguage")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
+
+        .requestMatchers(new AntPathRequestMatcher("/wines/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/rating/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/admin")).hasAnyAuthority("ADMIN_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/winery/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS");
+        .requestMatchers(new AntPathRequestMatcher("/winery/**")).hasAnyAuthority ("ADMIN_STATUS", "WINERY_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/allratings/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/changeLanguage")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/admin")).hasAnyAuthority("ADMIN_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/feedback/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/fragments/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/sendMail/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS");
         //andere URLs....
         http.headers(headers -> headers.frameOptions(FrameOptionsConfig::disable));
 
         http.formLogin()
                 .loginPage("/customlogin")
-                .defaultSuccessUrl("/", true)
+                .successHandler(myAuthenticationSuccessHandler())
                 .permitAll();
 
 
@@ -108,4 +116,10 @@ public class SecurityConfig {
     		AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+        return new MySimpleUrlAuthenticationSuccessHandler();
+    }
+
 }
