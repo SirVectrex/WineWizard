@@ -78,7 +78,7 @@ public class SecurityConfig {
 
 
         .requestMatchers(new AntPathRequestMatcher("/wines/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
-        .requestMatchers(new AntPathRequestMatcher("/rating/myarea/**")).hasAnyAuthority("WINERY_STATUS")
+        .requestMatchers(new AntPathRequestMatcher("/rating/myarea/**")).hasAnyAuthority("WINERY_STATUS", "WINEWIZARD_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/rating/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/admin")).hasAnyAuthority("ADMIN_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/winery/**")).hasAnyAuthority ("ADMIN_STATUS", "WINERY_STATUS")
