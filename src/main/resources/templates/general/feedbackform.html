@@ -4,46 +4,56 @@
 
 <body th:insert="~{fragments/header}"></body>
 
-<div class="container">
-    <form th:action="@{/feedback/add}"
-          th:object="${feedback}" method="POST">
+<div class="container my-5">
+    <div class="row">
 
-        <div class="col-md-8 offset-md-2">
-            <h2 class="mb-4 text-center" th:text="#{feedback_title}">We Value Your Feedback</h2>
-            <p class="text-center mb-5" th:text="#{feedback_text}">
-                Please share your thoughts with us. Whether it's a suggestion, question, or feedback, we're here to listen and improve. Fill out the form below, and we'll get back to you as soon as we can.
-            </p>
-        </div>
+        <!-- Form Column -->
+        <div class="col-md-6">
+            <form th:action="@{/feedback/add}" th:object="${feedback}" method="POST">
+                <h2 class="mb-4" th:text="#{feedback_title}">We Value Your Feedback</h2>
+                <p th:text="#{feedback_text}">
+                    Please share your thoughts with us. Whether it's a suggestion, question, or feedback, we're here to listen and improve. Fill out the form below, and we'll get back to you as soon as we can.
+                </p>
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="name" th:text="#{Name}"></label>
-                <input class="form-control mb-3" id="name" th:placeholder="#{Enter_your_name}" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:field="*{name}" type="text"/>
-                <div class="invalid-feedback">
-                    <span th:errors="*{name}"></span>
+                <div class="form-group mb-3">
+                    <label for="name" th:text="#{Name}">Name</label>
+                    <input class="form-control" id="name" th:placeholder="#{Enter_your_name}" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:field="*{name}" type="text"/>
+                    <div class="invalid-feedback">
+                        <span th:errors="*{name}"></span>
+                    </div>
                 </div>
 
-                <label for="mail" th:text="#{Email}"></label>
-                <input class="form-control mb-3" id="mail" th:placeholder="#{Enter_your_email}" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" th:field="*{email}" type="email"/>
-                <div class="invalid-feedback">
-                    <span th:errors="*{email}"></span>
+                <div class="form-group mb-3">
+                    <label for="mail" th:text="#{Email}">Email</label>
+                    <input class="form-control" id="mail" th:placeholder="#{Enter_your_email}" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" th:field="*{email}" type="email"/>
+                    <div class="invalid-feedback">
+                        <span th:errors="*{email}"></span>
+                    </div>
                 </div>
 
-                <label for="message" th:text="#{Message}"></label>
-                <textarea class="form-control mb-3" id="message" th:placeholder="#{Type_your_message}" rows="4" th:classappend="${#fields.hasErrors('message')} ? 'is-invalid'" th:field="*{message}"></textarea>
-                <div class="invalid-feedback">
-                    <span th:errors="*{message}"></span>
+                <div class="form-group mb-3">
+                    <label for="message" th:text="#{Message}">Message</label>
+                    <textarea class="form-control" id="message" th:placeholder="#{Type_your_message}" rows="4" th:classappend="${#fields.hasErrors('message')} ? 'is-invalid'" th:field="*{message}"></textarea>
+                    <div class="invalid-feedback">
+                        <span th:errors="*{message}"></span>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" th:text="#{Submit}"></button>
-            </div>
-        </div>
-        <div th:if="${feedbackSent == true}" class="alert alert-success" role="alert">
-            <span th:text="#{Thank_you_for_your_feedback}"></span>
+                <button type="submit" class="btn btn-primary" th:text="#{Submit}">Submit</button>
+            </form>
         </div>
 
-    </form>
+        <!-- Image Column -->
+        <div class="col-md-6">
+            <img src="/images/flaschi_suchi.png" class="img-fluid" alt="Feedback Image" height="20vh">
+        </div>
+
+    </div>
+    <div th:if="${feedbackSent == true}" class="alert alert-success" role="alert">
+        <span th:text="#{Thank_you_for_your_feedback}">Thank you for your feedback!</span>
+    </div>
 </div>
+
 
 
 

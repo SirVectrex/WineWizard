@@ -72,6 +72,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/images/flaschi_die_flasche.png").permitAll()
         );
                 		
         http.authorizeHttpRequests()

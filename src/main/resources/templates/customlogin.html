@@ -13,6 +13,10 @@
                     <div th:if="${param.error}">
                         <p class="alert alert-danger">Invalid username or password</p>
                     </div>
+                    <div class="text-center">
+                        <img src="/images/flaschi_die_flasche.png" alt="Cute Wine" style="height: 150px;">
+                    </div>
+
                     <form th:action="@{/customlogin}" method="post">
                         <div class="form-group">
                             <label for="username">Username:</label>

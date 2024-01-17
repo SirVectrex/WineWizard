@@ -56,12 +56,16 @@ public class WineController {
     public String addWine(@Valid Wine wine, BindingResult result, Model model){
         if(result.hasErrors()){
             System.out.println(result.getAllErrors().toString());
-            return "/home";
+            return "redirect:/";
         }
+
+        System.out.println("Neuer wein mit typ: " + wine.getType());
+        System.out.println("Neuer wein mit ean: " + wine.getEan());
+
 
         wineService.saveWine(wine);
 
-        return "/home";
+        return "redirect:/wines/showall";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/addRating")
