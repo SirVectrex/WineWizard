@@ -3,7 +3,7 @@
 
 <body>
 
-<body th:insert="~{fragments/header}"></body>
+<div th:insert="~{fragments/header}"></div>
 
 <h1 class="title">
     Welcome to statistics of the Wine Cellar!
@@ -14,23 +14,15 @@
     <tr>
         <th>Name</th>
         <th>Type of wine</th>
-
-
-        <!-- Add more columns as needed -->
     </tr>
     </thead>
     <tbody>
     <tr th:each="wine : ${winelist}">
         <td th:text="${wine.name}"></td>
         <td th:text="${wine.type}"></td>
-
-
-        <!-- Add more data fields as needed -->
     </tr>
     </tbody>
 </table>
 
-<body th:insert="~{fragments/footer}"><body>
-
-</body>
-</body>
+<div th:insert="~{fragments/footer}">
+</div>
