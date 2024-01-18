@@ -33,9 +33,9 @@ INSERT INTO user (login, password, email, phone, active, zip_code) values ('Sigi
 INSERT INTO user (login, password, email, phone, active, zip_code) values ('Thomas', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus@email', '+4915114962996',  1, 93499);
 INSERT INTO user (login, password, email, phone, active, zip_code) values ('PetersWinery', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'petermachtwein@peter.de', '+4915114962996',  1, 93499);
 
-INSERT INTO role (description) VALUES ( 'ADMIN');
-INSERT INTO role (description) VALUES ( 'wineWizard');
-INSERT INTO role (description) VALUES ( 'winery');
+INSERT INTO role (description, id) VALUES ( 'ADMIN', 1);
+INSERT INTO role (description, id) VALUES ( 'wineWizard', 2);
+INSERT INTO role (description, id) VALUES ( 'winery', 3);
 
 INSERT INTO authority (description) VALUES ( 'ADMIN_STATUS');
 INSERT INTO authority (description) VALUES ( 'WINERY_STATUS');

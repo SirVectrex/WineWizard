@@ -108,11 +108,16 @@ public class RegisterController {
         }
 
         var defaultUser = new Role();
-        // 1L is the default winewizward user, needs to be created on DB setup
-        defaultUser.setId(1L);
+
+        if(user.isWineryUser()) {
+            // 3L is the winery user, needs to be created on DB setup
+            defaultUser.setId(3L);
+        } else{
+            // 2L is the default winewizward user, needs to be created on DB setup
+            defaultUser.setId(2L);
+        }
         user.setRoles(List.of(defaultUser));
 
-        //TODO: check if username exists already
         try {
             user = userService.createUser(user);
         } catch (DataIntegrityViolationException e) {
@@ -121,7 +126,7 @@ public class RegisterController {
         }
 
         winery.setWineryOwnerId(user.getId());
-       wineryService.saveWinery(winery);
+        wineryService.saveWinery(winery);
 
         attr.addFlashAttribute("success", "User added!");
 
