@@ -65,7 +65,7 @@ public class WineController {
 
         wineService.saveWine(wine);
 
-        return "redirect:/wines/showall";
+        return "redirect:/wines/searchWine";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/addRating")
