@@ -49,7 +49,7 @@ public class WineController {
         wine.setId((long) -1);
         model.addAttribute("wine", wine);
 
-        return "addWine";
+        return "wines/addWine";
     }
 
     @PostMapping("/add")
@@ -70,7 +70,7 @@ public class WineController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/addRating")
     public String addRating() {
-        return "rateWine";
+        return "wines/rateWine";
     }
 
     @GetMapping ("/showall")
@@ -78,17 +78,17 @@ public class WineController {
         List<Wine> allWines = wineService.getAllWines();
         model.addAttribute("winelist", allWines);
         // System.out.println(allWines.get(0).getName() );
-        return "allWines";
+        return "wines/allWines";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/add_Description")
     public String add_Description() {
-        return "wines/add_Description";
+        return "wines/addDescription";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/sendAll")
     public String sendAll() {
-        return "sendAllWines";
+        return "wines/sendAllWines";
     }
 
     @GetMapping("/searchWine")
@@ -130,7 +130,7 @@ public class WineController {
             model.addAttribute("pageSize", size);
 
 
-            return "searchWine";
+            return "wines/searchWine";
         } catch (Exception e) {
             throw e;
         }
