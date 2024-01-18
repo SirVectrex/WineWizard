@@ -1,7 +1,5 @@
 package com.winewizard.winewizard.controller;
 
-import com.winewizard.winewizard.model.WineDTO;
-import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.RatingRepositoryI;
 import com.winewizard.winewizard.repository.StatsProjectionI;
 import com.winewizard.winewizard.repository.UserRepositoryI;
@@ -11,7 +9,6 @@ import com.winewizard.winewizard.service.impl.WineServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -39,7 +36,6 @@ public class GeneralController {
         this.ratingRepositoryI = ratingRepositoryI;
         this.wineServiceImpl = wineServiceImpl;
         this.userRepository = userRepository;
-
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/allratings")
@@ -54,9 +50,7 @@ public class GeneralController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/")
     public String home(Model model) {
-
         // get users zip code from auth
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUsername = getLoggedInUsername();
 
         List<StatsProjectionI> stats =  winerepo.getStats();
@@ -91,15 +85,10 @@ public class GeneralController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
-
             return authentication.getName();
-
         }
 
         // Wenn kein Benutzer authentifiziert ist
         return "Gast";
     }
-
-
-
 }
