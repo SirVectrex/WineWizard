@@ -50,6 +50,14 @@ public class Wine implements Serializable {
     @ManyToOne
     Winery winery;
 
+    public Winery getWinery() {
+        return winery;
+    }
+
+    public void setWinery(Winery winery) {
+        this.winery = winery;
+    }
+
     public Long getId() {
         return id;
     }

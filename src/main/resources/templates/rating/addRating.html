@@ -16,6 +16,9 @@
 <div class="container mt-4">
     <h2>Rate the Wine <span th:text="${wine.getName()}">Name</span></h2>
     <form th:action="@{/rating/addRating}" method="post">
+
+
+
         <input type="hidden" name="winenumber" th:value="${wine.getId()}" />
         <div class="star-rating mb-3">
             <label for="pricerating" class="form-label" th:text="#{price_label}">Price for value:</label>

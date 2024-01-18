@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+
+<body>
+
+<div th:insert="~{fragments/header}"></div>
+
+<div class="container mt-5">
+  <h1 id="title" class="text-center title">Update Rating</h1>
+  <div class="row">
+    <!-- Left column for the image -->
+    <div class="col-md-6 d-flex align-items-center justify-content-center">
+      <img src="/images/flaschi_notepad.png" alt="Wine Image" class="img-fluid" id="image">
+    </div>
+
+    <!-- Right column for the form -->
+    <div class="col-md-6">
+      <h2 th:text="${rating.getWine().getName()}">Wine Name</h2>
+      <form th:action="@{/rating/update/{id}(id=${rating.getRatingId()})}" th:object="${rating}" method="post">
+
+        <div class="star-rating mb-3">
+          <label for="ratingTaste" class="form-label" th:text="#{taste_label}">Rating of Taste:</label>
+          <div class="stars" data-rating="ratingTaste">
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+          </div>
+          <input type="hidden" id="ratingTaste" th:field="*{ratingTaste}" name="ratingTaste">
+        </div>
+
+        <div class="star-rating mb-3">
+          <label for="ratingDesign" class="form-label" th:text="#{design_label}">Rating of Design:</label>
+          <div class="stars" data-rating="ratingDesign">
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+          </div>
+          <input type="hidden" id="ratingDesign" th:field="*{ratingDesign}" name="ratingDesign" th:value="${rating.getRatingDesign()}">
+        </div>
+
+        <div class="star-rating mb-3">
+          <label for="ratingPrice" class="form-label" th:text="#{price_label}">Rating of Price:</label>
+          <div class="stars" data-rating="ratingPrice">
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+          </div>
+          <input type="hidden" id="ratingPrice" th:field="*{ratingPrice}" name="ratingPrice">
+        </div>
+
+        <input type="hidden" th:field="*{user}">
+        <input type="hidden" th:field="*{wine}">
+        <input type="hidden" th:field="*{ratingId}">
+
+        <button type="submit" class="btn btn-primary">Update Rating</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+
+<div th:insert="~{fragments/footer}"></div>
+
+<style>
+
+  #image {
+    max-height: 50vh !important;
+  }
+
+  .star-rating .stars {
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .star-rating .stars i {
+    font-size: 1.5rem; /* Adjust the size of stars */
+    color: #ccc; /* Default star color */
+  }
+
+  .star-rating .stars i.selected {
+    color: #f39c12; /* Selected star color */
+  }
+
+  #title {
+    margin-bottom: 2rem;
+  }
+
+</style>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const container = document.querySelector('.container');
+    container.addEventListener('click', function(e) {
+      if (e.target && e.target.matches('.fa-star')) {
+        const starsEl = e.target.parentNode;
+        const ratingInput = document.getElementById(starsEl.dataset.rating);
+        const idx = Array.from(starsEl.children).indexOf(e.target);
+        if (idx >= 0) {
+          ratingInput.value = idx + 1; // Set the hidden input value
+          updateStars(starsEl, idx);
+        }
+      }
+    });
+  });
+
+  function updateStars(starsEl, idx) {
+    Array.from(starsEl.children).forEach((star, i) => {
+      star.classList.toggle('selected', i <= idx);
+    });
+  }
+</script>

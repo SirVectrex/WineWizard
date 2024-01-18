@@ -30,7 +30,7 @@
             <td th:text="${rating.getRatingPrice()}">Price Rating</td>
             <td>
                 <a th:href="@{/rating/delete(id=${rating.getRatingId()})}" class="btn btn-danger">Delete</a>
-                <a th:href="@{/rating/updaterating(id=${rating.getRatingId()})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/rating/edit/{id}(id=${rating.getRatingId()})}" class="btn btn-primary">Edit Rating</a>
             </td>
         </tr>
         </tbody>

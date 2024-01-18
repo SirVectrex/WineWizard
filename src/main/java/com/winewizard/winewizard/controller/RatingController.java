@@ -6,12 +6,12 @@ import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineProjectionI;
-import com.winewizard.winewizard.repository.WineRepositoryI;
 import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
 import com.winewizard.winewizard.service.ApiClient;
 import com.winewizard.winewizard.service.RatingServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.impl.EmailServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -163,44 +164,6 @@ public class RatingController {
         return "redirect:/rating/myratings"; // Redirect to the page showing ratings
     }
 
-    @GetMapping("/updaterating")
-    public String showUpdateRatingForm(@RequestParam("id") Long id, Model model) {
-        Rating rating = ratingService.findRatingById(id);
-        System.out.println("Updating rating for wine: " + rating.getWine().getName());
-
-        model.addAttribute("oldrating", rating);
-
-        return "rating/updaterating";
-    }
-
-    @PostMapping("/update")
-    public String updateRating(@RequestParam("id") Long id,
-                               @RequestParam("wineId") Long wineId,
-                               @RequestParam("ratingTaste") int ratingTaste,
-                               @RequestParam("ratingDesign") int ratingDesign,
-                               @RequestParam("ratingPrice") int ratingPrice) {
-        // Logic to update the rating
-        // You'll need to fetch the Wine object based on wineName or its ID if available
-        Wine wine = wineRepository.findById(wineId).orElse(null);
-
-        // get current user through authentication
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Long userid = userRepository.findByLoginIgnoreCase(username).get().getId();
-        User user = userRepository.findById(userid).orElse(null);
-
-        Rating rating = new Rating();
-        rating.setId(id);
-        rating.setWine(wine);
-        rating.setUser(user);
-        rating.setRatingTaste(ratingTaste);
-        rating.setRatingDesign(ratingDesign);
-        rating.setRatingPrice(ratingPrice);
-
-
-        ratingService.updateRating(rating); // Implement this method in your service
-        return "redirect:/rating/myratings"; // Redirect to the ratings list view after update
-    }
 
 
     @GetMapping("/myarea")
@@ -237,6 +200,26 @@ public class RatingController {
 
         // Wenn kein Benutzer authentifiziert ist
         return "Gast";
+    }
+
+
+    @GetMapping("/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Rating rating = ratingService.findRatingById(id);
+
+        model.addAttribute("rating", rating);
+        return "rating/updateRating";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") long id, @Valid Rating rating,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "redirect:/rating/myratings";
+        }
+
+        ratingService.saveRating(rating);
+        return "redirect:/rating/myratings";
     }
 
 

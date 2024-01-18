@@ -77,7 +77,7 @@ public class SecurityConfig {
                 		
         http.authorizeHttpRequests()
 
-
+        .requestMatchers(new AntPathRequestMatcher("/wines/edit/**")).hasAnyAuthority("WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/wines/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/rating/myarea/**")).hasAnyAuthority("WINERY_STATUS", "WINEWIZARD_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/rating/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS")

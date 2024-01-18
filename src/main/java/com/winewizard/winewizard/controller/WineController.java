@@ -3,6 +3,7 @@ package com.winewizard.winewizard.controller;
 import com.winewizard.winewizard.model.Bookmark;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
+import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.repository.BookmarkRepository;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineRepositoryI;
@@ -182,6 +183,29 @@ public class WineController {
         wines.forEach(wine -> wine.setBookmarked(true));
 
         return wines;
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Wine wine = wineRepositoryI.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+        
+        model.addAttribute("wine", wine);
+        return "wines/updateWine";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateUser(@PathVariable("id") long id, @Valid Wine wine,
+                             BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "redirect:/winery/statistics";
+        }
+
+
+
+        wineRepositoryI.save(wine);
+        return "redirect:/winery/statistics";
     }
 
 }
