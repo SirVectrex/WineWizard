@@ -72,7 +72,7 @@ public class GeneralController {
     @RequestMapping(method= RequestMethod.GET, value = "/add")
     public String addWine() {
         // folder general/statistics.html
-        return "wines/add_wine";
+        return "addWine";
     }
 
     @RequestMapping(value = "/feedback", method = RequestMethod.GET)

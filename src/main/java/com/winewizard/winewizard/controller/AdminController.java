@@ -47,7 +47,7 @@ public class AdminController {
 
         model.addAttribute("usersByRole", usersByRole);
 
-        return "general/user-info";
+        return "userInfo";
     }
 
 

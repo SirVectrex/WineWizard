@@ -128,7 +128,7 @@ public class EmailServiceImpl implements EmailServiceI {
             helper.setSubject("WineWizard - Our best wines");
 
             // HTML content for the email body
-            String htmlBody = htmlFileReaderService.readHtmlFile("classpath:templates/general/topwine_list.html");
+            String htmlBody = htmlFileReaderService.readHtmlFile("classpath:templates/general/topWineList.html");
 
             List<WineProjectionI> winelist = wineService.getWineRatings();
 
