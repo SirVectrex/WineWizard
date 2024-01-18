@@ -48,6 +48,7 @@ public class User implements Serializable{
 	private String passwordRepeat;
 		
 	@NotBlank(message = "Email is mandatory")
+	//TODO: unique and check on sign in
 	private String email;
 
 	@NotBlank(message = "Phone Number is mandatory")
