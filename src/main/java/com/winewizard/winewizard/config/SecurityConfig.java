@@ -71,8 +71,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/register")).permitAll());
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").permitAll()
-                .requestMatchers("/images/flaschi_die_flasche.png").permitAll()
+                .requestMatchers("/api/**","/images/flaschi_die_flasche.png","/api/*").permitAll()
         );
                 		
         http.authorizeHttpRequests()

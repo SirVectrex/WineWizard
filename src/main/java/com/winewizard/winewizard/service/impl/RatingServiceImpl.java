@@ -39,6 +39,7 @@ public class RatingServiceImpl implements RatingServiceI {
         return ratingRepository.findAllByUserId(userId);
     }
 
+
     @Override
     public void deleteRatingById(Long id) {
         ratingRepository.deleteById(id);

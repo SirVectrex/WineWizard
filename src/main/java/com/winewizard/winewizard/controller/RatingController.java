@@ -1,7 +1,6 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.model.Rating;
-import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.UserRepositoryI;
@@ -221,10 +220,6 @@ public class RatingController {
         ratingService.saveRating(rating);
         return "redirect:/rating/myratings";
     }
-
-
-
-
 
 }
 

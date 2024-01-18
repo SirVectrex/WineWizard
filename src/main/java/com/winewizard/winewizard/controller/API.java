@@ -27,7 +27,6 @@ public class API {
         this.wineRepositoryI = wineRepositoryI;
         this.userRepository = userRepository;
         this.ratingService = ratingService;
-
     }
 
     @GetMapping("/topwines")
@@ -39,73 +38,55 @@ public class API {
     public List<Wine> getAllWines() { return wineRepositoryI.findAll();}
 
     @PostMapping("/addRating")
-    public String addRating(@RequestParam("user_id") Long userId,
-                            @RequestParam("winenumber") Long winenumber,
-                            @RequestParam("designrating") int designrating,
-                            @RequestParam("pricerating") int pricerating,
-                            @RequestParam("tasterating") int tasterating) {
+    public String addRating(@RequestBody Rating rating) {
 
-        Optional<Wine> wine = wineRepositoryI.findById(winenumber);
-        Optional<User> user = userRepository.findById(userId);
+        // get user from database
+        Optional<User> user = userRepository.findById(rating.getUser().getId());
 
-        if (!wine.isPresent() || !user.isPresent()) {
-            // Handle error, such as returning an error message or status code
-            return "Wine or User not found";
-        }
+        // set user in rating
+        rating.setUser(user.get());
 
-        Rating ratingObject = new Rating();
-        ratingObject.setRatingDesign(designrating);
-        ratingObject.setRatingPrice(pricerating);
-        ratingObject.setRatingTaste(tasterating);
-        ratingObject.setWine(wine.get());
-        ratingObject.setUser(user.get());
+        // save rating
+        ratingService.saveRating(rating);
 
-        // Save the rating object using your service or repository
-        ratingService.saveRating(ratingObject);
         return "Rating added successfully";
     }
 
-    @PostMapping("/updateRating")
-    public String updateRating(@RequestParam("rating_id") Long ratingId,
-                               @RequestParam("designrating") int designrating,
-                               @RequestParam("pricerating") int pricerating,
-                               @RequestParam("tasterating") int tasterating) {
+    @PutMapping("/updateRating")
+    public String updateRating(@RequestBody Rating rating) {
 
-        Rating rating = ratingService.findRatingById(ratingId);
+        // get user from database
+        Optional<User> user = userRepository.findById(rating.getUser().getId());
 
-        if (rating == null) {
-            // Handle error, such as returning an error message or status code
-            return "Rating not found";
-        }
+        // set user in rating
+        rating.setUser(user.get());
 
-        rating.setRatingDesign(designrating);
-        rating.setRatingPrice(pricerating);
-        rating.setRatingTaste(tasterating);
-
-        // Save the updated rating object using your service or repository
-        ratingService.saveRating(rating);
+        // save rating
+        ratingService.updateRating(rating);
 
         return "Rating updated successfully";
     }
 
-    @PostMapping("/deleteRating")
-    public String deleteRating(@RequestParam("rating_id") Long ratingId) {
+
+    @GetMapping("/deleteRating/{rating_id}")
+    public String deleteRating(@PathVariable("rating_id") Long ratingId) {
 
         Rating rating = ratingService.findRatingById(ratingId);
 
-        if (rating == null) {
-            // Handle error, such as returning an error message or status code
+        System.out.println(rating);
+
+        try {
+            ratingService.deleteRatingById(ratingId);
+        } catch (Exception e) {
             return "Rating not found";
         }
-
-        // Delete the rating object using your service or repository
-        ratingService.deleteRatingById(ratingId);
 
         return "Rating deleted successfully";
     }
 
-    @GetMapping("/getRating")
-    public Rating getRating(@RequestParam("rating_id") Long ratingId) {
+
+    @GetMapping("/getRating/{rating_id}")
+    public Rating getRating(@PathVariable("rating_id") Long ratingId) {
 
         Rating rating = ratingService.findRatingById(ratingId);
 
@@ -113,14 +94,23 @@ public class API {
             // Handle error, such as returning an error message or status code
             return null;
         }
+        // remove user object in rating for security reasons
+        rating.getUser().setPassword(null);
 
         return rating;
     }
 
-    @GetMapping("/getRatingsByUser")
-    public List<Rating> getRatingsByUser(@RequestParam("user_id") Long userId) {
+    @GetMapping("/getRatingsByUser/{user_id}")
+    public List<Rating> getRatingsByUser(@PathVariable("user_id") Long userId) {
+
+        System.out.println("LOG: Getting ratings for user with id: " + userId);
 
         List<Rating> ratings = ratingService.getAllRatingsByUserId(userId);
+
+        // set user password to null for security reasons
+        for (Rating rating : ratings) {
+            rating.getUser().setPassword(null);
+        }
 
         if (ratings == null) {
             // Handle error, such as returning an error message or status code
