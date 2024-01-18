@@ -16,7 +16,7 @@ INSERT INTO wine (name, type, ean, description, bookmarked) VALUES ('Rosé de Pr
 INSERT INTO address (postal_code, city, street, house_number) VALUES ('93333', 'Bad Goegging', 'Winestreet', 6);
 
 -- winery(id, name, address_id)
-INSERT INTO winery (winery_name, url_identifier) VALUES ('Schottis Winery', '2520ff3c-8f72-11ee-b9d1-0242ac120002');
+INSERT INTO winery (winery_name, url_identifier, winery_owner_id) VALUES ('Schottis Winery', '2520ff3c-8f72-11ee-b9d1-0242ac120002', 4);
 
 INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93333, 'DE', 'Neistod', 'Bayern');
 INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93499, 'DE', 'Zandt', 'Bayern');
