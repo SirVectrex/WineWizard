@@ -41,7 +41,7 @@
 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="login">E-Mail </label>
+                                        <label for="mail">E-Mail </label>
                                         <input type="text" class="form-control" id="mail" placeholder="E-Mail"
                                                autofocus="autofocus" th:field="*{email}"
                                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'" />
@@ -58,7 +58,7 @@
                                                autofocus="autofocus" th:field="*{phone}"
                                                th:classappend="${#fields.hasErrors('phone')} ? 'is-invalid'" />
                                         <div class="invalid-feedback">
-                                            <span th:errors="*{login}"></span>
+                                            <span th:errors="*{phone}"></span>
                                         </div>
                                     </div>
                                 </div>
