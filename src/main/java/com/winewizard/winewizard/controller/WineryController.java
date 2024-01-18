@@ -18,16 +18,18 @@ import org.springframework.web.bind.annotation.*;
 public class WineryController {
 
     private WineryServiceI wineryService;
+    private WineServiceI wineServiceI;
 
-    public WineryController(WineryServiceI wineService){
+    public WineryController(WineryServiceI wineryService, WineServiceI wineService) {
         super();
-        this.wineryService = wineService;
+        this.wineryService = wineryService;
+        this.wineServiceI = wineService;
     }
 
-    @GetMapping ("/{wineryIdentifier}")
-    public String getWine(Model model, @PathVariable("wineryIdentifier")String identifier){
+    @GetMapping("/{wineryIdentifier}")
+    public String getWine(Model model, @PathVariable("wineryIdentifier") String identifier) {
         Winery winery = wineryService.getByUrlIdent(identifier);
-        if(winery == null) {
+        if (winery == null) {
             System.out.println("Warning: No winery found with ident: " + identifier);
             return "/home";
         }
@@ -37,26 +39,19 @@ public class WineryController {
         return "/winery/profile";
     }
 
-    @GetMapping ("/statistics")
-    public String getStatistics(Model model){
+    @GetMapping("/statistics")
+    public String getStatistics(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication != null && authentication.isAuthenticated()) {
-            var ownerName =  authentication.getName();
+            var ownerName = authentication.getName();
             var winery = wineryService.getByWineryByWineryOwnerName(ownerName);
-            //TODO: get wines of winery
-            return "asdf";
+            var allWines = wineServiceI.getAllWinesOfWinery(winery);
+            //TODO: display the wines in frontend + Klassen umbenennen
+            model.addAttribute("allWines", allWines);
+            return "/winery/statistics";
         }
-
-       // Winery winery = wineryService.getByUrlIdent(identifier);
-       // if(winery == null) {
-      //      System.out.println("Warning: No winery found with ident: " + identifier);
-            return "/home";
-      //  }
-      //  model.addAttribute("emailDetails", new EmailDetails());
-     //   model.addAttribute("winery", winery);
-
-       // return "/winery/profile";
+        System.out.println("Error: Auth error");
+        return "/error/general";
     }
 
 

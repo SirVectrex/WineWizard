@@ -1,6 +1,7 @@
 package com.winewizard.winewizard.service;
 
 import com.winewizard.winewizard.model.Wine;
+import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.repository.WineProjectionI;
 
 import java.util.List;
@@ -12,5 +13,7 @@ public interface WineServiceI {
     Wine saveWine(Wine wine);
 
     List<WineProjectionI> getWineRatings();
+
+    List<Wine> getAllWinesOfWinery(Winery winery);
 
 }
