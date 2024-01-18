@@ -17,8 +17,4 @@ public interface WineRepositoryI extends JpaRepository<Wine, Long> {
     Wine findByNameContainingIgnoreCase(String searchTerm);
 
     List<Wine> findAllById(Long id);
-
-
-
-
 }

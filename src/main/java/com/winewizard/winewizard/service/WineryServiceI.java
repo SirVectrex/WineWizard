@@ -13,4 +13,6 @@ public interface WineryServiceI {
 
     Winery getByUrlIdent(String ident);
 
+    Winery getByWineryByWineryOwnerName(String name);
+
 }

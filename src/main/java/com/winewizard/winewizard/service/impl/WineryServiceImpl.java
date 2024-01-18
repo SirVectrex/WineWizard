@@ -1,7 +1,7 @@
 package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.Winery;
-import com.winewizard.winewizard.repository.WineryRepository;
+import com.winewizard.winewizard.repository.WineryRepositoryI;
 import com.winewizard.winewizard.service.WineryServiceI;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +13,9 @@ import java.util.UUID;
 public class WineryServiceImpl implements WineryServiceI {
 
     // Provides the most important CRUD-Functions
-    private WineryRepository wineryRepository;
+    private final WineryRepositoryI wineryRepository;
 
-    public WineryServiceImpl(WineryRepository wineRepository){
+    public WineryServiceImpl(WineryRepositoryI wineRepository){
         super();
         this.wineryRepository = wineRepository;
     }
@@ -34,4 +34,11 @@ public class WineryServiceImpl implements WineryServiceI {
     public Winery getByUrlIdent(String ident) {
         return wineryRepository.findByUrlIdentifier(UUID.fromString(ident));
     }
+
+    @Override
+    public Winery getByWineryByWineryOwnerName(String name) {
+        return wineryRepository.findWineryByWineryOwnerName(name);
+    }
+
+
 }
