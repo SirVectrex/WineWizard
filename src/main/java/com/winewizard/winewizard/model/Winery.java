@@ -1,7 +1,6 @@
 package com.winewizard.winewizard.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -15,14 +14,16 @@ public class Winery implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String wineryName;
+
+    private Long wineryOwnerId;
 
     @GeneratedValue
     private UUID urlIdentifier;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address address;
+    //@OneToOne(cascade = CascadeType.ALL)
+   // @JoinColumn(name = "address_id", referencedColumnName = "id")
+   // private Address address;
 
     @OneToMany
     private Collection<Wine> wines;
@@ -36,12 +37,16 @@ public class Winery implements Serializable {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getWineryName() {
+        return wineryName;
+    }
+
+    public void setWineryName(String name) {
+        this.wineryName = name;
     }
 
     public UUID getUrlIdentifier() {
@@ -57,13 +62,13 @@ public class Winery implements Serializable {
         this.urlIdentifier = urlIdentifier;
     }
 
-    public Address getAddress() {
-        return address;
-    }
+    //public Address getAddress() {
+     //   return address;
+    //}
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+    //public void setAddress(Address address) {
+     //   this.address = address;
+    //}
 
     public Collection<Wine> getWines() {
         return wines;
@@ -71,5 +76,13 @@ public class Winery implements Serializable {
 
     public void setWines(Collection<Wine> wines) {
         this.wines = wines;
+    }
+
+    public Long getWineryOwnerId() {
+        return wineryOwnerId;
+    }
+
+    public void setWineryOwnerId(Long wineryOwnerId) {
+        this.wineryOwnerId = wineryOwnerId;
     }
 }

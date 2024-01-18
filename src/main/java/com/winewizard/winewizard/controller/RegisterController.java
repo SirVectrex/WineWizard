@@ -2,10 +2,12 @@ package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.model.Role;
 import com.winewizard.winewizard.model.User;
+import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.service.ApiClientZipCodes;
 import com.winewizard.winewizard.service.BookmarkServiceI;
 import com.winewizard.winewizard.service.RatingServiceI;
+import com.winewizard.winewizard.service.WineryServiceI;
 import com.winewizard.winewizard.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,22 +28,29 @@ import java.util.Optional;
 public class RegisterController {
     private final UserServiceImpl userService;
     private final RatingServiceI ratingServiceI;
-
     private final BookmarkServiceI bookmarkServiceI;
+    private final WineryServiceI wineryService;
 
 
     @Autowired
-    public RegisterController(UserServiceImpl userService, RatingServiceI ratingServiceI, BookmarkServiceI bookmarkServiceI) {
+    public RegisterController(UserServiceImpl userService, RatingServiceI ratingServiceI, BookmarkServiceI bookmarkServiceI, WineryServiceI wineryService) {
         this.userService = userService;
         this.ratingServiceI = ratingServiceI;
         this.bookmarkServiceI = bookmarkServiceI;
+        this.wineryService = wineryService;
     }
 
-
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String showRegisterForm(Model model) {
+    public String showRegisterFormWinery(@RequestParam(required = false,  defaultValue = "false") Boolean isWineryUser, Model model) {
         User user = new User();
         user.setId((long) -1);
+        user.setWineryUser(isWineryUser);
+        if(isWineryUser)
+        {
+            Winery winery = new Winery();
+            winery.setId((long) -1);
+            model.addAttribute("winery", winery);
+        }
         model.addAttribute("user", user);
 
         return "general/register";
@@ -51,13 +58,22 @@ public class RegisterController {
 
     @PostMapping(value = "/register")
     public String addUser(@ModelAttribute @Valid User user,
+                          @ModelAttribute @Valid  Winery winery,
                              BindingResult result,
                              RedirectAttributes attr){
+        if( user.isWineryUser()) {
+            if(winery.getWineryName().isBlank()) {
+                result.rejectValue("wineryName", "no_winery_name");
+            }
+        }
 
+        if(!user.isOlderThanSixteen()) {
+            result.rejectValue("olderThanSixteen", "no_age_confirmation");
+        }
 
         boolean invalidZipCode = false;
 
-        if(user.getZipCodeInput().isEmpty() || user.getZipCodeInput().length() != 5 ){
+        if(user.getZipCodeInput().length() != 5){
             invalidZipCode = true;
         }
 
@@ -67,17 +83,18 @@ public class RegisterController {
             invalidZipCode = true;
         }
 
+        ZipCode zipCode = null;
         if(!invalidZipCode) {
             ApiClientZipCodes api = new ApiClientZipCodes();
-            ZipCode zipCode = api.getGermanZipInformation(user.getZipCodeInput());
+            zipCode = api.getGermanZipInformation(user.getZipCodeInput());
+        }
 
-            if (zipCode == null) {
-                result.rejectValue("zipCodeInput", "invalid_zip_code");
-            } else {
-                userService.createZipCode(zipCode);
-                user.setZipCode(zipCode);
+        if (zipCode == null) {
+            result.rejectValue("zipCodeInput", "invalid_zip_code");
+        } else {
+            userService.createZipCode(zipCode);
+            user.setZipCode(zipCode);
 
-            }
         }
 
         if(user.getPasswordRepeat().isEmpty() || !user.getPassword().equals(user.getPasswordRepeat())){
@@ -94,8 +111,11 @@ public class RegisterController {
         // 1L is the default winewizward user, needs to be created on DB setup
         defaultUser.setId(1L);
         user.setRoles(List.of(defaultUser));
+ //TODO: check if username exists already
+        user = userService.createUser(user);
 
-        userService.createUser(user);
+        winery.setWineryOwnerId(user.getId());
+        wineryService.saveWinery(winery);
 
         attr.addFlashAttribute("success", "User added!");
         return "redirect:/customlogin";

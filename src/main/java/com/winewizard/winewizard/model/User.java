@@ -51,7 +51,12 @@ public class User implements Serializable{
 
 	@NotBlank(message = "Phone Number is mandatory")
 	private  String phone;
-	
+
+	@Transient
+	private boolean olderThanSixteen;
+	@Transient
+	private boolean wineryUser;
+
 	private boolean active = true;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -69,6 +74,14 @@ public class User implements Serializable{
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public boolean isWineryUser() {
+		return wineryUser;
+	}
+
+	public void setWineryUser(boolean wineryUser) {
+		this.wineryUser = wineryUser;
 	}
 
 	public Long getId() {
@@ -113,6 +126,14 @@ public class User implements Serializable{
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public boolean isOlderThanSixteen() {
+		return olderThanSixteen;
+	}
+
+	public void setOlderThanSixteen(boolean olderThanSixteen) {
+		this.olderThanSixteen = olderThanSixteen;
 	}
 
 	public boolean isActive() {

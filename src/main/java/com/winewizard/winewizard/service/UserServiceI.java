@@ -12,7 +12,7 @@ public interface UserServiceI {
 
     public void deleteUserById(Long userId);
 
-    public void createUser(User user);
+    public User createUser(User user);
 
     public void createZipCode(ZipCode zipCode);
 }

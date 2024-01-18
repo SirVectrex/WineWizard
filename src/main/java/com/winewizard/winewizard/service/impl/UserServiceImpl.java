@@ -36,11 +36,11 @@ public class UserServiceImpl implements UserServiceI {
     }
 
     @Override
-    public void createUser(User user) {
+    public User createUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

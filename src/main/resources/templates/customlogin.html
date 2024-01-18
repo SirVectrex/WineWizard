@@ -30,7 +30,11 @@
                     </form>
 
                     <label>Create a new account</label>
-                    <a th:href="@{/register}" class="btn btn-primary btn-block ">Register</a>
+                    <br/>
+                    <a th:href="@{/register}" class="btn btn-primary btn-block ">Register as a user</a>
+                    <a th:href="@{/register(isWineryUser='true')}" class="btn btn-primary btn-block ">Register as a new winery</a>
+
+
 
                 </div>
             </div>
