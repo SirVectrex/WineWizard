@@ -29,6 +29,7 @@ public class User implements Serializable{
 	@NotBlank(message = "username is mandatory")
 	//TODO: check if contains blank
 	@Size(min = 5, max = 50, message ="Username must have at least 5 characters")
+	@Column(unique = true)
 	private String login;
 
 

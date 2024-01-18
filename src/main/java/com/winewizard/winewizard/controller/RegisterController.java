@@ -11,6 +11,7 @@ import com.winewizard.winewizard.service.WineryServiceI;
 import com.winewizard.winewizard.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,17 +59,18 @@ public class RegisterController {
 
     @PostMapping(value = "/register")
     public String addUser(@ModelAttribute @Valid User user,
+                          BindingResult bindingResultUser,
                           @ModelAttribute @Valid  Winery winery,
-                             BindingResult result,
+                             BindingResult bindingResultUserWinery,
                              RedirectAttributes attr){
         if( user.isWineryUser()) {
             if(winery.getWineryName().isBlank()) {
-                result.rejectValue("wineryName", "no_winery_name");
-            }
+                bindingResultUserWinery.rejectValue("wineryName",  "no_winery_name");
+           }
         }
 
         if(!user.isOlderThanSixteen()) {
-            result.rejectValue("olderThanSixteen", "no_age_confirmation");
+            bindingResultUser.rejectValue("olderThanSixteen", "no_age_confirmation");
         }
 
         boolean invalidZipCode = false;
@@ -90,7 +92,7 @@ public class RegisterController {
         }
 
         if (zipCode == null) {
-            result.rejectValue("zipCodeInput", "invalid_zip_code");
+            bindingResultUser.rejectValue("zipCodeInput", "invalid_zip_code");
         } else {
             userService.createZipCode(zipCode);
             user.setZipCode(zipCode);
@@ -98,12 +100,10 @@ public class RegisterController {
         }
 
         if(user.getPasswordRepeat().isEmpty() || !user.getPassword().equals(user.getPasswordRepeat())){
-            result.rejectValue("passwordRepeat", "password_not_equal");
+            bindingResultUser.rejectValue("passwordRepeat", "password_not_equal");
         }
 
-        if (result.hasErrors()) {
-            System.out.println(result.getErrorCount());
-            System.out.println(result.getAllErrors());
+        if (bindingResultUser.hasErrors() || bindingResultUserWinery.hasErrors()) {
             return "general/register";
         }
 
@@ -111,13 +111,20 @@ public class RegisterController {
         // 1L is the default winewizward user, needs to be created on DB setup
         defaultUser.setId(1L);
         user.setRoles(List.of(defaultUser));
- //TODO: check if username exists already
-        user = userService.createUser(user);
+
+        //TODO: check if username exists already
+        try {
+            user = userService.createUser(user);
+        } catch (DataIntegrityViolationException e) {
+            bindingResultUser.rejectValue("login", "user_name_already_exists");
+            return "general/register";
+        }
 
         winery.setWineryOwnerId(user.getId());
-        wineryService.saveWinery(winery);
+       wineryService.saveWinery(winery);
 
         attr.addFlashAttribute("success", "User added!");
+
         return "redirect:/customlogin";
     }
 
