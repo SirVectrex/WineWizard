@@ -13,7 +13,9 @@
         <!-- Form Column -->
         <div class="col-md-6">
             <form th:action="@{/wines/add}" th:object="${wine}" method="POST">
-                <h2 class="mb-4">Add New Wine</h2>
+                <h2 class="mb-4" th:text="#{Wine_add_title}">Add New Wine</h2>
+
+                <span th:text="#{Wine_add_desc}"> </span>
 
                 <!-- Name Field -->
                 <div class="form-group mb-3">
@@ -26,7 +28,7 @@
 
                 <!-- Type Field -->
                 <div class="form-group mb-3">
-                    <label for="type">Type</label>
+                    <label for="type" th:text="#{Type}">Type</label>
                     <input class="form-control" id="type" placeholder="Wine type" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid'" th:field="*{type}" type="text"/>
                     <div class="invalid-feedback">
                         <span th:errors="*{type}"></span>
@@ -35,7 +37,7 @@
 
                 <!-- EAN Field -->
                 <div class="form-group mb-3">
-                    <label for="ean">EAN</label>
+                    <label for="ean" th:text="#{EAN}">EAN</label>
                     <input class="form-control" id="ean" placeholder="Wine EAN" th:classappend="${#fields.hasErrors('ean')} ? 'is-invalid'" th:field="*{ean}" type="text"/>
                     <div class="invalid-feedback">
                         <span th:errors="*{ean}"></span>
@@ -44,7 +46,7 @@
 
                 <!-- Description Field -->
                 <div class="form-group mb-3">
-                    <label for="description">EAN</label>
+                    <label for="description" th:text="#{Description}"}>Description</label>
                     <input class="form-control" id="description" placeholder="Wine description" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'" th:field="*{description}" type="text"/>
                     <div class="invalid-feedback">
                         <span th:errors="*{description}"></span>
@@ -52,7 +54,7 @@
                 </div>
 
                 <input type="hidden" id="id" th:field="*{id}">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary" th:text="#{Save}">Save</button>
             </form>
         </div>
     </div>

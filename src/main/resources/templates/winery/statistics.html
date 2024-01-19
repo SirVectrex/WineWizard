@@ -6,14 +6,16 @@
 <div th:insert="~{fragments/header}"></div>
 
 <div class="container mt-5">
-    <h1 class="text-center">Your wines!</h1>
+    <h1 class="text-center" th:text="#{Your_Wines}">Your wines!</h1>
+
+    <span th:text="#{Your_Wines_desc}"></span>
 
     <table class="table table-striped mt-5">
         <thead class="thead-dark">
         <tr>
-            <th>Name</th>
-            <th>Type of wine</th>
-            <th>Description</th>
+            <th th:text="#{Name}">Name</th>
+            <th th:text="#{Type}">Type of wine</th>
+            <th th:text="#{Description}">Description</th>
             <th></th>
         </tr>
         </thead>
@@ -23,7 +25,7 @@
             <td th:text="${wine.type}"></td>
             <td th:text="${wine.description}"></td>
             <td>
-                <a th:href="@{/wines/edit/{id}(id=${wine.getId()})}" class="btn btn-primary">Edit wine</a>
+                <a th:href="@{/wines/edit/{id}(id=${wine.getId()})}" th:text="#{Edit}" class="btn btn-primary">Edit wine</a>
             </td>
         </tr>
         </tbody>

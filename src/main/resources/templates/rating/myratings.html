@@ -7,19 +7,23 @@
 <!-- content goes here -->
 <div class="container">
 
+    <h2 th:text="#{My_Ratings}"></h2>
+
+    <span th:text="#{My_Ratings_desc}"></span>
+
     <div th:if="${#lists.isEmpty(ratings)}">
-        <h2>You have not rated any wines yet.</h2>
+        <h2 th:text="#{No_Ratings}">You have not rated any wines yet.</h2>
 
     </div>
 
     <table th:if="${not #lists.isEmpty(ratings)}" class="table">
         <thead>
         <tr>
-            <th>Wine Name</th>
-            <th>Taste Rating</th>
-            <th>Design Rating</th>
-            <th>Price Rating</th>
-            <th>Actions</th>
+            <th th:text="#{Name}">Wine Name</th>
+            <th th:text="#{Taste_Rating}">Taste Rating</th>
+            <th th:text="#{Design_Rating}">Design Rating</th>
+            <th th:text="#{Price_Rating}">Price Rating</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -29,8 +33,8 @@
             <td th:text="${rating.getRatingDesign()}">Design Rating</td>
             <td th:text="${rating.getRatingPrice()}">Price Rating</td>
             <td>
-                <a th:href="@{/rating/delete(id=${rating.getRatingId()})}" class="btn btn-danger">Delete</a>
-                <a th:href="@{/rating/edit/{id}(id=${rating.getRatingId()})}" class="btn btn-primary">Edit Rating</a>
+                <a th:href="@{/rating/delete(id=${rating.getRatingId()})}" class="btn btn-danger" th:text="#{Delete}">Delete</a>
+                <a th:href="@{/rating/edit/{id}(id=${rating.getRatingId()})}" class="btn btn-primary" th:text="#{Edit}">Edit Rating</a>
             </td>
         </tr>
         </tbody>

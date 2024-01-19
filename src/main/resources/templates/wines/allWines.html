@@ -5,15 +5,16 @@
 
 <div th:insert="~{fragments/header}"></div>
 
-<h1 class="title">
-    Welcome to statistics of the Wine Cellar!
+<h1 class="title" th:text="#{Welcome_to_the_Wine_Cellar}">
 </h1>
+
+<span th:text="#{Welcome_to_the_Wine_Cellar_desc}">
 
 <table class="table table-striped">
     <thead class="thead-dark">
     <tr>
-        <th>Name</th>
-        <th>Type of wine</th>
+        <th th:text="#{Name}">Name</th>
+        <th th:text="#{Type}">Type of wine</th>
     </tr>
     </thead>
     <tbody>

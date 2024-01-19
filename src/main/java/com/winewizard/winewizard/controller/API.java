@@ -37,7 +37,28 @@ public class API {
     @GetMapping("/allwines")
     public List<Wine> getAllWines() { return wineRepositoryI.findAll();}
 
-    @PostMapping("/addRating")
+    @GetMapping("/ratings/{rating_id}")
+    public Rating getRating_by_id(@PathVariable("rating_id") String rating_id) {
+
+        Rating rating = ratingService.findRatingById(Long.valueOf(rating_id));
+
+        if (rating == null) {
+            // Handle error, such as returning an error message or status code
+            return null;
+        }
+        // remove user object in rating for security reasons
+        rating.getUser().setPassword(null);
+
+        // set user.role to null for security reasons
+        rating.getUser().setRoles(null);
+
+        System.out.println(rating);
+
+        return rating;
+    }
+
+
+    @PostMapping("/ratings")
     public String addRating(@RequestBody Rating rating) {
 
         // get user from database
@@ -52,7 +73,7 @@ public class API {
         return "Rating added successfully";
     }
 
-    @PutMapping("/updateRating")
+    @PutMapping("/ratings")
     public String updateRating(@RequestBody Rating rating) {
 
         // get user from database
@@ -68,48 +89,17 @@ public class API {
     }
 
 
-    @GetMapping("/deleteRating/{rating_id}")
-    public String deleteRating(@PathVariable("rating_id") Long ratingId) {
-
-        Rating rating = ratingService.findRatingById(ratingId);
-
-        System.out.println(rating);
-
-        try {
-            ratingService.deleteRatingById(ratingId);
-        } catch (Exception e) {
-            return "Rating not found";
-        }
-
-        return "Rating deleted successfully";
-    }
-
-
-    @GetMapping("/getRating/{rating_id}")
-    public Rating getRating(@PathVariable("rating_id") Long ratingId) {
-
-        Rating rating = ratingService.findRatingById(ratingId);
-
-        if (rating == null) {
-            // Handle error, such as returning an error message or status code
-            return null;
-        }
-        // remove user object in rating for security reasons
-        rating.getUser().setPassword(null);
-
-        return rating;
-    }
-
-    @GetMapping("/getRatingsByUser/{user_id}")
-    public List<Rating> getRatingsByUser(@PathVariable("user_id") Long userId) {
+    @GetMapping("/ratingsByUser/{user_id}")
+    public List<Rating> getRatingsByUser(@PathVariable("user_id") String userId) {
 
         System.out.println("LOG: Getting ratings for user with id: " + userId);
 
-        List<Rating> ratings = ratingService.getAllRatingsByUserId(userId);
+        List<Rating> ratings = ratingService.getAllRatingsByUserId(Long.valueOf(userId));
 
-        // set user password to null for security reasons
+        // set user password and role to null for security reasons
         for (Rating rating : ratings) {
             rating.getUser().setPassword(null);
+            rating.getUser().setRoles(null);
         }
 
         if (ratings == null) {

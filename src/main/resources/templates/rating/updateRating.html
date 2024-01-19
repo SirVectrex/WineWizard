@@ -6,7 +6,8 @@
 <div th:insert="~{fragments/header}"></div>
 
 <div class="container mt-5">
-  <h1 id="title" class="text-center title">Update Rating</h1>
+  <h1 id="title" class="text-center title" th:text="#{Update_rating}">Update Rating</h1>
+
   <div class="row">
     <!-- Left column for the image -->
     <div class="col-md-6 d-flex align-items-center justify-content-center">
@@ -58,7 +59,7 @@
         <input type="hidden" th:field="*{wine}">
         <input type="hidden" th:field="*{ratingId}">
 
-        <button type="submit" class="btn btn-primary">Update Rating</button>
+        <button type="submit" class="btn btn-primary" th:text="#{Update}">Update Rating</button>
       </form>
     </div>
   </div>

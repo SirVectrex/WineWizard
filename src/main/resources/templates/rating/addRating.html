@@ -14,11 +14,15 @@
 
 
 <div class="container mt-4">
-    <h2>Rate the Wine <span th:text="${wine.getName()}">Name</span></h2>
+    <h2>
+        <span th:text="#{Rate_wine}">Rate</span>
+        <span th:text="${wine.getName()}">Name</span>
+    </h2>
+
+    <span th:text="#{Rate_wine_desc}"></span>
+
+
     <form th:action="@{/rating/addRating}" method="post">
-
-
-
         <input type="hidden" name="winenumber" th:value="${wine.getId()}" />
         <div class="star-rating mb-3">
             <label for="pricerating" class="form-label" th:text="#{price_label}">Price for value:</label>
@@ -56,7 +60,7 @@
             <input type="hidden" id="tasterating" name="tasterating" value="0">
         </div>
         <!-- Repeat for other ratings -->
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" th:text="#{Submit}" >Submit</button>
     </form>
 </div>
 

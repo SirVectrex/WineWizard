@@ -69,10 +69,6 @@ public class WineController {
         return "redirect:/wines/searchWine";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/addRating")
-    public String addRating() {
-        return "wines/rateWine";
-    }
 
     @GetMapping ("/showall")
     public String showAll(Model model) {
@@ -82,15 +78,6 @@ public class WineController {
         return "wines/allWines";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/add_Description")
-    public String add_Description() {
-        return "wines/addDescription";
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/sendAll")
-    public String sendAll() {
-        return "wines/sendAllWines";
-    }
 
     @GetMapping("/searchWine")
     public String searchWine(@RequestParam(value = "searchTerm", required = false, defaultValue = "") String searchTerm,
