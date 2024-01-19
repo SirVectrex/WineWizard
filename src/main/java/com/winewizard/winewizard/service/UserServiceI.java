@@ -15,4 +15,6 @@ public interface UserServiceI {
     public User createUser(User user);
 
     public void createZipCode(ZipCode zipCode);
+
+    public boolean verify(String verificationCode);
 }

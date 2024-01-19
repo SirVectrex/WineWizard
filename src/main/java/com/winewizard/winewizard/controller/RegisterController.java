@@ -4,10 +4,8 @@ import com.winewizard.winewizard.model.Role;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.model.ZipCode;
-import com.winewizard.winewizard.service.ApiClientZipCodes;
-import com.winewizard.winewizard.service.BookmarkServiceI;
-import com.winewizard.winewizard.service.RatingServiceI;
-import com.winewizard.winewizard.service.WineryServiceI;
+import com.winewizard.winewizard.service.*;
+import com.winewizard.winewizard.service.impl.EmailServiceImpl;
 import com.winewizard.winewizard.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +29,18 @@ public class RegisterController {
     private final RatingServiceI ratingServiceI;
     private final BookmarkServiceI bookmarkServiceI;
     private final WineryServiceI wineryService;
+    private final EmailServiceI emailService;
 
 
     @Autowired
-    public RegisterController(UserServiceImpl userService, RatingServiceI ratingServiceI, BookmarkServiceI bookmarkServiceI, WineryServiceI wineryService) {
+    public RegisterController(UserServiceImpl userService, RatingServiceI ratingServiceI,
+                              BookmarkServiceI bookmarkServiceI, WineryServiceI wineryService,
+                              EmailServiceImpl emailService) {
         this.userService = userService;
         this.ratingServiceI = ratingServiceI;
         this.bookmarkServiceI = bookmarkServiceI;
         this.wineryService = wineryService;
+        this.emailService = emailService;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -117,6 +119,8 @@ public class RegisterController {
             defaultUser.setId(2L);
         }
         user.setRoles(List.of(defaultUser));
+        user.setVerified(false);
+        user.setVerificationCode(String.valueOf(java.util.UUID.randomUUID()));
 
         try {
             user = userService.createUser(user);
@@ -125,9 +129,13 @@ public class RegisterController {
             return "general/register";
         }
 
-        winery.setWineryOwnerId(user.getId());
-        wineryService.saveWinery(winery);
+        if(user.isWineryUser()) {
+            winery.setWineryOwnerId(user.getId());
+            wineryService.saveWinery(winery);
+        }
 
+        emailService.sendVerificaiton(user);
+        //TODO: Email info
         attr.addFlashAttribute("success", "User added!");
 
         return "redirect:/customlogin";
@@ -158,4 +166,13 @@ public class RegisterController {
         return new RedirectView("/customlogin");
     }
 
+    @GetMapping("/registrationFailed")
+    public String fail() {
+        return "general/registration/registrationFailed";
+    }
+
+    @GetMapping("/registrationSuccessful")
+    public String success() {
+        return "general/registration/registrationSuccessful";
+    }
 }

@@ -68,7 +68,12 @@ public class SecurityConfig {
                 		.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                 		.requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
                 		.requestMatchers(new AntPathRequestMatcher("/logout")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/register")).permitAll());
+                        .requestMatchers(new AntPathRequestMatcher("/register")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/registrationFailed")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/registrationSuccessful")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/verify")).permitAll());
+
+
 
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/**","/images/flaschi_die_flasche.png","/api/*").permitAll()

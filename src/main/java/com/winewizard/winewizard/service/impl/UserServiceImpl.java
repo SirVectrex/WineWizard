@@ -47,4 +47,20 @@ public class UserServiceImpl implements UserServiceI {
     public void createZipCode(ZipCode zipCode) {
         userRepository.save(zipCode);
     }
+
+    @Override
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode);
+
+        if (user == null || user.isVerified()) {
+        return false;
+        } else {
+        user.setVerificationCode(null);
+        user.setVerified(true);
+        userRepository.save(user);
+
+        return true;
+        }
+
+    }
 }
