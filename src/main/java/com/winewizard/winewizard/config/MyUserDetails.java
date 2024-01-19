@@ -24,6 +24,9 @@ public class MyUserDetails implements UserDetails {
 	private String password;
 	private boolean active;
 	@Getter
+	private boolean verified;
+
+	@Getter
 	private String email;
 	@Getter
 	private String phone;
@@ -38,6 +41,7 @@ public class MyUserDetails implements UserDetails {
 		this.email=user.getEmail();
 		this.phone= user.getPhone();
 		this.active = user.isActive();
+		this.verified = user.isVerified();
 		
 		//getting authorities from the DB 		
 		List<Role> myRoles = (List<Role>) user.getRoles();
@@ -80,6 +84,8 @@ public class MyUserDetails implements UserDetails {
 		return this.userName;
 	}
 
+
+
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
@@ -103,5 +109,4 @@ public class MyUserDetails implements UserDetails {
 		// TODO Auto-generated method stub
 		return this.active;
 	}
-
 }
