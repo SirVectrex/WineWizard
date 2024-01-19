@@ -1,6 +1,6 @@
 -- Intial database values
 -- winery(id, name, address_id)
-INSERT INTO winery (id, winery_name, url_identifier, winery_owner_id) VALUES (1, 'Schottis Winery', '2520ff3c-8f72-11ee-b9d1-0242ac120002', 4);
+INSERT INTO winery (id, winery_name, url_identifier, winery_owner_id) VALUES (1, 'Sepps Winery', '2520ff3c-8f72-11ee-b9d1-0242ac120002', 4);
 INSERT INTO winery (id, winery_name, url_identifier, winery_owner_id) VALUES (2, 'Lenas Winery', '2520ff3c-8f72-11ee-b9d1-0249ac120005', 7);
 
 
