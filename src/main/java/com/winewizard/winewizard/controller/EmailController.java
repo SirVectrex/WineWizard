@@ -1,8 +1,10 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.config.MyUserDetails;
+import com.winewizard.winewizard.service.AuthServiceI;
 import com.winewizard.winewizard.service.EmailServiceI;
 import com.winewizard.winewizard.service.UserServiceI;
+import com.winewizard.winewizard.service.impl.AuthServiceImpl;
 import com.winewizard.winewizard.service.impl.EmailServiceImpl;
 import com.winewizard.winewizard.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,13 @@ public class EmailController {
     private final EmailServiceI emailService;
     private final UserServiceI userService;
 
+    private  final AuthServiceI authService;
+
     @Autowired
-    EmailController(EmailServiceI emailService, UserServiceImpl userService){
+    EmailController(EmailServiceI emailService, UserServiceImpl userService, AuthServiceImpl authService){
         this.emailService = emailService;
         this.userService = userService;
+        this.authService = authService;
     }
 
     // Sending a simple Email
@@ -32,22 +37,11 @@ public class EmailController {
     public RedirectView
     sendMail()
     {
-        MyUserDetails user = getLoggedInUserDetails();
+        MyUserDetails user = authService.getLoggedInUserDetails();
         String recipient = user.getEmail();;
 
         emailService.sendHtmlMail(recipient);
         return new RedirectView("/");
-    }
-
-    public MyUserDetails getLoggedInUserDetails() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof MyUserDetails) {
-            return (MyUserDetails) authentication.getPrincipal();
-        }
-
-        // Wenn kein Benutzer authentifiziert ist oder die Details nicht verfügbar sind
-        return null;
     }
 
     @RequestMapping(value = "/verify", method = RequestMethod.GET)
