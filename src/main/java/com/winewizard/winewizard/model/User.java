@@ -32,10 +32,8 @@ public class User implements Serializable{
 	@Column(unique = true)
 	private String login;
 
-
 	@Transient
 	private String zipCodeInput;
-
 
 	@ManyToOne
 	@JoinColumn(name="zip_code", nullable = false)
@@ -52,7 +50,8 @@ public class User implements Serializable{
 	private String email;
 
 	@NotBlank(message = "Phone Number is mandatory")
-	private  String phone;
+	//TODO: check validity
+	private String phone;
 
 	@Transient
 	private boolean olderThanSixteen;

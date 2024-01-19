@@ -35,14 +35,11 @@ public class SecurityConfig {
             "/h2-console/**",
             "/console/**",
             "/api/**"
-
-            
     };
 	
 	// My API starts from /api so this pattern is ok for me
     private static final String API_URL_PATTERN = "/api/**";
-	
-			
+
 	@Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -51,8 +48,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain getSecurityFilterChain(HttpSecurity http,
                                                       HandlerMappingIntrospector introspector) throws Exception {
-
-
         http.csrf().disable();
         
         http.csrf(csrfConfigurer ->
@@ -72,8 +67,6 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/registrationFailed")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/registrationSuccessful")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/verify")).permitAll());
-
-
 
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/**","/images/flaschi_die_flasche.png","/api/*").permitAll()
@@ -103,8 +96,6 @@ public class SecurityConfig {
                 .successHandler(myAuthenticationSuccessHandler())
                 .permitAll();
 
-
-
         http.logout()
                 .logoutUrl("/logout") // Specify the URL for logout
                 .logoutSuccessUrl("/customlogin") // Redirect to this URL after logout
@@ -116,7 +107,6 @@ public class SecurityConfig {
         
         return http.build();
     }
-     
 
 	@Bean
     public AuthenticationManager authenticationManager(
