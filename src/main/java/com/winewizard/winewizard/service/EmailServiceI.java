@@ -1,5 +1,7 @@
 package com.winewizard.winewizard.service;
 
+import com.winewizard.winewizard.model.User;
+
 // Interface
 public interface EmailServiceI {
 
@@ -8,4 +10,7 @@ public interface EmailServiceI {
     Void sendHtmlMail(String recipient);
 
     Void sendTopWines(String recipient);
+
+    Void sendVerificaiton(User recipient);
+
 }

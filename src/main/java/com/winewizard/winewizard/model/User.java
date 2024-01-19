@@ -69,7 +69,26 @@ public class User implements Serializable{
 			)
 	private List<Role> roles = new ArrayList<Role>();
 
-	
+	@Column(length = 64)
+	private String verificationCode ;
+	private boolean verified;
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public void setVerified(boolean verified) {
+		this.verified = verified;
+	}
+
 	public List<Role> getRoles() {
 		return roles;
 	}

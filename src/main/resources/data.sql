@@ -20,16 +20,16 @@ INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93333, 'DE', 
 INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93499, 'DE', 'Zandt', 'Bayern');
 
 
-INSERT INTO user (id, login, password, email, phone, active, zip_code) values (1, 'moadl', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl19@gmail.com', '+4915114962996',  1, 93499);
-INSERT INTO user (id,login, password, email, phone, active, zip_code) values (2,'flo', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo@email', '+4915114962996',  1, 93333);
-INSERT INTO user (id,login, password, email, phone, active, zip_code) values (3, 'markus', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus@email', '+4915114962996',  1, 93333);
-INSERT INTO user (id,login, password, email, phone, active, zip_code) values (4, 'sepp', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl191@gmail.com', '+4915114962996',  1, 93499);
-INSERT INTO user (id,login, password, email, phone, active, zip_code) values (5, 'hans', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo3@email', '+4915114962996',  1, 93499);
-INSERT INTO user (id,login, password, email, phone, active, zip_code) values (6, 'anna', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus3@email', '+4915114962996',  1, 93499);
-INSERT INTO user (id, login, password, email, phone, active, zip_code) values (7, 'lena', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl192@gmail.com', '+4915114962996',  1, 93499);
-INSERT INTO user (id,login, password, email, phone, active, zip_code) values (8, 'Sigi', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo2@email', '+4915114962996',  1, 93499);
-INSERT INTO user (id,login, password, email, phone, active, zip_code) values (9, 'Thomas', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus2@email', '+4915114962996',  1, 93499);
-INSERT INTO user (id,login, password, email, phone, active, zip_code) values (10, 'PetersWinery', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'petermachtwein@peter.de', '+4915114962996',  1, 93499);
+INSERT INTO user (id, login, password, email, phone, active, zip_code, verified) values (1, 'moadl', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl19@gmail.com', '+4915114962996',  1, 93499, true);
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified) values (2,'flo', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo@email', '+4915114962996',  1, 93333, true);
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified) values (3, 'markus', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus@email', '+4915114962996',  1, 93333, true);
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified) values (4, 'sepp', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl191@gmail.com', '+4915114962996',  1, 93499, true);
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified) values (5, 'hans', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo3@email', '+4915114962996',  1, 93499, true);
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified) values (6, 'anna', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus3@email', '+4915114962996',  1, 93499, true);
+INSERT INTO user (id, login, password, email, phone, active, zip_code, verified) values (7, 'lena', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl192@gmail.com', '+4915114962996',  1, 93499, true);
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified) values (8, 'Sigi', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo2@email', '+4915114962996',  1, 93499, true);
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified) values (9, 'Thomas', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus2@email', '+4915114962996',  1, 93499, true);
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified) values (10, 'PetersWinery', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'petermachtwein@peter.de', '+4915114962996',  1, 93499, true);
 
 INSERT INTO role (description, id) VALUES ( 'ADMIN', 1);
 INSERT INTO role (description, id) VALUES ( 'wineWizard', 2);

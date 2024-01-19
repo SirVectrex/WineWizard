@@ -1,6 +1,7 @@
 package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.RiddleResponse;
+import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.service.EmailServiceI;
@@ -167,6 +168,38 @@ public class EmailServiceImpl implements EmailServiceI {
             javaMailSender.send(mimeMessage);
 
         } catch (IOException | MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public Void sendVerificaiton(User recipient) {
+
+        try {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+
+            helper.setFrom(sender);
+            helper.setTo(recipient.getEmail());
+            helper.setSubject("WineWizard - Registration");
+
+            String verifyURL = "http://localhost:8080/verify?code=" + recipient.getVerificationCode();
+
+            String content = "Hi " + recipient.getLogin() + ",<br>"
+                    + "Please click the link below to verify your registration:<br>"
+                    + "<h3><a href=\""  + verifyURL
+                    + "\" target=\"_self\">VERIFY</a></h3>"
+                    + "Thank you,<br>"
+                    + "Your wine wizard.";
+
+            // Set the HTML content to true
+            helper.setText(content, true);
+
+            // Send the email
+            javaMailSender.send(mimeMessage);
+
+        } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
         return null;
