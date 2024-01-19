@@ -53,6 +53,10 @@ public class Winery implements Serializable {
         return urlIdentifier;
     }
 
+    public String getShareLink() {
+        return "http://localhost:8080/winery/profile/" + getUrlIdentifier();
+    }
+
     public void setUrlIdentifier(UUID urlIdentifier) {
         if(this.urlIdentifier != null){
             System.out.println("Invalid operation: URL Identifier can not be overwritten");

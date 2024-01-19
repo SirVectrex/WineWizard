@@ -1,10 +1,13 @@
 package com.winewizard.winewizard.controller;
 
+import com.winewizard.winewizard.config.MyUserDetails;
 import com.winewizard.winewizard.repository.RatingRepositoryI;
 import com.winewizard.winewizard.repository.StatsProjectionI;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
+import com.winewizard.winewizard.service.AuthServiceI;
+import com.winewizard.winewizard.service.impl.AuthServiceImpl;
 import com.winewizard.winewizard.service.impl.WineServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,13 +33,17 @@ public class GeneralController {
     WineServiceImpl wineServiceImpl;
 
     UserRepositoryI userRepository;
+    AuthServiceI authService;
 
-    public GeneralController(WineRepositoryImpl winerepo, RatingRepositoryI ratingRepositoryI, WineServiceImpl wineServiceImpl, UserRepositoryI userRepository){
+    public GeneralController(WineRepositoryImpl winerepo, RatingRepositoryI ratingRepositoryI,
+                             WineServiceImpl wineServiceImpl, UserRepositoryI userRepository,
+                             AuthServiceImpl authService){
         super();
         this.winerepo = winerepo;
         this.ratingRepositoryI = ratingRepositoryI;
         this.wineServiceImpl = wineServiceImpl;
         this.userRepository = userRepository;
+        this.authService = authService;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/allratings")
@@ -98,4 +105,10 @@ public class GeneralController {
         return "general/registration/notVerified";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model model) {
+        var userDetails = authService.getLoggedInUserDetails();
+        model.addAttribute("user", userDetails);
+        return "/general/profile";
+    }
 }

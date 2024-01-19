@@ -1,42 +1,58 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.config.EmailDetails;
-import com.winewizard.winewizard.model.Wine;
+import com.winewizard.winewizard.config.MyUserDetails;
 import com.winewizard.winewizard.model.Winery;
+import com.winewizard.winewizard.service.AuthServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.WineryServiceI;
-import jakarta.validation.Valid;
+import com.winewizard.winewizard.service.impl.AuthServiceImpl;
+import com.winewizard.winewizard.service.impl.UserServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "winery")
 public class WineryController {
 
-    private WineryServiceI wineryService;
-    private WineServiceI wineServiceI;
+    private final WineryServiceI wineryService;
+    private final WineServiceI wineServiceI;
+    private final AuthServiceI authService;
 
-    public WineryController(WineryServiceI wineryService, WineServiceI wineService) {
+    public WineryController(WineryServiceI wineryService, WineServiceI wineService, AuthServiceImpl authService, UserServiceImpl userService) {
         super();
         this.wineryService = wineryService;
         this.wineServiceI = wineService;
+        this.authService = authService;
     }
 
-    @GetMapping("/{wineryIdentifier}")
-    public String getWine(Model model, @PathVariable("wineryIdentifier") String identifier) {
-        Winery winery = wineryService.getByUrlIdent(identifier);
-        if (winery == null) {
-            System.out.println("Warning: No winery found with ident: " + identifier);
-            return "/home";
+    @RequestMapping(value = {"profile/{wineryIdentifier}", "profile"})
+    public String getWinery(Model model, @PathVariable(value = "wineryIdentifier", required = false) String identifier) {
+        if(identifier == null) {
+            MyUserDetails userDetail= authService.getLoggedInUserDetails();
+            if(userDetail == null ){
+                return "/customlogin";
+            }
+
+            var winery = wineryService.getByWineryByWineryOwnerName(userDetail.getUsername());
+
+            if(winery != null) {
+                model.addAttribute("winery", winery);
+            }
+        } else {
+            Winery winery = wineryService.getByUrlIdent(identifier);
+            if (winery == null) {
+                System.out.println("Warning: No winery found with ident: " + identifier);
+                return "/home";
+            }
+            model.addAttribute("winery", winery);
         }
         model.addAttribute("emailDetails", new EmailDetails());
-        model.addAttribute("winery", winery);
 
-        return "/winery/profile";
+        return "winery/profile";
     }
 
     @GetMapping("/statistics")
@@ -53,6 +69,5 @@ public class WineryController {
         System.out.println("Error: Auth error");
         return "/error/general";
     }
-
 
 }
