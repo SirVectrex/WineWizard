@@ -43,4 +43,6 @@ public interface WineRepositoryImpl extends WineRepositoryI {
             "ORDER BY AVG(r.TASTE_RATING) DESC", nativeQuery = true)
     Page<WineProjectionI> getWinesByZipCodewParamwPage(@Param("zipcode") int zipcode, Pageable pageable);
 
+
+
 }

@@ -65,15 +65,19 @@ public class RatingController {
         Wine wine = wineRepository.findByNameContainingIgnoreCase(name);
 
         if (wine == null) {
-            // No wine found in DB - search API
-            System.out.println("No wine found in DB with name: " + name);
-            List<Map<String, String>> products = apiClient.searchProducts("Riesling");
-            for (Map<String, String> product : products) {
-                System.out.println(product);
+            // try to find wine by EAN
+            try {
+                ean = Long.parseLong(name);
+                System.out.println("LOG: No wine found with name: " + name + " - trying to find by EAN");
+                wine = wineRepository.findByEan(ean);
+            } catch (NumberFormatException e) {
+                System.out.println("LOG: No wine found with name: " + name + " - not a valid EAN");
+                System.out.println("No wine found in DB with name: " + name);
+                List<Map<String, String>> products = apiClient.searchProducts(name);
+                model.addAttribute("products", products);
+                return  "rating/winelist";
             }
 
-            model.addAttribute("products", products);
-            return  "rating/winelist";
         }
         else {
             // Wine found in DB
@@ -147,12 +151,19 @@ public class RatingController {
     }
 
     @GetMapping("/myratings")
-    public String myRatings(Model model) {
+    public String myRatings2(Model model,
+                         @RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "5") int size) {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Long userid = userRepository.findByLoginIgnoreCase(username).get().getId();
-        List<Rating> ratings = ratingService.getAllRatingsByUserId(userid);
-        model.addAttribute("ratings", ratings);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Rating> ratingPage =  ratingService.getAllRatingsByUserID(pageable, userid);
+
+        model.addAttribute("ratings", ratingPage);
+
+
         return "rating/myratings";
     }
 

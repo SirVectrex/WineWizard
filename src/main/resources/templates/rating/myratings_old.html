@@ -39,27 +39,6 @@
         </tr>
         </tbody>
     </table>
-
-    <!-- Pagination controls -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <li th:if="${ratings.hasPrevious()}" class="page-item">
-                <a class="page-link" th:href="@{/rating/myratings(page=${ratings.number - 1}, size=${ratings.size})}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li th:each="pageNum : ${#numbers.sequence(0, ratings.totalPages - 1)}" class="page-item" th:classappend="${pageNum} == ${ratings.number} ? 'active'">
-                <a class="page-link" th:href="@{/rating/myratings(page=${pageNum}, size=${ratings.size})}" th:text="${pageNum + 1}">1</a>
-            </li>
-            <li th:if="${ratings.hasNext()}" class="page-item">
-                <a class="page-link" th:href="@{/rating/myratings(page=${ratings.number + 1}, size=${ratings.size})}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
 </div>
 
 

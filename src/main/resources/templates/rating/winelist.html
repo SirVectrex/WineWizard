@@ -27,6 +27,9 @@
         </div>
         <div th:if="${#lists.isEmpty(products)}" class="alert alert-info">
             <p th:text="#{winelist_nowines}">No wines available</p>
+            <p th:text="#{winelist_nowines_desc}">Please try again with a different search term or add it manually here: </p>
+            <a th:href="@{/wines/add}" class="btn btn-primary" th:text="#{winelist_nowines_button}">Add to Database</a>
+
         </div>
     </div>
 <body th:insert="~{fragments/footer}"></body>

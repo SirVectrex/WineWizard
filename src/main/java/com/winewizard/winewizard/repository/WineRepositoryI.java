@@ -20,4 +20,6 @@ public interface WineRepositoryI extends JpaRepository<Wine, Long> {
     List<Wine> findAllById(Long id);
 
     List<Wine> getWinesByWinery(Winery winery);
+
+    Wine findByEan(long l);
 }

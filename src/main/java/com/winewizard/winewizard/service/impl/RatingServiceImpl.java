@@ -2,8 +2,11 @@ package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.repository.RatingRepositoryI;
+import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.service.RatingServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +42,9 @@ public class RatingServiceImpl implements RatingServiceI {
         return ratingRepository.findAllByUserId(userId);
     }
 
+    public Page<Rating> getAllRatingsByUserID(Pageable pageable, Long userId){
+        return ratingRepository.findAllByUserId(userId, pageable);
+    }
 
     @Override
     public void deleteRatingById(Long id) {
