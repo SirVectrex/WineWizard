@@ -66,6 +66,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/register")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/registrationFailed")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/registrationSuccessful")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/winery/profile/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/verify")).permitAll());
 
         http.authorizeHttpRequests(auth -> auth

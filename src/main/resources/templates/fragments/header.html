@@ -5,7 +5,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="hasAuthority('WINERY_STATUS') || hasAuthority('WINEWIZARD_STATUS') || hasAuthority('ADMIN_STATUS')">
                 <li class="nav-item">
                     <a class="nav-link" href="/" th:text="#{Home}"></a>
                 </li>
@@ -33,9 +33,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <!-- TODO: remove static link -->
-                        <li><a class="dropdown-item" href="/winery/2520ff3c-8f72-11ee-b9d1-0242ac120002" th:text="#{Profile}"></a></li>
                         <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/myratings" th:text="#{My_Ratings}"></a></li>
                         <li><a class="dropdown-item" href="/feedback/add" th:text="#{Feedback}"></a></li>
+                        <li><a class="dropdown-item" href="/profile" th:text="#{Profile}"></a></li>
                         <li><form class="me-2" th:action="@{/deleteUser}" method="post"><button class="btn btn-outline-danger" type="submit" th:text="#{Delete_User}"></button></form></li>
                     </ul>
                 </li>
@@ -45,8 +45,8 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Winery functionality
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/winery/profile" th:text="#{Profile}"></a></li>
                         <li><a class="dropdown-item" href="/winery/statistics" >My wine statistics</a></li>
-
                     </ul>
                 </li>
 
@@ -57,9 +57,10 @@
 
             </ul>
 
-            <div class="d-flex">
+            <div class="d-flex align-items-end">
 
-                <form th:action="@{/changeLanguage}" method="get" class="me-2" id="languageForm">
+                <form th:action="@{/changeLanguage}" method="get" class="me-2" id="languageForm"
+                      sec:authorize="hasAuthority('WINERY_STATUS') || hasAuthority('WINEWIZARD_STATUS') || hasAuthority('ADMIN_STATUS')">
                     <div class="dropdown">
                         <button class="btn btn-outline-primary dropdown-toggle" type="button" id="languageDropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                             <i class="fas fa-language " ></i> <span th:text="#{Select_Language}">Language</span>
