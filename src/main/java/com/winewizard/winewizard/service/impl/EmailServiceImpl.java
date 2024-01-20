@@ -3,6 +3,7 @@ package com.winewizard.winewizard.service.impl;
 import com.winewizard.winewizard.model.RiddleResponse;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
+import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.service.EmailServiceI;
 import jakarta.mail.MessagingException;
@@ -27,13 +28,15 @@ public class EmailServiceImpl implements EmailServiceI {
     private final HtmlFileReaderService htmlFileReaderService;
 
     private WineServiceImpl wineService;
+    private WineryServiceImpl wineryService;
 
     @Value("${spring.mail.username}")
     private String sender;
 
-    public EmailServiceImpl(HtmlFileReaderService htmlFileReaderService, WineServiceImpl wineService) {
+    public EmailServiceImpl(HtmlFileReaderService htmlFileReaderService, WineServiceImpl wineService, WineryServiceImpl wineryService) {
         this.htmlFileReaderService = htmlFileReaderService;
         this.wineService = wineService;
+        this.wineryService =wineryService;
     }
 
     public Void sendHtmlMail(String recipient) {
@@ -88,6 +91,7 @@ public class EmailServiceImpl implements EmailServiceI {
             htmlBody = htmlBody.replace("Top_new_wine_placeholder", htmltext);
 
             List<Wine> allWines = wineService.getAllWines();
+            List<Winery> allWinerys = wineryService.getAllWineries();
 
 
             // Zufällige Index generieren
@@ -95,12 +99,17 @@ public class EmailServiceImpl implements EmailServiceI {
 
             Wine wine_of_the_week = allWines.get(randomIndex);
 
-
-
-
             htmltext =wine_of_the_week.getName() + ". "+ wine_of_the_week.getType() + ". " + wine_of_the_week.getDescription();
 
             htmlBody = htmlBody.replace("Wine_of_the_week_placeholder", htmltext);
+
+            randomIndex = new Random().nextInt(allWinerys.size());
+
+            Winery winery_of_the_week = allWinerys.get(randomIndex);
+
+            htmltext =winery_of_the_week.getWineryName();
+
+            htmlBody = htmlBody.replace("Vintner_of_the_week_placeholder", htmltext);
 
             // Set the HTML content to true
             helper.setText(htmlBody, true);
