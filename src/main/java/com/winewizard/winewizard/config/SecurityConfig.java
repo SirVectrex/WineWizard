@@ -1,12 +1,9 @@
 package com.winewizard.winewizard.config;
 
-import com.winewizard.winewizard.service.impl.MyUserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,10 +19,9 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @EnableWebSecurity
 public class SecurityConfig {	
 		
-	private MyUserDetailsServiceImpl userDetailsService;
-	
-	public SecurityConfig(MyUserDetailsServiceImpl myUserDetailsServiceImpl) {
-		this.userDetailsService= myUserDetailsServiceImpl;
+
+	public SecurityConfig() {
+
 	}
 	
 	private static final String[] AUTH_WHITE_LIST = {

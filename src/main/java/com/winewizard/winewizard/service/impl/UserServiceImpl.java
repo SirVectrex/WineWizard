@@ -5,6 +5,9 @@ import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.service.UserServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,16 @@ public class UserServiceImpl implements UserServiceI {
     @Autowired
     public UserServiceImpl(UserRepositoryI userRepository) {
         this.userRepository = userRepository;
+    }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // TODO Auto-generated method stub
+        Optional<com.winewizard.winewizard.model.User> oUser= userRepository.findByLoginIgnoreCase(username);
+        oUser.orElseThrow(()-> new UsernameNotFoundException("Not found "+username));
+        System.out.println("User found at the UserDetailsService="+ oUser.get().getLogin());
+
+        return new User(oUser.get());
     }
 
     public Optional<User> findUserByLoginIgnoreCase(String login) {

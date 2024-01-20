@@ -85,14 +85,23 @@ public class User implements Serializable, UserDetails {
 	@Getter
 	private String personalProfileId ;
 
-	public User(User user) {
 
-		this.login= user.getLogin();
-		this.password= user.getPassword();
-		this.email=user.getEmail();
-		this.phone= user.getPhone();
+	public User(User user) {
+		this.id = user.getId();
+		this.login = user.getLogin();
+		this.zipCodeInput = user.getZipCodeInput();
+		this.zipCode = user.getZipCode();
+		this.password = user.getPassword();
+		this.passwordRepeat = user.getPasswordRepeat();
+		this.email = user.getEmail();
+		this.phone = user.getPhone();
+		this.olderThanSixteen = user.isOlderThanSixteen();
+		this.wineryUser = user.isWineryUser();
 		this.active = user.isActive();
+		this.roles = user.getRoles();
+		this.verificationCode = user.getVerificationCode();
 		this.verified = user.isVerified();
+		this.personalProfileId = user.getPersonalProfileId();
 
 		//getting authorities from the DB
 		List<Role> myRoles = (List<Role>) user.getRoles();
@@ -111,14 +120,11 @@ public class User implements Serializable, UserDetails {
 				authorities.add(new SimpleGrantedAuthority(auth.getDescription().toUpperCase()));
 				System.out.println("the authority" + i +" of the profile "+myRoles.get(i).getDescription()+" of the user " +user.getLogin() + " is "+ auth.getDescription());
 			}
-
 		}
-
 	}
 
 	public User() {
 	}
-
 
 	public void setVerificationCode(String verificationCode) {
 		this.verificationCode = verificationCode;
@@ -143,7 +149,7 @@ public class User implements Serializable, UserDetails {
 	public void setWineryUser(boolean wineryUser) {
 		this.wineryUser = wineryUser;
 	}
-	
+
 	public void setZipCode(ZipCode zipCode) {
 		this.zipCode = zipCode;
 	}
