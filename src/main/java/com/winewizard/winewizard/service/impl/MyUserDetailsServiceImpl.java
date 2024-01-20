@@ -1,9 +1,7 @@
 package com.winewizard.winewizard.service.impl;
 
-import com.winewizard.winewizard.config.MyUserDetails;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.repository.UserRepositoryI;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,10 +23,10 @@ public class MyUserDetailsServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		Optional<User> oUser= userRepository.findByLoginIgnoreCase(username);
+		Optional<com.winewizard.winewizard.model.User> oUser= userRepository.findByLoginIgnoreCase(username);
 		oUser.orElseThrow(()-> new UsernameNotFoundException("Not found "+username));
 		System.out.println("User found at the UserDetailsService="+ oUser.get().getLogin());
 
-		return new MyUserDetails(oUser.get());
+		return new User(oUser.get());
 	}
 }

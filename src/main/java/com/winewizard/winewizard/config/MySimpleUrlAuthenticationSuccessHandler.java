@@ -1,5 +1,6 @@
 package com.winewizard.winewizard.config;
 
+import com.winewizard.winewizard.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -7,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
@@ -58,7 +58,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         roleTargetUrlMap.put("WINERY_STATUS", "/");
 
         if (authentication != null && authentication.isAuthenticated()) {
-            MyUserDetails user = (MyUserDetails) authentication.getPrincipal() ;
+            User user = (User) authentication.getPrincipal() ;
             if(!user.isVerified()){
                 return "/notVerified";
             }

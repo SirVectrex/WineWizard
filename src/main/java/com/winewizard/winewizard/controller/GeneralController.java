@@ -1,6 +1,5 @@
 package com.winewizard.winewizard.controller;
 
-import com.winewizard.winewizard.config.MyUserDetails;
 import com.winewizard.winewizard.repository.RatingRepositoryI;
 import com.winewizard.winewizard.repository.StatsProjectionI;
 import com.winewizard.winewizard.repository.UserRepositoryI;

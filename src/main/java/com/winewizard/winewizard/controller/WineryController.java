@@ -1,7 +1,7 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.config.EmailDetails;
-import com.winewizard.winewizard.config.MyUserDetails;
+import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.service.AuthServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
@@ -32,7 +32,7 @@ public class WineryController {
     @RequestMapping(value = {"profile/{wineryIdentifier}", "profile"})
     public String getWinery(Model model, @PathVariable(value = "wineryIdentifier", required = false) String identifier) {
         if(identifier == null) {
-            MyUserDetails userDetail= authService.getLoggedInUserDetails();
+            User userDetail= authService.getLoggedInUserDetails();
             if(userDetail == null ){
                 return "/customlogin";
             }
