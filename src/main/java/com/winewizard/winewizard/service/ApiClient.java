@@ -104,6 +104,39 @@ public class ApiClient {
         return null;
     }
 
+    public String getRandomFact(){
+        // generate request to GET https://uselessfacts.jsph.pl/api/v2/facts/today with text/plain
+        try {
+            String queryUrl = "https://uselessfacts.jsph.pl/api/v2/facts/today";
+            URL url = new URL(queryUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "text/plain");
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+                    String inputLine;
+                    StringBuilder content = new StringBuilder();
+                    while ((inputLine = in.readLine()) != null) {
+                        content.append(inputLine);
+                    }
+                    // answer is this: {"id":"bc185f4257b4996266eaa3e18c490ae4","text":"Oak trees do not produce acorns until they are fifty years of age or older.","source":"djtech.net","source_url":"http://www.djtech.net/humor/useless_facts.htm","language":"en","permalink":"https://uselessfacts.jsph.pl/api/v2/facts/bc185f4257b4996266eaa3e18c490ae4"}
+                    // extract text
+                    String[] parts = content.toString().split("\"");
+                    return parts[7];
+                    // return content.toString();
+                }
+            } else {
+                System.out.println("GET request not worked");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
     private String encodeValue(String value) {
         try {
             return java.net.URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
@@ -113,10 +146,6 @@ public class ApiClient {
         return "";
     }
 
-    // Main method for testing
-    public static void main(String[] args) {
-        ApiClient client = new ApiClient();
-        String response = client.searchProduct("The Dog");
-        System.out.println(response);
-    }
+
+
 }
