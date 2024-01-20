@@ -15,10 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -104,10 +101,20 @@ public class GeneralController {
         return "general/registration/notVerified";
     }
 
-    @GetMapping("/profile")
-    public String profile(Model model) {
-        var userDetails = authService.getLoggedInUserDetails();
-        model.addAttribute("user", userDetails);
+    @GetMapping(value = {"/profile", "/profile/{profileId}"})
+    public String profile(Model model, @PathVariable(required = false) String profileId) {
+        if(profileId == null) {
+            var userDetails = authService.getLoggedInUserDetails();
+            model.addAttribute("user", userDetails);
+        } else{
+           var user = userRepository.findUserByPersonalProfileId(profileId);
+           if(user == null) {
+               return "error/404";
+           } else{
+               model.addAttribute("user", user);
+           }
+        }
+
         return "/general/profile";
     }
 }

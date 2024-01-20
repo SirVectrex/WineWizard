@@ -3,14 +3,16 @@ package com.winewizard.winewizard.repository;
 
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.ZipCode;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-
-public interface UserRepositoryI extends MyBaseRepository<User, Long> {
+public interface UserRepositoryI extends  MyBaseRepository<User, Long> {
 
 	Optional<User> findByLoginIgnoreCase(String login);
+
+	User findUserByPersonalProfileId(String profileId);
 
 	User findByVerificationCode(String verificationCode);
 

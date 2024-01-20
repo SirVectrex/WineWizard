@@ -121,6 +121,7 @@ public class RegisterController {
         user.setRoles(List.of(defaultUser));
         user.setVerified(false);
         user.setVerificationCode(String.valueOf(java.util.UUID.randomUUID()));
+        user.setPersonalProfileId(String.valueOf(java.util.UUID.randomUUID()));
 
         try {
             user = userService.createUser(user);
