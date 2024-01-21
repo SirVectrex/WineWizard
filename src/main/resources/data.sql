@@ -2,6 +2,7 @@
 -- winery(id, name, address_id)
 INSERT INTO winery (id, winery_name, url_identifier, winery_owner_id) VALUES (1, 'Sepps Winery', '2520ff3c-8f72-11ee-b9d1-0242ac120002', 4);
 INSERT INTO winery (id, winery_name, url_identifier, winery_owner_id) VALUES (2, 'Lenas Winery', '2520ff3c-8f72-11ee-b9d1-0249ac120005', 7);
+INSERT INTO winery (id, winery_name, url_identifier, winery_owner_id) VALUES (3, 'Professors Winery', '2520ff3c-8f72-11ee-b9d1-0249ac120012', 13);
 
 
 -- wine(id, barcode_num, name, type, description)
@@ -18,6 +19,7 @@ INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('
 
 INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93333, 'DE', 'Neistod', 'Bayern');
 INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93499, 'DE', 'Zandt', 'Bayern');
+INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93051, 'DE', 'Regensburg', 'Bayern');
 
 
 INSERT INTO user (id, login, password, email, phone, active, zip_code, verified, personal_profile_id) values (1, 'moadl', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'Martinwenzl19@gmail.com', '+4915114962996',  1, 93499, true, '222cff3c-8f72-11ee-b9d1-0249ac120rw05');
@@ -30,6 +32,10 @@ INSERT INTO user (id, login, password, email, phone, active, zip_code, verified,
 INSERT INTO user (id,login, password, email, phone, active, zip_code, verified, personal_profile_id) values (8, 'Sigi', '{bcrypt}$2a$12$hLQA4zpjoHuJLWLrv757uuiXBlZNAjIvUFRmzFN8HXvOEX5.VbRxC', 'flo2@email', '+4915114962996',  1, 93499, true, '222cff3c-8f72-11ee-b9d1-0249ac12okw05');
 INSERT INTO user (id,login, password, email, phone, active, zip_code, verified, personal_profile_id) values (9, 'Thomas', '{bcrypt}$2a$12$OqgFS1OcCaGndtsGCSTYo.KiW3IpT9SdFDyoCZn/0YFxH/iW3ljSG', 'markus2@email', '+4915114962996',  1, 93499, true, '222cff3c-8fk2-11ee-b9d1-0i49ac1200w05');
 INSERT INTO user (id,login, password, email, phone, active, zip_code, verified, personal_profile_id) values (10, 'PetersWinery', '{bcrypt}$2a$12$dEABxyOphtMwxWZGC9RpjeoE5lSU8ASwrYT0mgt4lqUeE/e.vx7jO', 'petermachtwein@peter.de', '+4915114962996',  1, 93499, true, '222c0f3c-8fü2-11ee-b9d1-0249ah120rw05');
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified, personal_profile_id) values (11, 'Professor_Admin', '{bcrypt}$2a$10$/ar/1d1eTbdnX4UqLUGOzuw910H3beBPu62EO.vaTC.aLOl5wjwu6', 'alixandre.santana@oth-regensburg.de', '+4915114962996',  1, 93051, true, '222c0f3c-8fü2-11ee-b9d1-0249ah120rw05');
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified, personal_profile_id) values (12, 'Professor_WineWizard', '{bcrypt}$2a$10$/ar/1d1eTbdnX4UqLUGOzuw910H3beBPu62EO.vaTC.aLOl5wjwu6', 'alixandre.santana@oth-regensburg.de', '+4915114962996',  1, 93051, true, '222c0f3c-8fü2-11ee-b9d1-0249ah120rw05');
+INSERT INTO user (id,login, password, email, phone, active, zip_code, verified, personal_profile_id) values (13, 'Professor_Winery', '{bcrypt}$2a$10$/ar/1d1eTbdnX4UqLUGOzuw910H3beBPu62EO.vaTC.aLOl5wjwu6', 'alixandre.santana@oth-regensburg.de', '+4915114962996',  1, 93051, true, '222c0f3c-8fü2-11ee-b9d1-0249ah120rw05');
+
 
 INSERT INTO role (description, id) VALUES ( 'ADMIN', 1);
 INSERT INTO role (description, id) VALUES ( 'wineWizard', 2);
@@ -50,6 +56,9 @@ INSERT INTO userrole(iduser, idrole) VALUES (7,3);
 INSERT INTO userrole(iduser, idrole) VALUES (8,2);
 INSERT INTO userrole(iduser, idrole) VALUES (9,2);
 INSERT INTO userrole(iduser, idrole) VALUES (10,2);
+INSERT INTO userrole(iduser, idrole) VALUES (11,1);
+INSERT INTO userrole(iduser, idrole) VALUES (12,2);
+INSERT INTO userrole(iduser, idrole) VALUES (13,3);
 
 
 INSERT INTO roleauthority(idrole, idauthority) VALUES (1,1);
