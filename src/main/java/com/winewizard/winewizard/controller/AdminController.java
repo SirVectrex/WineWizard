@@ -64,11 +64,8 @@ public class AdminController {
 
         if (userOptional.isPresent()) {
 
-            Long userId = userOptional.get().getId();
+            userService.deleteUser(login);
 
-            ratingServiceI.deleteRatingsByUserId(userId);
-            bookmarkServiceI.deleteBookmarksByUserId(userId);
-            userService.deleteUserById(userId);
         }
 
         return new RedirectView("/admin");  // Redirect to the wineWizards page

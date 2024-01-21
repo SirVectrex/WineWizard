@@ -3,6 +3,8 @@ package com.winewizard.winewizard.service.impl;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.UserRepositoryI;
+import com.winewizard.winewizard.service.BookmarkServiceI;
+import com.winewizard.winewizard.service.RatingServiceI;
 import com.winewizard.winewizard.service.UserServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,11 @@ import java.util.Optional;
 public class UserServiceImpl implements UserServiceI {
 
     private final UserRepositoryI userRepository;
+
+    @Autowired
+    private RatingServiceI ratingService;
+    @Autowired
+    private BookmarkServiceI bookmarkService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -74,5 +81,17 @@ public class UserServiceImpl implements UserServiceI {
         return true;
         }
 
+    }
+
+    public void deleteUser(String username) {
+        Optional<User> userOptional = userRepository.findByLoginIgnoreCase(username);
+
+        if (userOptional.isPresent()) {
+            Long userId = userOptional.get().getId();
+
+            ratingService.deleteRatingsByUserId(userId);
+            bookmarkService.deleteBookmarksByUserId(userId);
+            userRepository.deleteById(userId);
+        }
     }
 }

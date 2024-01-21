@@ -149,19 +149,11 @@ public class RegisterController {
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-
-            Optional<User> userOptional = userService.findUserByLoginIgnoreCase(userDetails.getUsername());
-
-            if (userOptional.isPresent()) {
-
-                Long userId = userOptional.get().getId();
-
-                ratingServiceI.deleteRatingsByUserId(userId);
-                bookmarkServiceI.deleteBookmarksByUserId(userId);
-                userService.deleteUserById(userId);
+            try {
+                userService.deleteUser(userDetails.getUsername());
                 redirectAttributes.addFlashAttribute("message", "Benutzer erfolgreich gelöscht");
-            } else {
-                redirectAttributes.addFlashAttribute("error", "Benutzer nicht gefunden");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("error", e.getMessage());
             }
         }
 
