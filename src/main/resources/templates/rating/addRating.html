@@ -23,7 +23,7 @@
 
 
     <form th:action="@{/rating/addRating}" th:object="${rating}" method="POST">
-        <input type="hidden" name="wine" th:field="*{wine}" th:value="${rating.getWine()}" />
+        <input type="hidden" name="wine" th:field="*{wine}" />
         <div class="star-rating mb-3">
             <label for="pricerating" class="form-label" th:text="#{price_label}">Price for value:</label>
             <div class="stars" data-rating="pricerating">
@@ -45,7 +45,7 @@
                 <i class="far fa-star"></i>
                 <i class="far fa-star"></i>
             </div>
-            <input type="hidden" id="designrating" th:field="*{ratingTaste}" name="designrating" value="0">
+            <input type="hidden" id="designrating" th:field="*{ratingDesign}" name="designrating" value="0">
         </div>
 
         <div class="star-rating mb-3">
@@ -57,10 +57,10 @@
                 <i class="far fa-star"></i>
                 <i class="far fa-star"></i>
             </div>
-            <input type="hidden" id="tasterating" name="tasterating" value="0">
+            <input type="hidden" id="tasterating" th:field="*{ratingTaste}" name="tasterating" value="0">
         </div>
         <!-- Repeat for other ratings -->
-        <button type="submit" class="btn btn-primary" th:field="*{ratingTaste}" th:text="#{Submit}" >Submit</button>
+        <button type="submit" class="btn btn-primary"  th:text="#{Submit}" >Submit</button>
     </form>
 </div>
 

@@ -58,15 +58,19 @@ public class RatingController {
 
     @PostMapping("/search_by_name")
     public String searchWineByName(@RequestParam("name") String name, Model model){
-        Wine result = wineService.findWine(name);
-        if(result == null){
+        System.out.println("DEBUG: Searching for wine with name: " + name);
+        Wine wine = wineService.findWine(name);
+        if(wine == null){
             System.out.println("DEBUG: Searching with API now...");
             List<Map<String, String>> products = apiClient.searchProducts(name);
             model.addAttribute("products", products);
             return  "rating/winelist";
         }
 
-        model.addAttribute("wine", result);
+        System.out.println("DEBUG: Found wine with name: " + wine.getName());
+        Rating rating = new Rating();
+        rating.setWine(wine);
+        model.addAttribute("rating",rating);
         return "rating/addRating";
 
     }
