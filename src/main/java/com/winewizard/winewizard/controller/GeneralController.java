@@ -56,12 +56,9 @@ public class GeneralController {
     public String home(Model model) {
         // get users zip code from auth
         String loggedInUsername = getLoggedInUsername();
-
         List<StatsProjectionI> stats =  winerepo.getStats();
 
-        System.out.println("loggedInUsername: " + loggedInUsername);
         model.addAttribute("loggedInUsername", loggedInUsername);
-
         model.addAttribute("stat", stats.get(0));
 
         return "home";
@@ -91,7 +88,6 @@ public class GeneralController {
         if (authentication != null && authentication.isAuthenticated()) {
             return authentication.getName();
         }
-
         // Wenn kein Benutzer authentifiziert ist
         return "Gast";
     }

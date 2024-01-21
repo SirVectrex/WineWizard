@@ -8,6 +8,7 @@ import com.winewizard.winewizard.repository.BookmarkRepository;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineRepositoryI;
 import com.winewizard.winewizard.service.WineServiceI;
+import com.winewizard.winewizard.service.impl.WineServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -33,10 +34,10 @@ public class WineController {
 
     private final BookmarkRepository bookmarkRepository;
 
-    private WineServiceI wineService;
+    private WineServiceImpl wineService;
     private final WineRepositoryI wineRepositoryI;
 
-    public WineController(UserRepositoryI userRepositoryI, BookmarkRepository bookmarkRepository, WineServiceI wineService , WineRepositoryI wineRepositoryI){
+    public WineController(UserRepositoryI userRepositoryI, BookmarkRepository bookmarkRepository, WineServiceImpl wineService , WineRepositoryI wineRepositoryI){
         super();
         this.userRepositoryI = userRepositoryI;
         this.bookmarkRepository = bookmarkRepository;
@@ -60,12 +61,7 @@ public class WineController {
             return "redirect:/";
         }
 
-        System.out.println("Neuer wein mit typ: " + wine.getType());
-        System.out.println("Neuer wein mit ean: " + wine.getEan());
-
-
         wineService.saveWine(wine);
-
         return "redirect:/wines/searchWine";
     }
 
@@ -74,7 +70,6 @@ public class WineController {
     public String showAll(Model model) {
         List<Wine> allWines = wineService.getAllWines();
         model.addAttribute("winelist", allWines);
-        // System.out.println(allWines.get(0).getName() );
         return "wines/allWines";
     }
 
@@ -189,9 +184,8 @@ public class WineController {
             return "redirect:/winery/statistics";
         }
 
-
-
-        wineRepositoryI.save(wine);
+        wineService.saveWine(wine);
+        
         return "redirect:/winery/statistics";
     }
 

@@ -3,6 +3,7 @@ package com.winewizard.winewizard.controller;
 import com.winewizard.winewizard.model.Feedback;
 import com.winewizard.winewizard.repository.FeedbackRepositoryI;
 import com.winewizard.winewizard.service.FeedbackServiceI;
+import com.winewizard.winewizard.service.impl.FeedbackServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FeedbackController {
 
 
-    private FeedbackServiceI feedbackService;
+    private FeedbackServiceImpl feedbackService;
 
 
-    public FeedbackController(FeedbackServiceI feedbackService){
+    public FeedbackController(FeedbackServiceImpl feedbackService){
         super();
         this.feedbackService = feedbackService;
     }
@@ -39,9 +40,14 @@ public class FeedbackController {
             System.out.println(result.getAllErrors().toString());
             return "/home";
         }
-        feedbackService.saveFeedback(feedback);
-        boolean flag = true;
-        model.addAttribute("feedbackSent", flag);
+        if (feedbackService.saveFeedback(feedback) != null){
+            // feedback correctly saved
+            boolean flag = true;
+            model.addAttribute("feedbackSent", flag);
+        }
+        else {
+            // possible further error handling
+        }
         return "/general/feedbackform";
     }
 

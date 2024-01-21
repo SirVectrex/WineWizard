@@ -7,6 +7,7 @@ import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
 import com.winewizard.winewizard.service.RatingServiceI;
+import com.winewizard.winewizard.service.impl.RatingServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +21,9 @@ public class API {
     WineRepositoryImpl wineRepositoryI;
     UserRepositoryI userRepository;
 
-    RatingServiceI ratingService;
+    RatingServiceImpl ratingService;
 
-    public API(WineRepositoryImpl wineRepositoryI, UserRepositoryI userRepository, RatingServiceI ratingService){
+    public API(WineRepositoryImpl wineRepositoryI, UserRepositoryI userRepository, RatingServiceImpl ratingService){
         super();
         this.wineRepositoryI = wineRepositoryI;
         this.userRepository = userRepository;
@@ -40,21 +41,13 @@ public class API {
     @GetMapping("/ratings/{rating_id}")
     public Rating getRating_by_id(@PathVariable("rating_id") String rating_id) {
 
-        Rating rating = ratingService.findRatingById(Long.valueOf(rating_id));
-
-        if (rating == null) {
-            // Handle error, such as returning an error message or status code
+        try {
+            return ratingService.getRating_by_id_safe(Long.parseLong(rating_id));
+        } catch (Exception e){
+            // no parsable input
             return null;
         }
-        // remove user object in rating for security reasons
-        rating.getUser().setPassword(null);
 
-        // set user.role to null for security reasons
-        rating.getUser().setRoles(null);
-
-        System.out.println(rating);
-
-        return rating;
     }
 
 
@@ -63,10 +56,8 @@ public class API {
 
         // get user from database
         Optional<User> user = userRepository.findById(rating.getUser().getId());
-
         // set user in rating
         rating.setUser(user.get());
-
         // save rating
         ratingService.saveRating(rating);
 
@@ -92,22 +83,13 @@ public class API {
     @GetMapping("/ratingsByUser/{user_id}")
     public List<Rating> getRatingsByUser(@PathVariable("user_id") String userId) {
 
-        System.out.println("LOG: Getting ratings for user with id: " + userId);
-
-        List<Rating> ratings = ratingService.getAllRatingsByUserId(Long.valueOf(userId));
-
-        // set user password and role to null for security reasons
-        for (Rating rating : ratings) {
-            rating.getUser().setPassword(null);
-            rating.getUser().setRoles(null);
-        }
-
-        if (ratings == null) {
-            // Handle error, such as returning an error message or status code
+        try {
+            return ratingService.getRatingsByUser_Safe(Long.parseLong(userId));
+        } catch (Exception e){
+            // possibly do error handling
             return null;
         }
 
-        return ratings;
     }
 
 

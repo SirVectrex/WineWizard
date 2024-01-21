@@ -85,6 +85,21 @@ INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating)
 INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (3, 1, 2, 2, 4);
 INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (1, 7, 3, 1, 3);
 INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (3, 1, 1, 1, 2);
+-- User 12 Ratings
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (12, 5, 4, 3, 2);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (12, 8, 2, 4, 5);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (12, 3, 3, 2, 4);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (12, 6, 5, 5, 3);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (12, 10, 1, 2, 4);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (12, 4, 4, 3, 1);
+-- User 11 Ratings
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (11, 7, 3, 4, 2);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (11, 2, 4, 2, 5);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (11, 9, 2, 5, 3);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (11, 1, 5, 3, 4);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (11, 8, 1, 4, 1);
+INSERT INTO rating (user_id, wine_id, design_rating, taste_rating, price_rating) VALUES (11, 5, 3, 5, 2);
+
 
 
 INSERT INTO bookmarks (user_id, wine_id) VALUES (1,2);

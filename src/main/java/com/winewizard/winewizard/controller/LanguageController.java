@@ -12,8 +12,8 @@ public class LanguageController {
 
     @GetMapping("/changeLanguage")
     public String changeLanguage(@RequestParam("lang") String lang, HttpServletRequest request) {
+        // methods sets correct language and redirects to the home screen
         request.getSession().setAttribute("lang", lang);
-
         return "redirect:/";
     }
 }

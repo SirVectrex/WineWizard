@@ -16,4 +16,7 @@ public interface WineServiceI {
 
     List<Wine> getAllWinesOfWinery(Winery winery);
 
+    public Wine findWine(String query);
+
+    public Wine saveWine(Long ean, String name, String description);
 }

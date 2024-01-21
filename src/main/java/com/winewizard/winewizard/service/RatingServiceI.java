@@ -23,4 +23,9 @@ public interface RatingServiceI {
     void updateRating(Rating rating);
 
     Page<Rating> getAllRatingsByUserID(Pageable pageable, Long userid);
+
+    public Rating getRating_by_id_safe(long rating_id);
+
+    public List<Rating> getRatingsByUser_Safe(long user_id);
+
 }

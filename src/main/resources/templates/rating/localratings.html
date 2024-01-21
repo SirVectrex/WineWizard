@@ -33,15 +33,15 @@
     <nav aria-label="Page navigation">
       <ul class="pagination justify-content-center">
         <li th:if="${wines.hasPrevious()}" class="page-item">
-          <a class="page-link" th:href="@{/allratings(page=${wines.number - 1}, size=${wines.size})}" aria-label="Previous">
+          <a class="page-link" th:href="@{/rating/myarea(page=${wines.number - 1}, size=${wines.size})}" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
         <li th:each="pageNum : ${#numbers.sequence(0, wines.totalPages - 1)}" class="page-item" th:classappend="${pageNum} == ${wines.number} ? 'active'">
-          <a class="page-link" th:href="@{/allratings(page=${pageNum}, size=${wines.size})}" th:text="${pageNum + 1}">1</a>
+          <a class="page-link" th:href="@{/rating/myarea(page=${pageNum}, size=${wines.size})}" th:text="${pageNum + 1}">1</a>
         </li>
         <li th:if="${wines.hasNext()}" class="page-item">
-          <a class="page-link" th:href="@{/allratings(page=${wines.number + 1}, size=${wines.size})}" aria-label="Next">
+          <a class="page-link" th:href="@{/rating/myarea(page=${wines.number + 1}, size=${wines.size})}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>

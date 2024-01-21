@@ -1,6 +1,7 @@
 package com.winewizard.winewizard.controller;
 
 import com.winewizard.winewizard.model.Rating;
+import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.UserRepositoryI;
@@ -10,6 +11,7 @@ import com.winewizard.winewizard.service.ApiClient;
 import com.winewizard.winewizard.service.RatingServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.impl.EmailServiceImpl;
+import com.winewizard.winewizard.service.impl.WineServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,16 +33,12 @@ public class RatingController {
 
     private RatingServiceI ratingService;
     private WineRepositoryImpl wineRepository;
-
     private UserRepositoryI userRepository;
-
-    private WineServiceI wineService;
-
+    private WineServiceImpl wineService;
     private ApiClient apiClient;
-
     private EmailServiceImpl emailService;
 
-    public RatingController(RatingServiceI ratingService, WineRepositoryImpl wineRepositoryI, WineServiceI wineService, UserRepositoryI userRepository, EmailServiceImpl emailService) {
+    public RatingController(RatingServiceI ratingService, WineRepositoryImpl wineRepositoryI, WineServiceImpl wineService, UserRepositoryI userRepository, EmailServiceImpl emailService) {
         super();
         this.ratingService = ratingService;
         this.wineRepository = wineRepositoryI;
@@ -59,89 +57,57 @@ public class RatingController {
     }
 
     @PostMapping("/search_by_name")
-    public String searchWineByName(@RequestParam("name") String name, Model model) {
-        Long ean;
-        System.out.println("LOG: Searching for wine with name: " + name);
-        Wine wine = wineRepository.findByNameContainingIgnoreCase(name);
-
-        if (wine == null) {
-            // try to find wine by EAN
-            try {
-                ean = Long.parseLong(name);
-                System.out.println("LOG: No wine found with name: " + name + " - trying to find by EAN");
-                wine = wineRepository.findByEan(ean);
-            } catch (NumberFormatException e) {
-                System.out.println("LOG: No wine found with name: " + name + " - not a valid EAN");
-                System.out.println("No wine found in DB with name: " + name);
-                List<Map<String, String>> products = apiClient.searchProducts(name);
-                model.addAttribute("products", products);
-                return  "rating/winelist";
-            }
-
-        }
-        else {
-            // Wine found in DB
-            System.out.println("Wine found in DB with name: " + wine.getName() + "and EAN: " + wine.getEan());
-            ean = wine.getEan();
-
-            model.addAttribute("wine", wine);
+    public String searchWineByName(@RequestParam("name") String name, Model model){
+        Wine result = wineService.findWine(name);
+        if(result == null){
+            System.out.println("DEBUG: Searching with API now...");
+            List<Map<String, String>> products = apiClient.searchProducts(name);
+            model.addAttribute("products", products);
+            return  "rating/winelist";
         }
 
-        model.addAttribute("wine", wine);
+        model.addAttribute("wine", result);
         return "rating/addRating";
+
     }
 
     @PostMapping("/addWine")
     public String addWineToDatabase(@RequestParam("name") String name,
                                     @RequestParam("description") String description,
                                     @RequestParam("ean") String ean) {
-        Long eanLong = Long.parseLong(ean);
-        Wine wine = new Wine();
-        wine.setEan(eanLong);
-        wine.setName(name);
-        wine.setDescription(description);
-        System.out.println("Attempting to save wine: " + wine);
-        wineService.saveWine(wine);
 
-        return "redirect:/rating/addRating?winenumber=" + wine.getId();
+        try {
+            Wine wine = wineService.saveWine(Long.parseLong(ean), name, description);
+            return "redirect:/rating/addRating?winenumber=" + wine.getId();
+        } catch (Exception e){
+            // possibly do error handling
+        }
+        return "rating/addRating";
+
     }
 
     @GetMapping("/addRating")
     public String addRating(@RequestParam("winenumber") Long winenumber, Model model) {
         Wine wine = wineRepository.findById(winenumber).orElse(null);
-        model.addAttribute("wine", wine);
+        Rating rating = new Rating();
+        rating.setWine(wine);
+        model.addAttribute("rating", rating);
         return "rating/addRating";
     }
 
     @PostMapping("/addRating")
-    public String addRating(@RequestParam("winenumber") Long winenumber,
-                            @RequestParam("designrating") int designrating,
-                            @RequestParam("pricerating") int pricerating,
-                            @RequestParam("tasterating") int tasterating) {
+    public String addRating(@ModelAttribute Rating rating){
 
+        // this method requires the wine to be part of the input already
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByLoginIgnoreCase(authentication.getName()).get();
 
-        System.out.println("Attempting to save rating for wine: " + winenumber + "with taste " + tasterating + " design " + designrating + " price " + pricerating);
+        rating.setUser(user);
+        ratingService.saveRating(rating);
 
-        Wine wine = wineRepository.findById(winenumber).orElse(null);
-        Rating ratingObject = new Rating();
-        ratingObject.setRatingDesign(designrating);
-        ratingObject.setRatingPrice(pricerating);
-        ratingObject.setRatingTaste(tasterating);
-        ratingObject.setWine(wine);
-
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            Long userid = userRepository.findByLoginIgnoreCase(username).get().getId();
-            ratingObject.setUser(userRepository.findById(userid).orElse(null));
-            // return authentication.getName();
-        }
-
-
-        ratingService.saveRating(ratingObject);
-        System.out.println("Saved rating: " + ratingObject);
-        return "redirect:/";
+        return "redirect:/rating/myratings";
     }
+
 
     @PostMapping("/sendInfo")
     public String sendMail(@RequestParam("email") String email) {
@@ -156,13 +122,11 @@ public class RatingController {
                          @RequestParam(defaultValue = "5") int size) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Long userid = userRepository.findByLoginIgnoreCase(username).get().getId();
+        Long userid = userRepository.findByLoginIgnoreCase(authentication.getName()).get().getId();
         Pageable pageable = PageRequest.of(page, size);
         Page<Rating> ratingPage =  ratingService.getAllRatingsByUserID(pageable, userid);
 
         model.addAttribute("ratings", ratingPage);
-
 
         return "rating/myratings";
     }
@@ -182,6 +146,7 @@ public class RatingController {
                          @RequestParam(defaultValue = "5") int size) {
 
         String loggedInUsername = getLoggedInUsername();
+        Pageable pageable = PageRequest.of(page, size);
         ZipCode zipCode;
         int zipCodeInt = 0;
         if (!loggedInUsername.equals("anonymousUser")) {
@@ -189,11 +154,8 @@ public class RatingController {
             zipCodeInt = Integer.parseInt((zipCode.getZipCode()));
         }
 
-        Pageable pageable = PageRequest.of(page, size);
         Page<WineProjectionI> winePage =  wineRepository.getWinesByZipCodewParamwPage(zipCodeInt, pageable);
-
         model.addAttribute("wines", winePage);
-
 
         return "rating/localratings";
     }
@@ -203,13 +165,10 @@ public class RatingController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.isAuthenticated()) {
-
             return authentication.getName();
-
         }
-
-        // Wenn kein Benutzer authentifiziert ist
-        return "Gast";
+        // fallback
+        return "Guest";
     }
 
 
@@ -225,6 +184,7 @@ public class RatingController {
     public String updateUser(@PathVariable("id") long id, @Valid Rating rating,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
+            // open for further debugging
             return "redirect:/rating/myratings";
         }
 

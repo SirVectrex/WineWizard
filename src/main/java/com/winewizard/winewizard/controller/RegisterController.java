@@ -6,6 +6,7 @@ import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.service.*;
 import com.winewizard.winewizard.service.impl.EmailServiceImpl;
+import com.winewizard.winewizard.service.impl.RatingServiceImpl;
 import com.winewizard.winewizard.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ import java.util.Optional;
 @Controller
 public class RegisterController {
     private final UserServiceImpl userService;
-    private final RatingServiceI ratingServiceI;
+    private final RatingServiceImpl ratingServiceI;
     private final BookmarkServiceI bookmarkServiceI;
     private final WineryServiceI wineryService;
     private final EmailServiceI emailService;
 
 
     @Autowired
-    public RegisterController(UserServiceImpl userService, RatingServiceI ratingServiceI,
+    public RegisterController(UserServiceImpl userService, RatingServiceImpl ratingServiceI,
                               BookmarkServiceI bookmarkServiceI, WineryServiceI wineryService,
                               EmailServiceImpl emailService) {
         this.userService = userService;

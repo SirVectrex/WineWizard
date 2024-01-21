@@ -8,6 +8,7 @@ import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.WineryServiceI;
 import com.winewizard.winewizard.service.impl.AuthServiceImpl;
 import com.winewizard.winewizard.service.impl.UserServiceImpl;
+import com.winewizard.winewizard.service.impl.WineServiceImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,10 @@ import org.springframework.web.bind.annotation.*;
 public class WineryController {
 
     private final WineryServiceI wineryService;
-    private final WineServiceI wineServiceI;
+    private final WineServiceImpl wineServiceI;
     private final AuthServiceI authService;
 
-    public WineryController(WineryServiceI wineryService, WineServiceI wineService, AuthServiceImpl authService, UserServiceImpl userService) {
+    public WineryController(WineryServiceI wineryService, WineServiceImpl wineService, AuthServiceImpl authService, UserServiceImpl userService) {
         super();
         this.wineryService = wineryService;
         this.wineServiceI = wineService;
