@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<header th:insert="~{layout}"></header>
+
+
+<body>
+<div th:insert="~{fragments/header}"></div>
+
+<div class="container mt-4">
+  <!--TODO: translate file-->
+
+  <h2 th:if="${categories.isEmpty()}">
+    Sorry, um dir Weine empfehlen zu können musst du erst einige Bewertungen abgeben.
+  </h2>
+
+  <section  class="card mb-4" >
+    <div class="card-body" >
+      <h2 class="card-title" >Your top wine categories</h2>
+      <table class="table table-striped">
+        <tbody>
+        <tr th:each="category : ${categories}">
+          <td th:text="${category}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card mb-4">
+    <div class="card-body">
+      <h2 class="card-title">Our recomendations based on your top categories</h2>
+      <table class="table table-striped">
+        <thead class="thead-light">
+        <tr>
+          <th th:text="#{Name}"></th>
+          <th >Beschreibung</th>
+          <th >Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="recommendation : ${recommendations}">
+          <td th:text="${recommendation.getName()}"></td>
+          <td th:text="${recommendation.getDescription()}"></td>
+          <td th:text="${recommendation.getType()}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+</div>
+
+</body>
+</html>

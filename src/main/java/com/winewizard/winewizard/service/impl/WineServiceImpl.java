@@ -1,9 +1,10 @@
 package com.winewizard.winewizard.service.impl;
 
+import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.Winery;
+import com.winewizard.winewizard.repository.RecommendationProjectionI;
 import com.winewizard.winewizard.repository.WineProjectionI;
-import com.winewizard.winewizard.repository.WineRepositoryI;
 import com.winewizard.winewizard.repository.impl.WineRepositoryImpl;
 import com.winewizard.winewizard.service.WineServiceI;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 // Provides the methods which we can use to interact with the database
 @Service
@@ -36,6 +36,15 @@ public class WineServiceImpl implements WineServiceI {
 
     public Page<WineProjectionI> getWineRatings(Pageable pageable) {
         return wineRepositoryI.findWinesWithAverageRatings_Pages(pageable);
+    }
+
+    public List<RecommendationProjectionI> getTopWineTypes(User user){
+        return wineRepositoryI.getTopWineTypesByUser(user.getId());
+    }
+
+    public List<Wine> getWineRecommendations(List<String> types){
+
+        return wineRepositoryI.getWineRecommendations(types);
     }
 
     public Wine findWine(String query){

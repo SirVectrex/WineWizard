@@ -3,17 +3,17 @@ package com.winewizard.winewizard.controller;
 import com.winewizard.winewizard.model.Bookmark;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
-import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.repository.BookmarkRepository;
+import com.winewizard.winewizard.repository.RecommendationProjectionI;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineRepositoryI;
-import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.impl.WineServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -71,6 +72,25 @@ public class WineController {
         List<Wine> allWines = wineService.getAllWines();
         model.addAttribute("winelist", allWines);
         return "wines/allWines";
+    }
+
+    @GetMapping ("/recommendations")
+    public String recommendations(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return "error/general";
+        }
+
+        List<RecommendationProjectionI> allWines = wineService.getTopWineTypes((User) authentication.getPrincipal());
+        List<String> result = new ArrayList<String>();
+        for (var item : allWines) {
+            result.add(item.getTopType());
+        }
+        List<Wine> wines = wineService.getWineRecommendations(result);
+        model.addAttribute("categories", result);
+        model.addAttribute("recommendations", wines);
+
+        return "general/wineRecommendations";
     }
 
 

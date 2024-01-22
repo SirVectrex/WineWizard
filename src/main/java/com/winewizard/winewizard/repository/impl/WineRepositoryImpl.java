@@ -1,5 +1,7 @@
 package com.winewizard.winewizard.repository.impl;
 
+import com.winewizard.winewizard.model.Wine;
+import com.winewizard.winewizard.repository.RecommendationProjectionI;
 import com.winewizard.winewizard.repository.StatsProjectionI;
 import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.repository.WineRepositoryI;
@@ -43,6 +45,29 @@ public interface WineRepositoryImpl extends WineRepositoryI {
             "ORDER BY AVG(r.TASTE_RATING) DESC", nativeQuery = true)
     Page<WineProjectionI> getWinesByZipCodewParamwPage(@Param("zipcode") int zipcode, Pageable pageable);
 
+    @Query(value = "SELECT w.type as TopType " +
+            "FROM RATING r " +
+            "join WINE w on r.WINE_ID = w.ID " +
+            "where r.USER_ID = :id " +
+            "group by w.type " +
+            "order by sum(r.DESIGN_RATING + r.PRICE_RATING + r.TASTE_RATING) desc " +
+            "limit 3", nativeQuery = true)
+    List<RecommendationProjectionI> getTopWineTypesByUser(@Param("id") long id);
 
-
+    @Query(value = "SELECT  id, type, name, bookmarked, ean, winery_id, description FROM ( " +
+            "SELECT sum(r.DESIGN_RATING + r.PRICE_RATING + r.TASTE_RATING) / count(*) as avg_rating, " +
+            "w.id, " +
+            "w.type, " +
+            "w.name, " +
+            "w.bookmarked, " +
+            "w.ean, " +
+            "w.winery_id, " +
+            "w.description " +
+            "FROM RATING r " +
+            "JOIN WINE w on r.WINE_ID = w.id " +
+            "where w.type in :types " +
+            "group by wine_id, w.type, w.name,  w.bookmarked, w.ean, w.winery_id, w.description " +
+            "order by avg_rating desc "  +
+            "Limit 5)", nativeQuery = true)
+    List<Wine> getWineRecommendations(@Param("types") List<String> types);
 }
