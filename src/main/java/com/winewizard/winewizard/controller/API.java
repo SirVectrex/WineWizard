@@ -142,7 +142,7 @@ public class API {
 
 
     @PostMapping("/bookmarks")
-    public String addRating(@RequestBody Bookmark bookmark) {
+    public String addBookmark(@RequestBody Bookmark bookmark) {
 
         bookmarkService.saveBookmark(bookmark);
 
