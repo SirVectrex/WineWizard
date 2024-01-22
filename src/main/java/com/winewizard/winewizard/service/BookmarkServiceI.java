@@ -14,4 +14,6 @@ public interface BookmarkServiceI {
     public List<Bookmark> getBookmarksByUser(long user_id);
 
     void updateBookmark(Bookmark bookmark);
+
+    Bookmark saveBookmark(Bookmark bookmark);
 }

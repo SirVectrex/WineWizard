@@ -8,6 +8,14 @@ import java.io.Serializable;
 @Table(name= "bookmarks")
 public class Bookmark implements Serializable {
 
+    public Long getBookmarkId() {
+        return bookmarkId;
+    }
+
+    public void setBookmarkId(Long bookmarkId) {
+        this.bookmarkId = bookmarkId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookmarkId;

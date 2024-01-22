@@ -135,6 +135,11 @@ public class API {
     @PutMapping("/bookmarks")
     public String updateBookmark(@RequestBody Bookmark bookmark) {
 
+        System.out.println(bookmark.getWine());
+        System.out.println(bookmark.getUser());
+        System.out.println(bookmark.getBookmarkId());
+
+
         // get user from database
         Optional<User> user = userRepository.findById(bookmark.getUser().getId());
 
@@ -145,6 +150,15 @@ public class API {
         bookmarkService.updateBookmark(bookmark);
 
         return "Bookmark updated successfully";
+    }
+
+
+    @PostMapping("/bookmarks")
+    public String addRating(@RequestBody Bookmark bookmark) {
+
+        bookmarkService.saveBookmark(bookmark);
+
+        return "Bookmark added successfully";
     }
 
 

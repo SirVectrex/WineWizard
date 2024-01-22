@@ -1,7 +1,6 @@
 package com.winewizard.winewizard.service.impl;
 
 import com.winewizard.winewizard.model.Bookmark;
-import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.repository.BookmarkRepository;
 import com.winewizard.winewizard.service.BookmarkServiceI;
 import org.springframework.stereotype.Service;
@@ -49,5 +48,10 @@ public class BookmarkServiceImpl implements BookmarkServiceI {
     @Override
     public void updateBookmark(Bookmark bookmark) {
         bookmarkRepository.save(bookmark);
+    }
+
+    @Override
+    public Bookmark saveBookmark(Bookmark bookmark) {
+        return bookmarkRepository.save(bookmark);
     }
 }
