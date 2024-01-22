@@ -114,10 +114,6 @@ public class API {
     @PutMapping("/bookmarks")
     public String updateBookmark(@RequestBody Bookmark bookmark) {
 
-        System.out.println(bookmark.getWine());
-        System.out.println(bookmark.getUser());
-        System.out.println(bookmark.getBookmarkId());
-
 
         // get user from database
         Optional<User> user = userRepository.findById(bookmark.getUser().getId());
@@ -138,6 +134,19 @@ public class API {
         bookmarkService.saveBookmark(bookmark);
 
         return "Bookmark added successfully";
+    }
+
+    @DeleteMapping("/bookmarks/{user_id}")
+    public String deleteBookmark(@PathVariable("user_id") String user_id) {
+
+        try {
+            bookmarkService.deleteBookmarksByUserId(Long.parseLong(user_id));
+        } catch (Exception e){
+            // possibly do error handling
+            return "Rating not found";
+        }
+
+        return "Bookmark deleted successfully";
     }
 
 
