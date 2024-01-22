@@ -59,6 +59,8 @@ public class API {
     @PostMapping("/ratings")
     public String addRating(@RequestBody Rating rating) {
 
+        System.out.println("Attempt to add rating");
+
         // get user from database
         //Optional<User> user = userRepository.findById(rating.getUser().getId());
         // set user in rating
@@ -81,6 +83,21 @@ public class API {
          */
 
         return "Rating added successfully";
+    }
+
+    @PutMapping("/ratings")
+    public String updateRating(@RequestBody Rating rating) {
+
+        // get user from database
+        Optional<User> user = userRepository.findById(rating.getUser().getId());
+
+        // set user in rating
+        rating.setUser(user.get());
+
+        // save rating
+        ratingService.updateRating(rating);
+
+        return "Rating updated successfully";
     }
 
     @DeleteMapping("/ratings/{rating_id}")

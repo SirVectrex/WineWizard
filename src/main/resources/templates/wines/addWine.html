@@ -38,7 +38,7 @@
                 <!-- EAN Field -->
                 <div class="form-group mb-3">
                     <label for="ean" th:text="#{EAN}">EAN</label>
-                    <input class="form-control" id="ean" placeholder="Wine EAN" th:classappend="${#fields.hasErrors('ean')} ? 'is-invalid'" th:field="*{ean}" type="text"/>
+                    <input class="form-control" id="ean" placeholder="Wine EAN" th:classappend="${#fields.hasErrors('ean')} ? 'is-invalid'" th:field="*{ean}" type="number"/>
                     <div class="invalid-feedback">
                         <span th:errors="*{ean}"></span>
                     </div>
