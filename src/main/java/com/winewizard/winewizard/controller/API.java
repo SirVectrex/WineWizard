@@ -120,18 +120,6 @@ public class API {
 
     }
 
-    @GetMapping("/bookmarksByUser/{user_id}")
-    public List<Bookmark> getBookmarksByUser(@PathVariable("user_id") String userId) {
-
-        try {
-            return bookmarkService.getBookmarksByUser(Long.parseLong(userId));
-        } catch (Exception e){
-            // possibly do error handling
-            return null;
-        }
-
-    }
-
     @PutMapping("/bookmarks")
     public String updateBookmark(@RequestBody Bookmark bookmark) {
 

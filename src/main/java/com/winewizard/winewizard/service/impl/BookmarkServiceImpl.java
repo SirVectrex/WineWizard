@@ -27,24 +27,6 @@ public class BookmarkServiceImpl implements BookmarkServiceI {
         return bookmarkRepository.findBookmarkByUserId(userId);
     }
 
-    public List<Bookmark> getBookmarksByUser(long user_id){
-
-        List<Bookmark> bookmarks = getAllBookmarksByUserId(Long.valueOf(user_id));
-
-        // set user password and role to null for security reasons
-        for (Bookmark bookmark : bookmarks) {
-            bookmark.getUser().setPassword(null);
-            bookmark.getUser().setRoles(null);
-        }
-
-        if (bookmarks == null) {
-            // Handle error, such as returning an error message or status code
-            return null;
-        }
-        return bookmarks;
-
-    }
-
     @Override
     public void updateBookmark(Bookmark bookmark) {
         bookmarkRepository.save(bookmark);
