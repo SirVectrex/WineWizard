@@ -2,10 +2,12 @@ package com.winewizard.winewizard.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -45,16 +47,25 @@ public class SecurityConfig {
     public SecurityFilterChain getSecurityFilterChain(HttpSecurity http,
                                                       HandlerMappingIntrospector introspector) throws Exception {
         http.csrf().disable();
-        
+
+        http.csrf()
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/api/**"))
+                .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"));
+
+        /*
         http.csrf(csrfConfigurer ->
                 csrfConfigurer.ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**")));
+                */
+
 
         http.headers(headersConfigurer ->
                 headersConfigurer.frameOptions(FrameOptionsConfig::sameOrigin));
 
         http.authorizeHttpRequests(auth ->
                 auth
-                		.requestMatchers(new AntPathRequestMatcher("/resources/**")).permitAll()		
+                		.requestMatchers(new AntPathRequestMatcher("/resources/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/api/ratings/**")).permitAll()
                 		.requestMatchers(new AntPathRequestMatcher("/webjars/**")).permitAll()
                 		.requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
                 		.requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
@@ -66,7 +77,7 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/verify")).permitAll());
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**","/images/flaschi_die_flasche.png","/api/*").permitAll()
+                .requestMatchers("/images/flaschi_die_flasche.png").permitAll()
         );
                 		
         http.authorizeHttpRequests()
@@ -81,7 +92,6 @@ public class SecurityConfig {
         .requestMatchers(new AntPathRequestMatcher("/changeLanguage")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/admin")).hasAnyAuthority("ADMIN_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/feedback/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
-        // .requestMatchers(new AntPathRequestMatcher("/fragments/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/sendMail/**")).hasAnyAuthority ("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS")
         .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyAuthority("ADMIN_STATUS", "WINEWIZARD_STATUS", "WINERY_STATUS");
 
