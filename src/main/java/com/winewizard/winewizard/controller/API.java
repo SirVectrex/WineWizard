@@ -67,16 +67,16 @@ public class API {
         ratingService.saveRating(rating);
         /*
         {
-  "user": {
-    "id": 1
-  },
-  "wine": {
-    "id": 4
-  },
-  "ratingTaste": 1,
-  "ratingDesign": 1,
-  "ratingPrice": 1
-}
+            "user": {
+            "id": 1
+            },
+            "wine": {
+            "id": 4
+            },
+            "ratingTaste": 1,
+            "ratingDesign": 1,
+            "ratingPrice": 1
+        }
 
          */
 

@@ -57,7 +57,7 @@ public class RatingServiceImpl implements RatingServiceI {
             // set user.role to null for security reasons
             rating.getUser().setRoles(null);
         }
-        return null;
+        return rating;
     }
 
     public List<Rating> getRatingsByUser_Safe(long user_id){
