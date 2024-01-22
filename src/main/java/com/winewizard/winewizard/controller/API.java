@@ -83,29 +83,20 @@ public class API {
         return "Rating added successfully";
     }
 
-    @PutMapping("/ratings")
-    public String updateRating(@RequestBody Rating rating) {
+    @DeleteMapping("/ratings/{rating_id}")
+    public String deleteRating(@PathVariable("rating_id") String rating_id) {
 
-        System.out.println(rating.getRatingDesign());
-        System.out.println(rating.getRatingId());
-        System.out.println(rating.getUser());
-        System.out.println(rating.getWine());
-        System.out.println(rating.getRatingPrice());
-        System.out.println(rating.getRatingTaste());
+        try {
+            ratingService.deleteRatingById(Long.parseLong(rating_id));
+        } catch (Exception e){
+            // possibly do error handling
+            return "Rating not found";
+        }
 
-
-
-        // get user from database
-        Optional<User> user = userRepository.findById(rating.getUser().getId());
-
-        // set user in rating
-        rating.setUser(user.get());
-
-        // save rating
-        ratingService.updateRating(rating);
-
-        return "Rating updated successfully";
+        return "Rating deleted successfully";
     }
+
+
 
 
     @GetMapping("/ratingsByUser/{user_id}")
