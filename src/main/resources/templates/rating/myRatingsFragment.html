@@ -1,0 +1,47 @@
+<div th:if="${#lists.isEmpty(ratings)}">
+    <h2 th:text="#{No_Ratings}">You have not rated any wines yet.</h2>
+
+</div>
+
+<table th:if="${not #lists.isEmpty(ratings)}" class="table">
+    <thead>
+    <tr>
+        <th th:text="#{Name}">Wine Name</th>
+        <th th:text="#{Taste_Rating}">Taste Rating</th>
+        <th th:text="#{Design_Rating}">Design Rating</th>
+        <th th:text="#{Price_Rating}">Price Rating</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rating : ${ratings}">
+        <td th:text="${rating.getWine().getName()}">Wine Name</td>
+        <td th:text="${rating.getRatingTaste()}">Taste Rating</td>
+        <td th:text="${rating.getRatingDesign()}">Design Rating</td>
+        <td th:text="${rating.getRatingPrice()}">Price Rating</td>
+        <td th:if="${allowEditing}">
+            <a th:href="@{/rating/delete(id=${rating.getRatingId()})}" class="btn btn-danger" th:text="#{Delete}">Delete</a>
+            <a th:href="@{/rating/edit/{id}(id=${rating.getRatingId()})}" class="btn btn-primary" th:text="#{Edit}">Edit Rating</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Pagination controls -->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li th:if="${ratings.hasPrevious()}" class="page-item">
+            <a class="page-link"  th:href="${hrefLinkPrev}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li th:each="pageNum : ${#numbers.sequence(0, ratings.totalPages - 1)}" class="page-item" th:classappend="${pageNum} == ${ratings.number} ? 'active'">
+            <a class="page-link" th:href="${hrefLinkPagePre}+${pageNum}+${hrefLinkPagePost}" th:text="${pageNum + 1}">1</a>
+        </li>
+        <li th:if="${ratings.hasNext()}" class="page-item">
+            <a class="page-link" th:href="${hrefLinkNext}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
