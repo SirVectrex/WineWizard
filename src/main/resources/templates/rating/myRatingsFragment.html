@@ -28,7 +28,7 @@
 </table>
 
 <!-- Pagination controls -->
-<nav aria-label="Page navigation" th:if="${ratings.isEmpty()}">
+<nav aria-label="Page navigation" th:if="${!ratings.isEmpty()}">
     <ul class="pagination justify-content-center">
         <li th:if="${ratings.hasPrevious()}" class="page-item">
             <a class="page-link"  th:href="${hrefLinkPrev}" aria-label="Previous">
