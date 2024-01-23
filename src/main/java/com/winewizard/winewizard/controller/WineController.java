@@ -151,6 +151,8 @@ public class WineController {
                 if (existingBookmark.isPresent()) {
                     // Wenn bereits gebookmarked, entfernen Sie das Bookmark
                     bookmarkRepository.delete(existingBookmark.get());
+
+                    return new RedirectView("/wines/searchWine");
                 } else {
                     // Wenn nicht gebookmarked, fügen Sie das Bookmark hinzu
                     Bookmark newBookmark = new Bookmark();
@@ -162,7 +164,8 @@ public class WineController {
         }
 
 
-        return new RedirectView("/wines/searchWine");
+
+        return new RedirectView("/wines/searchWine?searchTerm=Bookmark");
 
     }
 
