@@ -76,7 +76,6 @@ public class WineryController {
         Pageable pageable = PageRequest.of(page, size);
 
         var allWines = wineServiceI.getWineRatingsByWinery(pageable, winery);
-        //TODO: display the wines in frontend + Klassen umbenennen
         model.addAttribute("allWines", allWines);
         return "/winery/statistics";
     }

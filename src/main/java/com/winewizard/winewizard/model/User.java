@@ -3,6 +3,7 @@ package com.winewizard.winewizard.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import org.hibernate.annotations.DynamicUpdate;
@@ -33,8 +34,7 @@ public class User implements Serializable, UserDetails {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	Long id;
 	@NotBlank(message = "username is mandatory")
-	//TODO: check if contains blank
-	@Size(min = 5, max = 50, message ="Username must have at least 5 characters")
+	@Pattern(regexp="(^$|[a-zA-Z0-9]{5,15})", message = "Only letters and numbers allowed. Min length 5")
 	@Column(unique = true)
 	private String login;
 	@Transient
@@ -48,10 +48,10 @@ public class User implements Serializable, UserDetails {
 	@Transient
 	private String passwordRepeat;
 	@NotBlank(message = "Email is mandatory")
-	//TODO: unique and check on sign in
+	//TODO: unique and check on sign in + validate
 	private String email;
 	@NotBlank(message = "Phone Number is mandatory")
-	//TODO: check validity
+	@Pattern(regexp="(^$|[0-9 +]{4,15})", message = "Invalid phone number. Allowed characters '0-9' '+' ' '")
 	private String phone;
 	@Transient
 	private boolean olderThanSixteen;
