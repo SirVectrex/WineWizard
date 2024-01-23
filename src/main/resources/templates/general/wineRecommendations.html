@@ -7,15 +7,14 @@
 <div th:insert="~{fragments/header}"></div>
 
 <div class="container mt-4">
-  <!--TODO: translate file-->
 
-  <h2 th:if="${categories.isEmpty()}">
-    Sorry, um dir Weine empfehlen zu können musst du erst einige Bewertungen abgeben.
+  <h2 th:if="${categories.isEmpty()}" th:text="#{please_rate_wine}">
+
   </h2>
 
   <section  class="card mb-4" >
     <div class="card-body" >
-      <h2 class="card-title" >Your top wine categories</h2>
+      <h2 class="card-title" th:text="#{your_top_categorie}"></h2>
       <table class="table table-striped">
         <tbody>
         <tr th:each="category : ${categories}">
@@ -28,13 +27,13 @@
 
   <section class="card mb-4">
     <div class="card-body">
-      <h2 class="card-title">Our recomendations based on your top categories</h2>
+      <h2 class="card-title" th:text="#{our_tipps}"></h2>
       <table class="table table-striped">
         <thead class="thead-light">
         <tr>
           <th th:text="#{Name}"></th>
-          <th >Beschreibung</th>
-          <th >Type</th>
+          <th th:text="#{Description}">Beschreibung</th>
+          <th th:text="#{Type}">Type</th>
         </tr>
         </thead>
         <tbody>

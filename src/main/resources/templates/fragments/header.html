@@ -17,8 +17,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/allratings" th:text="#{All_Ratings}"></a></li>
                         <li><a class="dropdown-item" href="/wines/add" th:text="#{Add_a_wine}"></a></li>
-                        <!--TODO: translate-->
-                        <li><a class="dropdown-item" href="/wines/recommendations" >Recommendations</a></li>
+                        <li><a class="dropdown-item" href="/wines/recommendations" th:text="#{Recommendations}">Recommendations</a></li>
                         <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/add" th:text="#{Rate_a_wine}"></a></li>
                         <li><a class="dropdown-item" href="/rating/myarea" th:text="#{Ratings_area}">Best in my area</a></li>
                         <li><hr class="dropdown-divider"></li>
@@ -34,7 +33,6 @@
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{User_functionality}">
                     </a>
                     <ul class="dropdown-menu">
-                        <!-- TODO: remove static link -->
                         <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/myratings" th:text="#{My_Ratings}"></a></li>
                         <li><a class="dropdown-item" href="/feedback/add" th:text="#{Feedback}"></a></li>
                         <li><a class="dropdown-item" href="/profile" th:text="#{Profile}"></a></li>
@@ -43,7 +41,6 @@
                 </li>
 
                 <li class="nav-item dropdown" sec:authorize="hasAuthority('WINERY_STATUS')">
-                    <!-- TODO: translate -->
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{My_Winery}" >Winery functionality
                     </a>
                     <ul class="dropdown-menu">

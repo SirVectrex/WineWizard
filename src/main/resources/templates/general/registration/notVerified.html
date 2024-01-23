@@ -6,9 +6,8 @@
         <div class="container text-center">
             <!-- Wine Image or Icon -->
             <img src="/images/cryingwine.png" alt="Cute Wine" style="width: 400px;">
-            <!--TODO: übersetzung-->
-            <h3>Oh oh, you haven´t confirmed your email address</h3>
-            <h4>Please confirm your email by clicking on the link in the mail we sent you.</h4>
+            <h3 th:text="#{no_mail_confirmation}"></h3>
+            <h4  th:text="#{no_mail_explaination}"></h4>
         </div>
     </div>
 </body>
