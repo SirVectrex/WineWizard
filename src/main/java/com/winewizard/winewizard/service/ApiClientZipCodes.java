@@ -19,7 +19,6 @@ public class ApiClientZipCodes {
     private static String apiKey;
 
     static {
-        //TODO: Duplicate with ApiClient
         try (InputStream input = ApiClientZipCodes.class.getClassLoader().getResourceAsStream("application.properties")) {
             Properties prop = new Properties();
             if (input == null) {
