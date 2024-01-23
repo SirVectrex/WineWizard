@@ -66,95 +66,22 @@ public class RegisterController {
                           @ModelAttribute @Valid  Winery winery,
                              BindingResult bindingResultUserWinery,
                              RedirectAttributes attr){
-        //TODO: move -if possible- stuff to service
-        boolean isUpdating = false;
-        if(user.getId()!= -1) {
-            isUpdating = true;
-        }
+        boolean isUpdating = user.getId() != -1;
 
-        if( user.isWineryUser()) {
-            if(winery.getWineryName().isBlank()) {
-                bindingResultUserWinery.rejectValue("wineryName",  "no_winery_name");
-           }
-        }
-
-        if(!user.isOlderThanSixteen()) {
-            bindingResultUser.rejectValue("olderThanSixteen", "no_age_confirmation");
-        }
-
-        boolean invalidZipCode = false;
-
-        if(user.getZipCodeInput().length() != 5){
-            invalidZipCode = true;
-        }
-
-        try{
-            Integer.parseInt(user.getZipCodeInput());
-        } catch (NumberFormatException e) {
-            invalidZipCode = true;
-        }
-
-        ZipCode zipCode = null;
-        if(!invalidZipCode) {
-            ApiClientZipCodes api = new ApiClientZipCodes();
-            zipCode = api.getGermanZipInformation(user.getZipCodeInput());
-        }
-
-        if (zipCode == null) {
-            bindingResultUser.rejectValue("zipCodeInput", "invalid_zip_code");
-        } else {
-            userService.createZipCode(zipCode);
-            user.setZipCode(zipCode);
-        }
-
-        if(!user.getPassword().equals(user.getPasswordRepeat())){
-            bindingResultUser.rejectValue("passwordRepeat", "password_not_equal");
-        }
-
-        if(!isUpdating && user.getPassword().isEmpty()){
-            //TODO: change error message
-            bindingResultUser.rejectValue("passwordRepeat", "password_not_equal");
-        }
-
+        //Validate input
+        userService.validateInput(user, bindingResultUser, winery, bindingResultUserWinery, isUpdating);
         if (bindingResultUser.hasErrors() || bindingResultUserWinery.hasErrors()) {
             return "general/register";
         }
 
+        //Handle updating
         if(isUpdating){
-            //get user again from db so the password is not temporarly exposed in the frontend
-           var dbUser = userService.findUserByLoginIgnoreCase(user.getLogin()).get();
-            dbUser.setZipCode(user.getZipCode());
-            dbUser.setPhone(user.getPhone());
-
-            if(!user.getPassword().isBlank()){
-                var encryptedPassword = userService.encryptPassword(user.getPassword());
-                dbUser.setPassword(encryptedPassword);
-            }
-
-            userService.update(dbUser);
-            if(user.isWineryUser()){
-                var dbWinery = wineryService.getByWineryByWineryOwnerName(dbUser.getUsername());
-                dbWinery.setWineryName(winery.getWineryName());
-                wineryService.update(dbWinery);
-            }
-
-            return "general/profile";
+            userService.handleUpdatingProcess(user, winery);
+            return "redirect:/profile";
         }
 
-        var defaultUser = new Role();
-
-        if(user.isWineryUser()) {
-            // 3L is the winery user, needs to be created on DB setup
-            defaultUser.setId(3L);
-        } else{
-            // 2L is the default winewizward user, needs to be created on DB setup
-            defaultUser.setId(2L);
-        }
-        user.setRoles(List.of(defaultUser));
-        user.setVerified(false);
-        user.setVerificationCode(String.valueOf(java.util.UUID.randomUUID()));
-        user.setPersonalProfileId(String.valueOf(java.util.UUID.randomUUID()));
-
+        //Create a new account
+        user = userService.setDefaultValuesInUser(user);
         try {
             user.setPassword(userService.encryptPassword(user.getPassword()));
             user = userService.createUser(user);
@@ -163,14 +90,8 @@ public class RegisterController {
             return "general/register";
         }
 
-        if(user.isWineryUser()) {
-            winery.setWineryOwnerId(user.getId());
-            wineryService.saveWinery(winery);
-        }
-
+        userService.createWineryIfNeccessary(user, winery);
         emailService.sendVerificaiton(user);
-        //TODO: Email info
-        attr.addFlashAttribute("success", "User added!");
 
         return "redirect:/customlogin";
     }
