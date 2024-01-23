@@ -111,6 +111,6 @@ public class GeneralController {
            }
         }
 
-        return "/general/profile";
+        return "general/profile";
     }
 }

@@ -31,14 +31,14 @@ public class FeedbackController {
         Feedback feedback = new Feedback();
         feedback.setId((long) -1);
         model.addAttribute("feedback", feedback);
-        return "/general/feedbackform";
+        return "general/feedbackform";
     }
 
     @PostMapping("/add")
     public String addFeedback(@Valid Feedback feedback, BindingResult result, Model model){
         if(result.hasErrors()){
             System.out.println(result.getAllErrors().toString());
-            return "/home";
+            return "home";
         }
         if (feedbackService.saveFeedback(feedback) != null){
             // feedback correctly saved
@@ -48,7 +48,7 @@ public class FeedbackController {
         else {
             // possible further error handling
         }
-        return "/general/feedbackform";
+        return "general/feedbackform";
     }
 
 

@@ -60,7 +60,7 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         if (authentication != null && authentication.isAuthenticated()) {
             User user = (User) authentication.getPrincipal() ;
             if(!user.isVerified()){
-                return "/notVerified";
+                return "notVerified";
             }
         }
 

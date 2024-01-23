@@ -35,7 +35,7 @@ public class WineryController {
         if(identifier == null) {
             User userDetail= authService.getLoggedInUserDetails();
             if(userDetail == null ){
-                return "/customlogin";
+                return "customlogin";
             }
 
             var winery = wineryService.getByWineryByWineryOwnerName(userDetail.getUsername());
@@ -47,7 +47,7 @@ public class WineryController {
             Winery winery = wineryService.getByUrlIdent(identifier);
             if (winery == null) {
                 System.out.println("Warning: No winery found with ident: " + identifier);
-                return "/home";
+                return "home";
             }
             model.addAttribute("winery", winery);
         }
@@ -65,10 +65,10 @@ public class WineryController {
             var allWines = wineServiceI.getAllWinesOfWinery(winery);
             //TODO: display the wines in frontend + Klassen umbenennen
             model.addAttribute("allWines", allWines);
-            return "/winery/statistics";
+            return "winery/statistics";
         }
         System.out.println("Error: Auth error");
-        return "/error/general";
+        return "error/general";
     }
 
 }
