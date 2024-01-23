@@ -14,22 +14,46 @@
         <thead class="thead-dark">
         <tr>
             <th th:text="#{Name}">Name</th>
-            <th th:text="#{Type}">Type of wine</th>
-            <th th:text="#{Description}">Description</th>
+            <!-- TODO: tranlate-->
+            <th>Avg taste rating</th>
+            <th >Avg Desgin rating</th>
+            <th>Avg price rating</th>
+
             <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="wine : ${allWines}">
             <td th:text="${wine.name}"></td>
-            <td th:text="${wine.type}"></td>
-            <td th:text="${wine.description}"></td>
+            <td th:text="${wine.getAvgTasteRating()}"></td>
+            <td th:text="${wine.getAvgDesignRating()}"></td>
+            <td th:text="${wine.getAvgPriceRating()}"></td>
+
             <td>
                 <a th:href="@{/wines/edit/{id}(id=${wine.getId()})}" th:text="#{Edit}" class="btn btn-primary">Edit wine</a>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <!-- Pagination controls -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li th:if="${allWines.hasPrevious()}" class="page-item">
+                <a class="page-link" th:href="@{/winery/statistics(page=${allWines.number - 1}, size=${allWines.size})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li th:each="pageNum : ${#numbers.sequence(0, allWines.totalPages - 1)}" class="page-item" th:classappend="${pageNum} == ${allWines.number} ? 'active'">
+                <a class="page-link" th:href="@{/winery/statistics(page=${pageNum}, size=${allWines.size})}" th:text="${pageNum + 1}">1</a>
+            </li>
+            <li th:if="${allWines.hasNext()}" class="page-item">
+                <a class="page-link" th:href="@{/winery/statistics(page=${allWines.number + 1}, size=${allWines.size})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 

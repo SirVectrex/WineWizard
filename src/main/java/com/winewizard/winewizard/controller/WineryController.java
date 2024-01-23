@@ -3,12 +3,16 @@ package com.winewizard.winewizard.controller;
 import com.winewizard.winewizard.config.EmailDetails;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Winery;
+import com.winewizard.winewizard.repository.WineProjectionI;
 import com.winewizard.winewizard.service.AuthServiceI;
 import com.winewizard.winewizard.service.WineServiceI;
 import com.winewizard.winewizard.service.WineryServiceI;
 import com.winewizard.winewizard.service.impl.AuthServiceImpl;
 import com.winewizard.winewizard.service.impl.UserServiceImpl;
 import com.winewizard.winewizard.service.impl.WineServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -57,18 +61,23 @@ public class WineryController {
     }
 
     @GetMapping("/statistics")
-    public String getStatistics(Model model) {
+    public String getStatistics(Model model, @RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "5") int size) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            var ownerName = authentication.getName();
-            var winery = wineryService.getByWineryByWineryOwnerName(ownerName);
-            var allWines = wineServiceI.getAllWinesOfWinery(winery);
-            //TODO: display the wines in frontend + Klassen umbenennen
-            model.addAttribute("allWines", allWines);
-            return "winery/statistics";
-        }
-        System.out.println("Error: Auth error");
-        return "error/general";
-    }
 
+        if (authentication == null || !authentication.isAuthenticated()) {
+            System.out.println("Error: Auth error");
+            return "/error/general";
+        }
+
+        var ownerName = authentication.getName();
+        var winery = wineryService.getByWineryByWineryOwnerName(ownerName);
+        //var allWines = wineServiceI.getAllWinesOfWinery(winery);
+        Pageable pageable = PageRequest.of(page, size);
+
+        var allWines = wineServiceI.getWineRatingsByWinery(pageable, winery);
+        //TODO: display the wines in frontend + Klassen umbenennen
+        model.addAttribute("allWines", allWines);
+        return "/winery/statistics";
+    }
 }

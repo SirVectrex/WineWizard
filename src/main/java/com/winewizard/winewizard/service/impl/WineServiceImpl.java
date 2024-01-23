@@ -38,6 +38,10 @@ public class WineServiceImpl implements WineServiceI {
         return wineRepositoryI.findWinesWithAverageRatings_Pages(pageable);
     }
 
+    public Page<WineProjectionI> getWineRatingsByWinery(Pageable pageable, Winery winery) {
+        return wineRepositoryI.findWinesWithAverageRatingsByWinery_Pages(pageable, winery.getId());
+    }
+
     public List<RecommendationProjectionI> getTopWineTypes(User user){
         return wineRepositoryI.getTopWineTypesByUser(user.getId());
     }
