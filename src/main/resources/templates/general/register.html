@@ -10,7 +10,12 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5 ">
-                            <h2 class="text-uppercase text-center mb-5"  th:text="${!user.isWineryUser} ? 'Create an account' : 'Create a new winery'"></h2>
+
+                            <h2 class="text-uppercase text-center mb-5" th:if="${user.isWineryUser}"
+                                th:text="${user.getId() != -1} ?'Update your winery' : 'Create a new winery'"></h2>
+
+                            <h2 class="text-uppercase text-center mb-5" th:if="${!user.isWineryUser}"
+                                th:text="${user.getId() != -1} ? 'Update your account': 'Create an account' "></h2>
 
                             <form th:action="@{/register}" th:object="${user}" method="POST">
                                 <div class="form-row"  th:remove="*{!isWineryUser} ? all : none">
@@ -27,7 +32,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-row">
+                                <div class="form-row" th:classappend="${user.getId() != -1} ? 'd-none'">
                                     <div class="form-group col-md-6">
                                         <label for="login">Username </label>
                                         <input type="text" class="form-control" id="login" placeholder="Name"
@@ -39,7 +44,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-row">
+                                <div class="form-row" th:classappend="${user.getId() != -1} ? 'd-none'">
                                     <div class="form-group col-md-6">
                                         <label for="mail">E-Mail </label>
                                         <input type="text" class="form-control" id="mail" placeholder="E-Mail"
@@ -118,10 +123,10 @@
 
                                 <div class="d-flex justify-content-center">
                                     <button type="submit"
-                                            class="btn  btn-primary btn-lg text-body">Register</button>
+                                            class="btn  btn-primary btn-lg text-body" th:text="${user.getId() != -1} ? 'Update': 'Register'">Register</button>
                                 </div>
 
-                                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="customlogin"
+                                <p th:remove="${user.getId() != -1} ? all : none" class="text-center text-muted mt-5 mb-0">Have already an account? <a href="customlogin"
                                                                                                         class="fw-bold text-body"><u>Login here</u></a></p>
                             </form>
 

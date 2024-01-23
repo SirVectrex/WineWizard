@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,7 @@ import java.util.List;
 @Entity
 @Table(name="user")
 @Inheritance(strategy=InheritanceType.JOINED)
+@DynamicUpdate
 //more about: https://stackabuse.com/guide-to-jpa-with-hibernate-inheritance-mapping/
 public class User implements Serializable, UserDetails {
 
@@ -40,7 +42,8 @@ public class User implements Serializable, UserDetails {
 	@ManyToOne
 	@JoinColumn(name="zip_code", nullable = false)
 	private ZipCode zipCode;
-	@NotBlank(message = "password is mandatory")
+	//Validity check during registration proccess
+	//otherwise problems with updating
 	private String password;
 	@Transient
 	private String passwordRepeat;

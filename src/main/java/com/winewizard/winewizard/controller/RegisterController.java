@@ -66,6 +66,12 @@ public class RegisterController {
                           @ModelAttribute @Valid  Winery winery,
                              BindingResult bindingResultUserWinery,
                              RedirectAttributes attr){
+        //TODO: move -if possible- stuff to service
+        boolean isUpdating = false;
+        if(user.getId()!= -1) {
+            isUpdating = true;
+        }
+
         if( user.isWineryUser()) {
             if(winery.getWineryName().isBlank()) {
                 bindingResultUserWinery.rejectValue("wineryName",  "no_winery_name");
@@ -99,15 +105,40 @@ public class RegisterController {
         } else {
             userService.createZipCode(zipCode);
             user.setZipCode(zipCode);
-
         }
 
-        if(user.getPasswordRepeat().isEmpty() || !user.getPassword().equals(user.getPasswordRepeat())){
+        if(!user.getPassword().equals(user.getPasswordRepeat())){
+            bindingResultUser.rejectValue("passwordRepeat", "password_not_equal");
+        }
+
+        if(!isUpdating && user.getPassword().isEmpty()){
+            //TODO: change error message
             bindingResultUser.rejectValue("passwordRepeat", "password_not_equal");
         }
 
         if (bindingResultUser.hasErrors() || bindingResultUserWinery.hasErrors()) {
             return "general/register";
+        }
+
+        if(isUpdating){
+            //get user again from db so the password is not temporarly exposed in the frontend
+           var dbUser = userService.findUserByLoginIgnoreCase(user.getLogin()).get();
+            dbUser.setZipCode(user.getZipCode());
+            dbUser.setPhone(user.getPhone());
+
+            if(!user.getPassword().isBlank()){
+                var encryptedPassword = userService.encryptPassword(user.getPassword());
+                dbUser.setPassword(encryptedPassword);
+            }
+
+            userService.update(dbUser);
+            if(user.isWineryUser()){
+                var dbWinery = wineryService.getByWineryByWineryOwnerName(dbUser.getUsername());
+                dbWinery.setWineryName(winery.getWineryName());
+                wineryService.update(dbWinery);
+            }
+
+            return "general/profile";
         }
 
         var defaultUser = new Role();
@@ -125,6 +156,7 @@ public class RegisterController {
         user.setPersonalProfileId(String.valueOf(java.util.UUID.randomUUID()));
 
         try {
+            user.setPassword(userService.encryptPassword(user.getPassword()));
             user = userService.createUser(user);
         } catch (DataIntegrityViolationException e) {
             bindingResultUser.rejectValue("login", "user_name_already_exists");
@@ -158,6 +190,29 @@ public class RegisterController {
         }
 
         return new RedirectView("/customlogin");
+    }
+
+    @RequestMapping(value = "/editUser", method = RequestMethod.POST)
+    public String updateUser( Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            User user = (User) authentication.getPrincipal();
+            user.setZipCodeInput(user.getZipCode().getZipCode());
+            user.setOlderThanSixteen(true);
+
+            var winery = wineryService.getByWineryByWineryOwnerName(user.getUsername());
+
+            if(winery != null)
+            {
+                user.setWineryUser(true);
+                model.addAttribute("winery", winery);
+            }
+            model.addAttribute("user", user);
+
+            return "general/register";
+        }
+
+        return "/";
     }
 
     @GetMapping("/registrationFailed")

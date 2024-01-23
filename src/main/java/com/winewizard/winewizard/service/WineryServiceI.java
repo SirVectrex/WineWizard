@@ -11,6 +11,8 @@ public interface WineryServiceI {
 
     Winery saveWinery(Winery winery);
 
+    Winery update(Winery winery);
+
     Winery getByUrlIdent(String ident);
 
     Winery getByWineryByWineryOwnerName(String name);

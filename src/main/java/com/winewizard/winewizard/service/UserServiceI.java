@@ -15,7 +15,11 @@ public interface UserServiceI extends UserDetailsService {
 
     public User createUser(User user);
 
+    public String encryptPassword(String password);
+
     public void createZipCode(ZipCode zipCode);
 
     public boolean verify(String verificationCode);
+
+    public User update(User user);
 }

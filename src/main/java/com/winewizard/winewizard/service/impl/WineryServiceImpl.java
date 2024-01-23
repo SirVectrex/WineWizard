@@ -22,11 +22,16 @@ public class WineryServiceImpl implements WineryServiceI {
 
     @Override
     public List<Winery> getAllWineries() {
-        return wineryRepository.findAll();
+        return (List<Winery>) wineryRepository.findAll();
     }
 
     @Override
     public Winery saveWinery(Winery winery) {
+        return wineryRepository.save(winery);
+    }
+
+    @Override
+    public Winery update(Winery winery) {
         return wineryRepository.save(winery);
     }
 
