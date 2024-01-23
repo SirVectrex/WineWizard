@@ -157,7 +157,6 @@ public class User implements Serializable, UserDetails {
 		this.wineryUser = wineryUser;
 	}
 
-
 	public Long getId() {
 		return id;
 	}
