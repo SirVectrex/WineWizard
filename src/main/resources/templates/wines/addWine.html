@@ -20,7 +20,7 @@
                 <!-- Name Field -->
                 <div class="form-group mb-3">
                     <label for="name">Name</label>
-                    <input class="form-control" id="name" placeholder="Wine name" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:field="*{name}" type="text"/>
+                    <input class="form-control" id="name" placeholder="Wine name" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:field="*{name}" type="text" required/>
                     <div class="invalid-feedback">
                         <span th:errors="*{name}"></span>
                     </div>
@@ -29,7 +29,7 @@
                 <!-- Type Field -->
                 <div class="form-group mb-3">
                     <label for="type" th:text="#{Type}">Type</label>
-                    <input class="form-control" id="type" placeholder="Wine type" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid'" th:field="*{type}" type="text"/>
+                    <input class="form-control" id="type" placeholder="Wine type" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid'" th:field="*{type}" type="text" required/>
                     <div class="invalid-feedback">
                         <span th:errors="*{type}"></span>
                     </div>
@@ -38,7 +38,7 @@
                 <!-- EAN Field -->
                 <div class="form-group mb-3">
                     <label for="ean" th:text="#{EAN}">EAN</label>
-                    <input class="form-control" id="ean" placeholder="Wine EAN" th:classappend="${#fields.hasErrors('ean')} ? 'is-invalid'" th:field="*{ean}" type="number"/>
+                    <input class="form-control" id="ean" placeholder="Wine EAN" th:classappend="${#fields.hasErrors('ean')} ? 'is-invalid'" th:field="*{ean}" type="number" required/>
                     <div class="invalid-feedback">
                         <span th:errors="*{ean}"></span>
                     </div>
