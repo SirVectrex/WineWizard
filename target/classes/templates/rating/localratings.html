@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+
+
+<div th:insert="~{fragments/header}"></div>
+<div>
+  <div class="container mt-4">
+    <h2 th:text="#{Wine_List_area}"></h2>
+
+  <span th:text="#{wine_list_desc}"></span>
+
+    <!-- Table for displaying wine data -->
+    <table class="table table-bordered table-hover">
+      <thead class="thead-dark">
+      <tr>
+        <th th:text="#{Name}">Name</th>
+        <th th:text="#{Average_Taste_Rating}"></th>
+        <th th:text="#{Average_Design_Rating}"></th>
+        <th th:text="#{Average_Price_Rating}"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="wine : ${wines}">
+        <td th:text="${wine.name}">Name</td>
+        <td th:text="${wine.avgTasteRating}">Taste Rating</td>
+        <td th:text="${wine.avgDesignRating}">Design Rating</td>
+        <td th:text="${wine.avgPriceRating}">Price Rating</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li th:if="${wines.hasPrevious()}" class="page-item">
+          <a class="page-link" th:href="@{/rating/myarea(page=${wines.number - 1}, size=${wines.size})}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li th:each="pageNum : ${#numbers.sequence(0, wines.totalPages - 1)}" class="page-item" th:classappend="${pageNum} == ${wines.number} ? 'active'">
+          <a class="page-link" th:href="@{/rating/myarea(page=${pageNum}, size=${wines.size})}" th:text="${pageNum + 1}">1</a>
+        </li>
+        <li th:if="${wines.hasNext()}" class="page-item">
+          <a class="page-link" th:href="@{/rating/myarea(page=${wines.number + 1}, size=${wines.size})}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+
+</div>
+
+<div th:insert="~{fragments/footer}"></div>

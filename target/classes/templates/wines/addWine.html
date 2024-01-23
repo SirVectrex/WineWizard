@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+
+<div th:insert="~{fragments/header}"></div>
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Image Column -->
+        <div class="col-md-6 text-center">
+            <img src="/images/flaschi_notepad.png" id="img" class="img-fluid" alt="Wine Image" height="40vh">
+        </div>
+
+        <!-- Form Column -->
+        <div class="col-md-6">
+            <form th:action="@{/wines/add}" th:object="${wine}" method="POST">
+                <h2 class="mb-4" th:text="#{Wine_add_title}">Add New Wine</h2>
+
+                <span th:text="#{Wine_add_desc}"> </span>
+
+                <!-- Name Field -->
+                <div class="form-group mb-3">
+                    <label for="name">Name</label>
+                    <input class="form-control" id="name" placeholder="Wine name" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" th:field="*{name}" type="text"/>
+                    <div class="invalid-feedback">
+                        <span th:errors="*{name}"></span>
+                    </div>
+                </div>
+
+                <!-- Type Field -->
+                <div class="form-group mb-3">
+                    <label for="type" th:text="#{Type}">Type</label>
+                    <input class="form-control" id="type" placeholder="Wine type" th:classappend="${#fields.hasErrors('type')} ? 'is-invalid'" th:field="*{type}" type="text"/>
+                    <div class="invalid-feedback">
+                        <span th:errors="*{type}"></span>
+                    </div>
+                </div>
+
+                <!-- EAN Field -->
+                <div class="form-group mb-3">
+                    <label for="ean" th:text="#{EAN}">EAN</label>
+                    <input class="form-control" id="ean" placeholder="Wine EAN" th:classappend="${#fields.hasErrors('ean')} ? 'is-invalid'" th:field="*{ean}" type="number"/>
+                    <div class="invalid-feedback">
+                        <span th:errors="*{ean}"></span>
+                    </div>
+                </div>
+
+                <!-- Description Field -->
+                <div class="form-group mb-3">
+                    <label for="description" th:text="#{Description}"}>Description</label>
+                    <input class="form-control" id="description" placeholder="Wine description" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'" th:field="*{description}" type="text"/>
+                    <div class="invalid-feedback">
+                        <span th:errors="*{description}"></span>
+                    </div>
+                </div>
+
+                <input type="hidden" id="id" th:field="*{id}">
+                <button type="submit" class="btn btn-primary" th:text="#{Save}">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <div th:insert="~{fragments/footer}"></div>
+</html>
+
+
+<style>
+
+    #img {
+        max-height: 50vh !important;
+    }
+
+</style>

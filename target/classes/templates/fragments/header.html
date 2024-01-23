@@ -1,0 +1,91 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="/images/flaschi_die_flasche.png" alt="Cute Wine" style="height: 70px;"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" sec:authorize="hasAuthority('WINERY_STATUS') || hasAuthority('WINEWIZARD_STATUS') || hasAuthority('ADMIN_STATUS')">
+                <li class="nav-item">
+                    <a class="nav-link" href="/" th:text="#{Home}"></a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{Wine_functionality}">
+
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/allratings" th:text="#{All_Ratings}"></a></li>
+                        <li><a class="dropdown-item" href="/wines/add" th:text="#{Add_a_wine}"></a></li>
+                        <!--TODO: translate-->
+                        <li><a class="dropdown-item" href="/wines/recommendations" >Recommendations</a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/add" th:text="#{Rate_a_wine}"></a></li>
+                        <li><a class="dropdown-item" href="/rating/myarea" th:text="#{Ratings_area}">Best in my area</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/wines/searchWine" th:text="#{Search_for_wine}"></a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{User_functionality}">
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- TODO: remove static link -->
+                        <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/myratings" th:text="#{My_Ratings}"></a></li>
+                        <li><a class="dropdown-item" href="/feedback/add" th:text="#{Feedback}"></a></li>
+                        <li><a class="dropdown-item" href="/profile" th:text="#{Profile}"></a></li>
+                        <li><form class="me-2" th:action="@{/deleteUser}" method="post"><button class="btn btn-outline-danger" type="submit" th:text="#{Delete_User}"></button></form></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown" sec:authorize="hasAuthority('WINERY_STATUS')">
+                    <!-- TODO: translate -->
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:text="#{My_Winery}" >Winery functionality
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/winery/profile" th:text="#{Profile}"></a></li>
+                        <li><a class="dropdown-item" href="/winery/statistics" th:text="#{My_Wines}" >My wine statistics</a></li>
+                    </ul>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="hasAuthority('ADMIN_STATUS')" href="/admin" th:text="#{User_info}"></a>
+                </li>
+
+            </ul>
+
+            <div class="d-flex align-items-end">
+
+                <form th:action="@{/changeLanguage}" method="get" class="me-2" id="languageForm"
+                      sec:authorize="hasAuthority('WINERY_STATUS') || hasAuthority('WINEWIZARD_STATUS') || hasAuthority('ADMIN_STATUS')">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="languageDropdownButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            <i class="fas fa-language " ></i> <span th:text="#{Select_Language}">Language</span>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="languageDropdownButton">
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='en')}" th:text="#{English}">English</a>
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='fr')}" th:text="#{French}">French</a>
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='de')}" th:text="#{German}">German</a>
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='sp')}" th:text="#{Spanish}">Spanish</a>
+                            <a class="dropdown-item" th:href="@{/changeLanguage(lang='pt')}" th:text="#{Portuguese}">Portugese</a>
+
+                        </div>
+                    </div>
+                </form>
+
+
+                <form class="me-2" th:action="@{/logout}" method="post">
+                    <button class="btn btn-outline-danger" type="submit">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}" ></header>
+
+<body id="main">
+
+<div th:insert="~{fragments/header}"></div>
+
+
+
+<div>
+
+    <div class="container mt-5">
+        <div class="row text-center">
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="#{Number_of_Ratings}"></h5>
+                        <p class="card-text" th:text="${stat.getNumRatings()}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="#{Number_of_Wines}"></h5>
+                        <p class="card-text" th:text="${stat.getNumwines()}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="#{Number_of_Wineries}"></h5>
+                        <p class="card-text" th:text="${stat.getNumwinery()}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="#{Number_of_Users}"></h5>
+                        <p class="card-text" th:text="${stat.getNumuser()}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<h1 class="title" id="title">
+    <span th:text="#{Welcome_to_the_Wine_Cellar}" style="color:white;" ></span>
+    <span th:text="${loggedInUsername}" style="color:white;">Test</span>
+</h1>
+
+
+<div th:insert="~{fragments/footer}"></div>
+
+</body>
+
+<style>
+
+
+    #title {
+        color: white;
+        padding-top: 20vh;
+        text-align: center;
+        font-size: 50px;
+        font-weight: bold;
+        padding-bottom: 20px;
+    }
+
+    .card {
+        margin: 10px;
+        min-height: 140px;
+        background: white;
+        border-radius: 20px;
+        border: white;
+        color: black;
+    }
+
+    .card-title {
+        font-size: 20px;
+        min-height: 50px;
+        color: black;
+    }
+
+    .card-text {
+        font-size: 40px;
+        font-weight: bold;
+        font-family: Monospaced, sans-serif;
+        color: black;
+    }
+
+    #main {
+        background-image: url("/images/wine.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100%;
+        width: 100%;
+    }
+
+
+
+</style>

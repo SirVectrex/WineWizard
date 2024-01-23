@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<header th:insert="~{layout}"></header>
+
+
+<div th:insert="~{fragments/header}"></div>
+
+<div>
+    <h2 th:text="#{Overview_all_users}"></h2>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3 th:text="#{Admin}">Admins</h3>
+            <div class="table-responsive overflow-auto" style="max-height: 500px;">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th th:text="#{Name}"></th>
+                        <th th:text="#{Email}"></th>
+                        <th th:text="#{Zip_Code}"></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="admin : ${usersByRole['ADMIN']}">
+                    <tr>
+                        <td th:text="${admin.getLogin()}"></td>
+                        <td th:text="${admin.getEmail()}"></td>
+                        <td th:text="${admin.getZipCode()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3 th:text="#{Wine_Wizard}">Winewizards</h3>
+            <div class="table-responsive overflow-auto" style="max-height: 500px;">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th th:text="#{Name}"></th>
+                        <th th:text="#{Email}"></th>
+                        <th th:text="#{Zip_Code}"></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="winewizard : ${usersByRole['wineWizard']}">
+                    <tr>
+                        <td th:text="${winewizard.getLogin()}"></td>
+                        <td th:text="${winewizard.getEmail()}"></td>
+                        <td th:text="${winewizard.getZipCode()}"></td>
+                        <td>
+                            <!-- Delete button -->
+                            <form th:action="@{/admin/deleteUser}" method="post">
+                                <input type="hidden" name="login" th:value="${winewizard.getLogin()}"/>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3 th:text="#{Winery}">Winerys</h3>
+            <div class="table-responsive overflow-auto" style="max-height: 500px;">
+                <table class="table table-bordered">
+                    <thead class="thead-light">
+                    <tr>
+                        <th th:text="#{Name}"></th>
+                        <th th:text="#{Email}"></th>
+                        <th th:text="#{Zip_Code}"></th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="winery : ${usersByRole['winery']}">
+                    <tr>
+                        <td th:text="${winery.getLogin()}"></td>
+                        <td th:text="${winery.getEmail()}"></td>
+                        <td th:text="${winery.getZipCode()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div th:insert="~{fragments/footer}"></div>

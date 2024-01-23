@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+
+<body>
+
+<div th:insert="~{fragments/header}"></div>
+
+<h1 class="title" th:text="#{Welcome_to_the_Wine_Cellar}">
+</h1>
+
+<span th:text="#{Welcome_to_the_Wine_Cellar_desc}">
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+    <tr>
+        <th th:text="#{Name}">Name</th>
+        <th th:text="#{Type}">Type of wine</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="wine : ${winelist}">
+        <td th:text="${wine.name}"></td>
+        <td th:text="${wine.type}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:insert="~{fragments/footer}">
+</div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+
+<div th:insert="~{fragments/header}"></div>
+
+
+<!-- content goes here -->
+<div class="container">
+
+    <h2 th:text="#{My_Ratings}"></h2>
+
+    <span th:text="#{My_Ratings_desc}"></span>
+
+    <div th:insert="~{rating/myRatingsFragment}"></div>
+
+</div>
+
+</div>
+
+
+
+<div th:insert="~{fragments/footer}"></div>

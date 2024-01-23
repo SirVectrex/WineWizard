@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<header th:insert="~{layout}"></header>
+
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center">Login</h2>
+
+                    <div th:if="${param.error}">
+                        <p class="alert alert-danger">Invalid username or password</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="/images/flaschi_die_flasche.png" alt="Cute Wine" style="height: 150px;">
+                    </div>
+
+                    <form th:action="@{/customlogin}" method="post">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-2">Login</button>
+                    </form>
+
+                    <label>Create a new account</label>
+                    <br/>
+                    <a th:href="@{/register}" class="btn btn-primary btn-block ">Register as a user</a>
+                    <a th:href="@{/register(isWineryUser='true')}" class="btn btn-primary btn-block ">Register as a new winery</a>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

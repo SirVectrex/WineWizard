@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<header th:insert="~{layout}"></header>
+<body>
+
+<div th:insert="~{fragments/header}"></div>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <img src="/images/flaschi_suchi.png"  class="img-fluid" alt="Feedback Image" >
+    </div>
+
+
+    <div class="col-md-8">
+        <div class="container-fluid">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <h1 class="title text-center" th:text="#{Browse_through_our_wine_collection}"></h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-8 text-center">
+                    <!-- Search Form -->
+                    <form th:action="@{/wines/searchWine}" th:method="get" >
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control rounded" th:placeholder="#{Search}"  th:name="searchTerm" id="searchInput">
+                            <div class="input-group-append mx-4">
+                            <button class="btn btn-primary" type="submit" th:text="#{Search_for_wine}"></button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-4">
+                    <form  th:action="#{/wines/searchWine}" th:method="get">
+                        <div class="input-group-append mx-4">
+                            <input type="hidden" class="form-control rounded"  value="Bookmark" th:name="searchTerm" id="Bookmark">
+                            <button class="btn btn-primary" type="submit" th:text="#{Your_Bookmarks}"></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Search Results List -->
+            <ul class="list-group" id="searchResults">
+
+                <li th:each="wine : ${searchResults}" class="list-group-item">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div>
+                                    <strong th:text="${wine.name}"></strong>
+                                </div>
+                                <div><a th:text="#{Type}"></a> <span th:text="${wine.type}"></span></div>
+                                <div> <a th:text="#{EAN}"></a> <span th:text="${wine.ean}"></span></div>
+                                <div> <a th:text="#{Description}"></a> <span th:text="${wine.description}"></span></div>
+                            </div>
+
+
+                            <div class="col-md-2 text-center">
+                                    <form th:action="@{/wines/toggleBookmark/{wineId}(wineId=${wine.id})}" method="post">
+                                        <button class="btn btn-light bookmark-button" th:classappend="${wine.bookmarked ? 'fas' : 'far'}">
+                                            <i class="fa-bookmark fa-4x"></i>
+                                        </button>
+                                    </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+    <nav aria-label="Pagination" th:if="${totalPages > 0}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                <a th:replace="~{fragments/paging :: paging(1, '<<', 'First Page', ${searchTerm})}"></a>
+            </li>
+            <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                <a th:replace="~{fragments/paging :: paging(${currentPage - 1}, 'Prev', 'Previous Page', ${searchTerm})}"></a>
+            </li>
+            <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item" th:classappend="${page == currentPage} ? 'active'" th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                <a th:replace="~{fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page}, ${searchTerm})}"></a>
+            </li>
+            <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                <a th:replace="~{fragments/paging :: paging(${currentPage + 1},'Next', 'Next Page', ${searchTerm})}"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                <a th:replace="~{fragments/paging :: paging(${totalPages}, '>>', 'Last Page', ${searchTerm})}"></a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+</div>
+
+</div>
+
+<div th:insert="~{fragments/footer}"></div>
+
+</body>
