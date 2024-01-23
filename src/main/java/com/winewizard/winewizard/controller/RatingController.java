@@ -131,6 +131,14 @@ public class RatingController {
         Page<Rating> ratingPage =  ratingService.getAllRatingsByUserID(pageable, userid);
 
         model.addAttribute("ratings", ratingPage);
+        var prevPage = page -1;
+        var nextPage = size +1;
+        model.addAttribute("hrefLinkPrev", "/rating/myratings?page="+ prevPage +"&size=" + size);
+        model.addAttribute("hrefLinkNext", "/rating/myratings?page="+ nextPage +"&size=" + size);
+        model.addAttribute("hrefLinkPagePre", "/rating/myratings?page=");
+        model.addAttribute("hrefLinkPagePost", "&size=" + size);
+        model.addAttribute("allowEditing", true);
+
 
         return "rating/myratings";
     }
