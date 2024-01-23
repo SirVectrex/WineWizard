@@ -56,10 +56,12 @@ public class UserServiceImpl implements UserServiceI {
 
     @Override
     public User createUser(User user) {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-
         return userRepository.save(user);
+    }
+
+    @Override
+    public String encryptPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 
     @Override
@@ -81,6 +83,13 @@ public class UserServiceImpl implements UserServiceI {
         return true;
         }
 
+    }
+
+
+
+    @Override
+    public User update(User user) {
+        return userRepository.save(user);
     }
 
     public void deleteUser(String username) {
