@@ -1,9 +1,9 @@
-<div th:if="${ratings.isEmpty()}">
+<div th:if="${ratings!=null && ratings.isEmpty()}">
     <h2 th:text="#{No_Ratings}">You have not rated any wines yet.</h2>
 
 </div>
 
-<table th:if="${not ratings.isEmpty()}" class="table">
+<table th:if="${ratings!=null && not ratings.isEmpty()}" class="table">
     <thead>
     <tr>
         <th th:text="#{Name}">Wine Name</th>
@@ -28,7 +28,7 @@
 </table>
 
 <!-- Pagination controls -->
-<nav aria-label="Page navigation" th:if="${!ratings.isEmpty()}">
+<nav aria-label="Page navigation" th:if="${ratings!=null && !ratings.isEmpty()}">
     <ul class="pagination justify-content-center">
         <li th:if="${ratings.hasPrevious()}" class="page-item">
             <a class="page-link"  th:href="${hrefLinkPrev}" aria-label="Previous">
