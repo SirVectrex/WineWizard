@@ -7,6 +7,9 @@ import com.winewizard.winewizard.model.ZipCode;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -143,7 +146,7 @@ public class UserServiceImpl implements UserServiceI {
     }
 
     @Override
-    public void handleUpdatingProcess(User user, Winery winery) {
+    public User handleUpdatingProcess(User user, Winery winery) {
         //get user again from db so the password is not temporarly exposed in the frontend
         var dbUser = findUserByLoginIgnoreCase(user.getLogin()).get();
         dbUser.setZipCode(user.getZipCode());
@@ -160,6 +163,16 @@ public class UserServiceImpl implements UserServiceI {
             dbWinery.setWineryName(winery.getWineryName());
             wineryService.update(dbWinery);
         }
+
+        //This is required otherwise auth token is not updated
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        principal.setPhone(dbUser.getPhone());
+        principal.setZipCode(dbUser.getZipCode());
+        principal.setPassword(dbUser.getPassword());
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(), principal.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return dbUser;
     }
 
     @Override

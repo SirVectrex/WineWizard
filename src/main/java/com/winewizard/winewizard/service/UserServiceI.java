@@ -33,7 +33,7 @@ public interface UserServiceI extends UserDetailsService {
 
     public Role getRole(User user);
 
-    public void handleUpdatingProcess(User user, Winery winery);
+    public User handleUpdatingProcess(User user, Winery winery);
 
     public ZipCode getZipCode(User user);
 
