@@ -36,6 +36,12 @@ public class WineryServiceImpl implements WineryServiceI {
     }
 
     @Override
+    public void deleteWineryById(Long id) {
+         wineryRepository.deleteById(id);
+    }
+
+
+    @Override
     public Winery getByUrlIdent(String ident) {
         return wineryRepository.findByUrlIdentifier(UUID.fromString(ident));
     }

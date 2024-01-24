@@ -13,6 +13,8 @@ public interface WineryServiceI {
 
     Winery update(Winery winery);
 
+    void deleteWineryById(Long id);
+
     Winery getByUrlIdent(String ident);
 
     Winery getByWineryByWineryOwnerName(String name);
