@@ -29,7 +29,7 @@ public interface WineRepositoryImpl extends WineRepositoryI {
     Page<WineProjectionI> findWinesWithAverageRatings_Pages(Pageable pageable);
 
     @Query("SELECT w.name as name,  w.id as id, ROUND(AVG(r.ratingTaste), 2) as avgTasteRating, ROUND(AVG(r.ratingDesign), 2) as avgDesignRating, ROUND(AVG(r.ratingPrice), 2) as avgPriceRating " +
-            "FROM Wine w JOIN Rating r ON w = r.wine " +
+            "FROM Wine w LEFT JOIN Rating r ON w = r.wine " +
             "WHERE w.winery.id = :winery_id " +
             "GROUP BY w.id, w.name " +
             "ORDER BY AVG(r.ratingTaste) DESC")
