@@ -74,15 +74,15 @@
                         <thead>
                         <tr>
                             <th th:text="#{Name}">Wine Name</th>
-                            <th th:text="#{Taste_Rating}">Taste Rating</th>
-                            <th th:text="#{Design_Rating}">Design Rating</th>
+                            <th th:text="#{Description}">Description</th>
+                            <th th:text="#{Type}">Type</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="wine : ${wines}">
                             <td th:text="*{wine.getName()}">Wine Name</td>
-                            <td th:text="${wine.getDescription()}">Taste Rating</td>
-                            <td th:text="${wine.getType()}">Design Rating</td>
+                            <td th:text="${wine.getDescription()}">Description</td>
+                            <td th:text="${wine.getType()}">Type</td>
                         </tr>
                         </tbody>
                     </table>
