@@ -12,7 +12,7 @@
 
   </h2>
 
-  <section  class="card mb-4" >
+  <section  class="card mb-4" th:remove="${categories.isEmpty()} ? all : none">
     <div class="card-body" >
       <h2 class="card-title" th:text="#{your_top_category}"></h2>
       <table class="table table-striped">
@@ -25,7 +25,7 @@
     </div>
   </section>
 
-  <section class="card mb-4">
+  <section class="card mb-4" th:remove="${categories.isEmpty()} ? all : none">
     <div class="card-body">
       <h2 class="card-title" th:text="#{our_tips}"></h2>
       <table class="table table-striped">
