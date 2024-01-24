@@ -60,7 +60,11 @@ public class UserServiceImpl implements UserServiceI {
 
     @Override
     public User createUser(User user) {
-        return userRepository.save(user);
+        //otherwise this information is overwritten, but is still required
+        var isWineryUser = user.isWineryUser();
+        var dbUser=  userRepository.save(user);
+        dbUser.setWineryUser(isWineryUser);
+        return  dbUser;
     }
 
     @Override
