@@ -7,7 +7,9 @@ import com.winewizard.winewizard.repository.BookmarkRepository;
 import com.winewizard.winewizard.repository.RecommendationProjectionI;
 import com.winewizard.winewizard.repository.UserRepositoryI;
 import com.winewizard.winewizard.repository.WineRepositoryI;
+import com.winewizard.winewizard.service.WineryServiceI;
 import com.winewizard.winewizard.service.impl.WineServiceImpl;
+import com.winewizard.winewizard.service.impl.WineryServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,13 +39,15 @@ public class WineController {
 
     private WineServiceImpl wineService;
     private final WineRepositoryI wineRepositoryI;
+    private final WineryServiceI wineryService;
 
-    public WineController(UserRepositoryI userRepositoryI, BookmarkRepository bookmarkRepository, WineServiceImpl wineService , WineRepositoryI wineRepositoryI){
+    public WineController(UserRepositoryI userRepositoryI, WineryServiceImpl wineryService, BookmarkRepository bookmarkRepository, WineServiceImpl wineService , WineRepositoryI wineRepositoryI){
         super();
         this.userRepositoryI = userRepositoryI;
         this.bookmarkRepository = bookmarkRepository;
         this.wineService = wineService;
         this.wineRepositoryI = wineRepositoryI;
+        this.wineryService = wineryService;
     }
 
     @GetMapping ("/add")
@@ -61,7 +65,12 @@ public class WineController {
             System.out.println(result.getAllErrors().toString());
             return "redirect:/";
         }
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        var winery = wineryService.getByWineryByWineryOwnerName(user.getUsername());
+        if(winery != null) {
+            wine.setWinery(winery);
+        }
         wineService.saveWine(wine);
         return "redirect:/wines/searchWine";
     }
