@@ -48,7 +48,7 @@ public class User implements Serializable, UserDetails {
 	@Transient
 	private String passwordRepeat;
 	@NotBlank(message = "Email is mandatory")
-	//TODO: unique + validate
+	@Pattern(regexp="([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4})", message = "Invalid mail address")
 	private String email;
 	@NotBlank(message = "Phone Number is mandatory")
 	@Pattern(regexp="(^$|[0-9 +]{4,15})", message = "Invalid phone number. Allowed characters '0-9' '+' ' '")
@@ -59,7 +59,7 @@ public class User implements Serializable, UserDetails {
 	private boolean wineryUser;
 	private boolean active = true;
 
-	@Transient //TODO: annotation übeprüfen
+	@Transient
 	private List<GrantedAuthority> authorities;
 	
 	@ManyToMany(fetch = FetchType.EAGER)

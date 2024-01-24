@@ -17,8 +17,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/allratings" th:text="#{All_Ratings}"></a></li>
                         <li><a class="dropdown-item" href="/wines/add" th:text="#{Add_a_wine}"></a></li>
-                        <!--TODO: hide for winery-->
-                        <li><a class="dropdown-item" href="/wines/recommendations" th:text="#{Recommendations}">Recommendations</a></li>
+                        <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS') || hasAuthority('ADMIN_STATUS')" href="/wines/recommendations" th:text="#{Recommendations}">Recommendations</a></li>
                         <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/add" th:text="#{Rate_a_wine}"></a></li>
                         <li><a class="dropdown-item" href="/rating/myarea" th:text="#{Ratings_area}">Best in my area</a></li>
                         <li><hr class="dropdown-divider"></li>
