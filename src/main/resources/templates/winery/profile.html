@@ -15,7 +15,7 @@
                                  class="rounded-circle img-fluid" style="width: 150px;">
                             <p class="my-3" th:text="${winery.getWineryName()}"></p>
                             <p class="text-muted mb-1">Winery in Bavaria</p>
-                            <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                            <p class="text-muted mb-4">Niederbayern, Germany</p>
 
                             <br>
                             <div>
@@ -55,15 +55,7 @@
                                     <p class="text-muted mb-0">(097) 234-5678</p>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Mobile</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">(098) 765-4321</p>
-                                </div>
-                            </div>
+
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
@@ -77,7 +69,42 @@
                     </div>
 
                     <h2>All wines</h2>
-                    <!--TODO: show a list of all wines -->
+
+                    <table th:if="${wines!=null && not wines.isEmpty()}" class="table">
+                        <thead>
+                        <tr>
+                            <th th:text="#{Name}">Wine Name</th>
+                            <th th:text="#{Taste_Rating}">Taste Rating</th>
+                            <th th:text="#{Design_Rating}">Design Rating</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="wine : ${wines}">
+                            <td th:text="*{wine.getName()}">Wine Name</td>
+                            <td th:text="${wine.getDescription()}">Taste Rating</td>
+                            <td th:text="${wine.getType()}">Design Rating</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Pagination controls -->
+                    <nav aria-label="Page navigation" th:if="${wines!=null && !wines.isEmpty()}">
+                        <ul class="pagination justify-content-center">
+                            <li th:if="${wines.hasPrevious()}" class="page-item">
+                                <a class="page-link"  th:href="${hrefLinkPrev}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li th:each="pageNum : ${#numbers.sequence(0, wines.totalPages - 1)}" class="page-item" th:classappend="${pageNum} == ${wines.number} ? 'active'">
+                                <a class="page-link" th:href="${hrefLinkPagePre}+${pageNum}+${hrefLinkPagePost}" th:text="${pageNum + 1}">1</a>
+                            </li>
+                            <li th:if="${wines.hasNext()}" class="page-item">
+                                <a class="page-link" th:href="${hrefLinkNext}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
