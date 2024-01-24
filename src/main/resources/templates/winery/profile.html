@@ -19,7 +19,7 @@
 
                             <br>
                             <div>
-                                    <p >Share the link to this page!!</p>
+                                    <p th:text="#{share_link}">Share the link to this page!!</p>
                                     <p th:text="${winery.getShareLink()}"></p>
                             </div>
 
@@ -31,7 +31,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Full Name</p>
+                                    <p class="mb-0" th:text="#{username}">Full Name</p>
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0" th:text="${winery.getWineryName()}"></p>
@@ -40,7 +40,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Email</p>
+                                    <p class="mb-0" th:text="#{mail}">Email</p>
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0">example@example.com</p>
@@ -49,7 +49,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Phone</p>
+                                    <p class="mb-0" th:text="#{phone}">Phone</p>
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0">(097) 234-5678</p>
@@ -59,7 +59,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Address</p>
+                                    <p class="mb-0" th:text="#{address}">Address</p>
                                 </div>
                                 <div class="col-sm-9">
                                     <p class="text-muted mb-0">Galgenbergstraße 32, Regensburg, Deutschland </p>
