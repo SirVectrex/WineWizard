@@ -1,8 +1,11 @@
 package com.winewizard.winewizard.service;
 
+import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.Winery;
 import com.winewizard.winewizard.repository.WineProjectionI;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,7 +17,7 @@ public interface WineServiceI {
 
     List<WineProjectionI> getWineRatings();
 
-    List<Wine> getAllWinesOfWinery(Winery winery);
+    Page<Wine> getAllWinesOfWinery(Winery winery, Pageable pageable);
 
     public Wine findWine(String query);
 

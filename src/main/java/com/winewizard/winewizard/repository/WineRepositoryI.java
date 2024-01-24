@@ -1,5 +1,6 @@
 package com.winewizard.winewizard.repository;
 
+import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.Winery;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,7 @@ public interface WineRepositoryI extends JpaRepository<Wine, Long> {
 
     List<Wine> findAllById(Long id);
 
-    List<Wine> getWinesByWinery(Winery winery);
+    Page<Wine> getWinesByWinery(Winery winery, Pageable pageable);
 
     Wine findByEan(long l);
 }

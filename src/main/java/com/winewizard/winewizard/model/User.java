@@ -48,7 +48,7 @@ public class User implements Serializable, UserDetails {
 	@Transient
 	private String passwordRepeat;
 	@NotBlank(message = "Email is mandatory")
-	//TODO: unique and check on sign in + validate
+	//TODO: unique + validate
 	private String email;
 	@NotBlank(message = "Phone Number is mandatory")
 	@Pattern(regexp="(^$|[0-9 +]{4,15})", message = "Invalid phone number. Allowed characters '0-9' '+' ' '")

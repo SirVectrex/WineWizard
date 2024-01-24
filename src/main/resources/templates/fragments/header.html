@@ -17,6 +17,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/allratings" th:text="#{All_Ratings}"></a></li>
                         <li><a class="dropdown-item" href="/wines/add" th:text="#{Add_a_wine}"></a></li>
+                        <!--TODO: hide for winery-->
                         <li><a class="dropdown-item" href="/wines/recommendations" th:text="#{Recommendations}">Recommendations</a></li>
                         <li><a class="dropdown-item" sec:authorize="hasAuthority('WINEWIZARD_STATUS')" href="/rating/add" th:text="#{Rate_a_wine}"></a></li>
                         <li><a class="dropdown-item" href="/rating/myarea" th:text="#{Ratings_area}">Best in my area</a></li>
@@ -75,13 +76,13 @@
                     </div>
                 </form>
 
-                <form class="me-2" th:action="@{/editUser}" method="post">
+                <form class="me-2" th:action="@{/editUser}" method="post" sec:authorize="hasAuthority('WINERY_STATUS') || hasAuthority('WINEWIZARD_STATUS') || hasAuthority('ADMIN_STATUS')">
                     <button class="btn btn-outline-primary" type="submit">
                         <i class="fas fa-wrench"></i>
                     </button>
                 </form>
 
-                <form class="me-2" th:action="@{/logout}" method="post">
+                <form class="me-2" th:action="@{/logout}" method="post" sec:authorize="hasAuthority('WINERY_STATUS') || hasAuthority('WINEWIZARD_STATUS') || hasAuthority('ADMIN_STATUS')">
                     <button class="btn btn-outline-danger" type="submit">
                         <i class="fas fa-sign-out-alt"></i>
                     </button>

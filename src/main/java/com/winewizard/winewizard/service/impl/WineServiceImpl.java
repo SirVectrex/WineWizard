@@ -1,5 +1,6 @@
 package com.winewizard.winewizard.service.impl;
 
+import com.winewizard.winewizard.model.Rating;
 import com.winewizard.winewizard.model.User;
 import com.winewizard.winewizard.model.Wine;
 import com.winewizard.winewizard.model.Winery;
@@ -30,8 +31,8 @@ public class WineServiceImpl implements WineServiceI {
     }
 
     @Override
-    public List<Wine> getAllWinesOfWinery(Winery winery) {
-        return wineRepositoryI.getWinesByWinery( winery);
+    public Page<Wine> getAllWinesOfWinery(Winery winery, Pageable pageable) {
+        return wineRepositoryI.getWinesByWinery( winery, pageable);
     }
 
     public Page<WineProjectionI> getWineRatings(Pageable pageable) {
