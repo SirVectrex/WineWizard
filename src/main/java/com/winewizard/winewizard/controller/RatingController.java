@@ -132,7 +132,7 @@ public class RatingController {
 
         model.addAttribute("ratings", ratingPage);
         var prevPage = page -1;
-        var nextPage = size +1;
+        var nextPage = page +1;
         model.addAttribute("hrefLinkPrev", "/rating/myratings?page="+ prevPage +"&size=" + size);
         model.addAttribute("hrefLinkNext", "/rating/myratings?page="+ nextPage +"&size=" + size);
         model.addAttribute("hrefLinkPagePre", "/rating/myratings?page=");
