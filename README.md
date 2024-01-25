@@ -17,8 +17,10 @@ To set up the WineWizard application, follow the steps below:
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
 3. Run the command `mvn clean install` to build the project.
-4. After the build is successful, run the command `java -jar target/wine-wizard-0.0.1-SNAPSHOT.jar` to start the application.
-5. The application will be accessible at `http://localhost:8080`.
+4. Run locally or deploy with docker: 
+   - EITHER: After the build is successful, run the command `java -jar target/wine-wizard-0.0.1-SNAPSHOT.jar` to start the application.
+   - OR: Run this app with docker:   `docker built -t winewizard .` and  `docker run -d -p 8080:80 winewizard` to start the application.
+6. The application will be accessible at `http://localhost:8080`.
 
 ## Localization
 
