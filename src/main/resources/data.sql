@@ -9,13 +9,13 @@ INSERT INTO winery (id, winery_name, url_identifier, winery_owner_id) VALUES (3,
 INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Lugana', 'dry white wine', '1234567890123', 'A crisp and refreshing white wine with citrus notes.', false, 1);
 INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Château Margaux', 'red wine', '2345678901234', 'An elegant and complex Bordeaux blend with a velvety finish.', false, 1);
 INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Prosecco Brut', 'sparkling wine', '3456789012345', 'Bubbly and lively, this Prosecco offers floral and fruity aromas.', false, 1);
-INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Chardonnay Reserve', 'oaked white wine', '4567890123456', 'Full-bodied Chardonnay with hints of vanilla and butter.', false, 1);
+INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Chardonnay Reserve', 'oaked white wine', '4567890123456', 'Full-bodied Chardonnay with hints of vanilla and butter.', false, 3);
 INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Merlot Estate', 'red wine', '5678901234567', 'Smooth and medium-bodied Merlot with plum and cherry flavors.', false, 2);
 INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Sauvignon Blanc', 'crisp white wine', '6789012345678', 'Zesty Sauvignon Blanc with tropical fruit and herbal undertones.', false, 2);
 INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Cabernet Sauvignon', 'full-bodied red wine', '7890123456789', 'Bold and robust Cabernet with blackberry and cassis notes.', false, 2);
 INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Pinot Grigio', 'light white wine', '8901234567890', 'Delicate Pinot Grigio featuring citrus and pear aromas.', false, 1);
-INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Malbec Reserva', 'intense red wine', '9012345678901', 'Rich and intense Malbec with dark fruit and chocolate nuances.', false, 1);
-INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Rosé de Provence', 'rosé wine', '0123456789012', 'A dry and crisp Provencal Rosé with strawberry and floral hints.', false, 1);
+INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Malbec Reserva', 'intense red wine', '9012345678901', 'Rich and intense Malbec with dark fruit and chocolate nuances.', false, 3);
+INSERT INTO wine (name, type, ean, description, bookmarked, winery_id) VALUES ('Rosé de Provence', 'rosé wine', '0123456789012', 'A dry and crisp Provencal Rosé with strawberry and floral hints.', false, 3);
 
 INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93333, 'DE', 'Neistod', 'Bayern');
 INSERT INTO zipcodes (zip_code, country_code, city, state) VALUES (93499, 'DE', 'Zandt', 'Bayern');
